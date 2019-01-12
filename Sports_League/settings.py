@@ -25,12 +25,13 @@ SECRET_KEY = 'k3go3!hwe%c=fh+20(v2m*r+rfcq+_ey24tya=5d)5-4kw6p^='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"] #"*" - позволяет выполнить войти с любого устройства находящегося в сети
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'user.apps.UserConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -76,8 +77,12 @@ WSGI_APPLICATION = 'Sports_League.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'sports_league',
+        'USER': 'sportsman',
+        'PASSWORD': 'sport',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
