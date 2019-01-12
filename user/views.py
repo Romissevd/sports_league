@@ -5,3 +5,6 @@ def login(request):
 
     return HttpResponse('Страница входа')
 
+def registration(request):
+
+    return render(request, 'base.html')
