@@ -1,5 +1,6 @@
 body {
-    background-color: #f8f8f8;
+    background-color: #BABBCD;
+    font: 12pt Roboto;
     margin: 0 0;
 }
 
@@ -10,9 +11,15 @@ header {
     border-bottom-right-radius: 10px;
 }
 
-button.login {
+.button_log {
+    margin: auto;
+}
+
+input.login {
+    font: 10pt DialogInput;
     color: #f8f8f8;
-    border: 0;
+    border: 1px #4a2dad solid;
+    padding: 3px;
     -moz-border-radius: 5px; /* Firefox */
     -webkit-border-radius: 5px; /* Safari 4 */
     border-radius: 5px; /* IE 9, Safari 5, Chrome */
@@ -22,24 +29,20 @@ button.login {
     outline: none;
 }
 
-button.login :active {
-    /*color: #f8f8f8;*/
-    /*-moz-border-radius:  5px; !* Firefox *!*/
-    /*-webkit-border-radius:  5px; !* Safari 4 *!*/
-    /*border-radius:  5px; !* IE 9, Safari 5, Chrome *!*/
-    background: -moz-linear-gradient(#B42C43, #2235B4);
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(#B42C43), to(#1AA3D6));
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#B42C43', endColorstr='#2235B4');
+input.login:active {
+    background: -moz-linear-gradient(#2235B4, #1AA3D6);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#2235B4), to(#1AA3D6));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2235B4', endColorstr='#1AA3D6');
 }
 
 .container {
     max-width: 1024px; /*максимальная ширина может иметь другое значение*/
     padding: 0 15px;
     margin: 0 auto;
-    text-align-last: center;
+    /*text-align-last: center;*/
 }
 .main {
-    background-color: mintcream;
+    background-color: #BABBCD;
     height: 300px;
 }
 
@@ -49,4 +52,13 @@ button.login :active {
 
 nav {
     text-align-last: left;
+}
+
+nav a {
+	text-decoration: none;
+}
+
+nav ul {
+	margin: 0;
+	padding: 0;
 }

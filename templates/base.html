@@ -11,7 +11,13 @@
     <div class="head">
     <div class="container">
         <a href="/user/login" class="logo">Sport-league</a>
-        <button class="login">Вход</button>
+{#        отображать кнопки если пользователь не авторизован иначе пользователя#}
+            <form action="/user/login">
+                <input type="submit" class="login" value="Вход">
+            </form>
+            <form action="/user/registration">
+                <input type="submit" class="login" value="Регистрация">
+            </form>
         <nav>
           <ul>
             <li><a href="/user/login">Главная</a></li>
