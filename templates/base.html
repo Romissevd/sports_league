@@ -4,13 +4,13 @@
     <meta charset="UTF-8">
     <title>Sport-league</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/bases.css" %}" />
 </head>
 <body>
 <header>
     <div class="head">
     <div class="container">
-        <a href="/user/login" class="logo">Sport-league</a>
+        <a href="/" class="logo">Sport-league</a>
 {#        отображать кнопки если пользователь не авторизован иначе пользователя#}
             <form action="/user/login">
                 <input type="submit" class="login" value="Вход">
@@ -20,18 +20,19 @@
             </form>
         <nav>
           <ul>
-            <li><a href="/user/login">Главная</a></li>
-            <li><a href="/user/login">О нас</a></li>
-            <li><a href="/user/login">Контакты</a></li>
+            <li><a href="/">Главная</a></li>
+            <li><a href="/abouts">О нас</a></li>
+            <li><a href="/contacts">Контакты</a></li>
           </ul>
         </nav>
     </div>
     </div>
 </header>
-
+{% block content %}
 <div class="main">
-    <p>Здесь что-то будет</p>
+    <p>Это главная страница. Здесь что-то будет</p>
 </div>
+{% endblock %}
 
 <footer class="foot">
 
