@@ -15,7 +15,7 @@ header {
     margin: auto;
 }
 
-input.login {
+input.button {
     font: 10pt DialogInput;
     color: #f8f8f8;
     border: 1px #4a2dad solid;
@@ -29,7 +29,7 @@ input.login {
     outline: none;
 }
 
-input.login:active {
+input.button:active {
     background: -moz-linear-gradient(#2235B4, #1AA3D6);
     background: -webkit-gradient(linear, 0 0, 0 100%, from(#2235B4), to(#1AA3D6));
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2235B4', endColorstr='#1AA3D6');

@@ -8,30 +8,28 @@
 </head>
 <body>
 <header>
-    <div class="head">
+
     <div class="container">
-        <a href="/" class="logo">Sport-league</a>
+        <a href="{% url 'index' %}" class="logo">Sport-league</a>
 {#        отображать кнопки если пользователь не авторизован иначе пользователя#}
-            <form action="/user/login">
-                <input type="submit" class="login" value="Вход">
+            <form action="{% url 'login' %}">
+                <input type="submit" class="but" value="Вход">
             </form>
-            <form action="/user/registration">
-                <input type="submit" class="login" value="Регистрация">
+            <form action="{% url 'registration' %}">
+                <input type="submit" class="but" value="Регистрация">
             </form>
         <nav>
           <ul>
-            <li><a href="/">Главная</a></li>
-            <li><a href="/abouts">О нас</a></li>
-            <li><a href="/contacts">Контакты</a></li>
+            <li><a href="{% url 'index' %}">Главная</a></li>
+            <li><a href="{% url 'abouts' %}">О нас</a></li>
+            <li><a href="{% url 'contacts' %}">Контакты</a></li>
           </ul>
         </nav>
     </div>
-    </div>
+
 </header>
 {% block content %}
-<div class="main">
     <p>Это главная страница. Здесь что-то будет</p>
-</div>
 {% endblock %}
 
 <footer class="foot">
