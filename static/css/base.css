@@ -1,25 +1,84 @@
 body {
-    background-color: #BABBCD;
-    font: 12pt Roboto;
+    background-color: #E9EBFF;
+    font: 10pt 'Oswald', sans-serif;
     margin: 0 0;
 }
 
 header {
     background-color: #23b411;
     width: 100%;
+    height: auto;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    text-decoration: none;
 }
 
-.button_log {
-    margin: auto;
+.logo_text {
+    color: black;
+    position: absolute;
+    left: 100px;
+
 }
 
-input.button {
+header img {
+    width: 75px;
+    height: 75px;
+    position: absolute;
+    left: 30px;
+    /*box-shadow: 2px 2px 2px #333333;*/
+}
+
+.form_reg_log {
+    padding: 2px 0 2px 0;
+    position: relative;
+    left: 1005px;
+}
+
+header form {
+    display: inline-block;
+    /*box-shadow: 2px 2px 2px #333333; !*тень*!*/
+}
+
+nav {
+    text-align-last: center;
+}
+
+nav ul {
+	margin: 0;
+	padding: 0;
+}
+
+header nav ul li {
+    display: inline-block;
+}
+
+header nav ul li a {
+    display: block;
+    width: 10em;
+    border: 1px #9BFF86 solid;
+    padding: 2px;
+    -moz-border-radius: 2px; /* Firefox */
+    -webkit-border-radius: 2px; /* Safari 4 */
+    border-radius: 5px; /* IE 9, Safari 5, Chrome */
+    margin-right: -4px;
+    text-align: center;
+    color: black;
+    background: -moz-linear-gradient(#9BFF86, #1eb433);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#9BFF86), to(#1eb433));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9BFF86', endColorstr='#1eb433');
+}
+
+header nav ul li a:hover {
+    background: -moz-linear-gradient(#1eb433, #9BFF86);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#1eb433), to(#9BFF86));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1eb433', endColorstr='#9BFF86');
+}
+
+input.but {
     font: 10pt DialogInput;
     color: #f8f8f8;
     border: 1px #4a2dad solid;
-    padding: 3px;
+    padding: 2px;
     -moz-border-radius: 5px; /* Firefox */
     -webkit-border-radius: 5px; /* Safari 4 */
     border-radius: 5px; /* IE 9, Safari 5, Chrome */
@@ -29,7 +88,7 @@ input.button {
     outline: none;
 }
 
-input.button:active {
+input.but:active {
     background: -moz-linear-gradient(#2235B4, #1AA3D6);
     background: -webkit-gradient(linear, 0 0, 0 100%, from(#2235B4), to(#1AA3D6));
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2235B4', endColorstr='#1AA3D6');
@@ -41,24 +100,12 @@ input.button:active {
     margin: 0 auto;
     /*text-align-last: center;*/
 }
-.main {
-    background-color: #BABBCD;
-    height: 300px;
+
+.container a {
+    text-decoration: none;
 }
 
 .foot {
     height: 50px;
 }
 
-nav {
-    text-align-last: left;
-}
-
-nav a {
-	text-decoration: none;
-}
-
-nav ul {
-	margin: 0;
-	padding: 0;
-}

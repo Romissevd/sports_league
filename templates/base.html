@@ -4,20 +4,22 @@
     <meta charset="UTF-8">
     <title>Sport-league</title>
     {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static "css/bases.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}" />
 </head>
 <body>
 <header>
-
     <div class="container">
-        <a href="{% url 'index' %}" class="logo">Sport-league</a>
+        <a href="{% url 'index' %}" ><img src="{% static "img/balls_logo.png" %}"></a>
+        <a href="{% url 'index' %}" class="logo_text">Sport-league</a>
 {#        отображать кнопки если пользователь не авторизован иначе пользователя#}
-            <form action="{% url 'login' %}">
-                <input type="submit" class="but" value="Вход">
-            </form>
-            <form action="{% url 'registration' %}">
-                <input type="submit" class="but" value="Регистрация">
-            </form>
+            <div class="form_reg_log">
+                <form action="{% url 'login' %}">
+                    <input type="submit" class="but" value="Вход">
+                </form>
+                <form action="{% url 'registration' %}">
+                    <input type="submit" class="but" value="Регистрация">
+                </form>
+            </div>
         <nav>
           <ul>
             <li><a href="{% url 'index' %}">Главная</a></li>
