@@ -1,0 +1,99 @@
+body {
+    background-color: #E9EBFF;
+    font: 12pt Roboto;
+    margin: 0 0;
+}
+
+header {
+    background-color: #23b411;
+    width: 100%;
+    height: 50px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    text-decoration: none;
+}
+
+header form {
+    display: inline-block;
+}
+nav {
+    text-align-last: center;
+}
+
+/*nav a {*/
+	/*text-decoration: none;*/
+/*}*/
+
+nav ul {
+	margin: 0;
+	padding: 0;
+}
+
+/*header nav ul {*/
+    /*margin: 0;*/
+    /*padding-left: 0;*/
+/*}*/
+
+header nav ul li {
+    display: inline-block;
+    /*height: auto;*/
+    /*width: 32%;*/
+    /*border: 1px #9BFF86 solid;*/
+    /*padding: 2px;*/
+    /*-moz-border-radius: 2px; !* Firefox *!*/
+    /*-webkit-border-radius: 2px; !* Safari 4 *!*/
+    /*border-radius: 5px; !* IE 9, Safari 5, Chrome *!*/
+    /*margin-right: -4px;*/
+}
+
+header nav ul li a {
+    display: block;
+    width: 10em;
+    border: 1px #9BFF86 solid;
+    padding: 2px;
+    -moz-border-radius: 2px; /* Firefox */
+    -webkit-border-radius: 2px; /* Safari 4 */
+    border-radius: 5px; /* IE 9, Safari 5, Chrome */
+    margin-right: -4px;
+    text-align: center;
+}
+
+header nav ul li a:hover {
+    background-color: #9BFF86;
+}
+
+input.but {
+    font: 10pt DialogInput;
+    color: #f8f8f8;
+    border: 1px #4a2dad solid;
+    padding: 2px;
+    -moz-border-radius: 5px; /* Firefox */
+    -webkit-border-radius: 5px; /* Safari 4 */
+    border-radius: 5px; /* IE 9, Safari 5, Chrome */
+    background: -moz-linear-gradient(#1AA3D6, #2235B4);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#1AA3D6), to(#2235B4));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1AA3D6', endColorstr='#2235B4');
+    outline: none;
+}
+
+input.but:active {
+    background: -moz-linear-gradient(#2235B4, #1AA3D6);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#2235B4), to(#1AA3D6));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2235B4', endColorstr='#1AA3D6');
+}
+
+.container {
+    max-width: 1024px; /*максимальная ширина может иметь другое значение*/
+    padding: 0 15px;
+    margin: 0 auto;
+    /*text-align-last: center;*/
+}
+
+.container a {
+    text-decoration: none;
+}
+
+.foot {
+    height: 50px;
+}
+

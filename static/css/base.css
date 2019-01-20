@@ -1,0 +1,131 @@
+body {
+    background-color: #E9EBFF;
+    font: 10pt 'Oswald', sans-serif;
+    margin: 0 0;
+}
+
+header {
+    background-color: #23b411;
+    width: 100%;
+    min-height: 55px;
+    position: relative;
+}
+
+.img_logo {
+    display: inline-block;
+    width: 20%;
+    min-height: 55px;
+}
+
+.logo_text {
+    display: inline-block;
+    text-align: center;
+    width: 60%;
+    left: 40%;
+}
+
+.logo_text_a {
+    color: black;
+    font-size: 35pt;
+    font-style: italic;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.img_logo img {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 30px;
+    -webkit-filter: drop-shadow(-5px -5px 5px #222);
+    filter: drop-shadow(-5px -5px 5px #222);
+}
+
+.guest {
+    display: inline-block;
+    padding: 2px 0 2px 0;
+    position: absolute;
+    right: 1%;
+}
+
+.guest form {
+    display: inline-block;
+}
+
+.guest p {
+    margin-top: 0;
+    margin-bottom: 2px;
+}
+
+
+nav {
+    background-color: #23b411;
+    text-align-last: center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    /*padding-top: 30px;*/
+}
+
+nav ul {
+	margin: 0;
+	padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+}
+
+nav ul li a {
+    display: block;
+    width: 10em;
+    border: 1px #9BFF86 solid;
+    padding: 2px;
+    -moz-border-radius: 2px; /* Firefox */
+    -webkit-border-radius: 2px; /* Safari 4 */
+    border-radius: 5px; /* IE 9, Safari 5, Chrome */
+    margin-right: -4px;
+    text-align: center;
+    text-decoration: none;
+    color: black;
+    background: -moz-linear-gradient(#9BFF86, #1eb433);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#9BFF86), to(#1eb433));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9BFF86', endColorstr='#1eb433');
+}
+
+nav ul li a:hover {
+    background: -moz-linear-gradient(#1eb433, #9BFF86);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#1eb433), to(#9BFF86));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1eb433', endColorstr='#9BFF86');
+}
+
+input.but {
+    font: 10pt DialogInput;
+    color: #f8f8f8;
+    border: 1px #4a2dad solid;
+    padding: 2px;
+    -moz-border-radius: 5px; /* Firefox */
+    -webkit-border-radius: 5px; /* Safari 4 */
+    border-radius: 5px; /* IE 9, Safari 5, Chrome */
+    background: -moz-linear-gradient(#1AA3D6, #2235B4);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#1AA3D6), to(#2235B4));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1AA3D6', endColorstr='#2235B4');
+    outline: none;
+}
+
+input.but:active {
+    background: -moz-linear-gradient(#2235B4, #1AA3D6);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#2235B4), to(#1AA3D6));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2235B4', endColorstr='#1AA3D6');
+}
+
+.container {
+    max-width: 1024px; /*максимальная ширина может иметь другое значение*/
+    padding: 0 15px;
+    margin: 0 auto;
+    /*text-align-last: center;*/
+}
+
+.foot {
+    height: 50px;
+}
+

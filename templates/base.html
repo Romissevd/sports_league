@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sport-league</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}" />
+</head>
+<body>
+<header>
+    <div class="img_logo">
+        <a href="{% url 'index' %}" ><img src="{% static "img/balls_logo.png" %}"></a>
+    </div>
+    <div class="logo_text">
+        <a href="{% url 'index' %}" class="logo_text_a">Sport-league</a>
+    </div>
+    <div class="guest">
+{#        отображать кнопки если пользователь не авторизован иначе пользователя#}
+            <p>Здравтсвуйте, Гость</p>
+        <div class="form_reg_log">
+            <form action="{% url 'login' %}">
+                <input type="submit" class="but" value="Вход">
+            </form>
+            <form action="{% url 'registration' %}">
+                <input type="submit" class="but" value="Регистрация">
+            </form>
+        </div>
+    </div>
+</header>
+ <nav>
+     <ul>
+         <li><a href="{% url 'index' %}">Главная</a></li>
+         <li><a href="{% url 'abouts' %}">О нас</a></li>
+         <li><a href="{% url 'contacts' %}">Контакты</a></li>
+     </ul>
+ </nav>
+{% block content %}
+    <p>Это главная страница. Здесь что-то будет</p>
+{% endblock %}
+
+<footer class="foot">
+
+</footer>
+
+</body>
+</html>
