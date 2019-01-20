@@ -125,10 +125,6 @@ input.but:active {
     /*text-align-last: center;*/
 }
 
-.container a {
-    text-decoration: none;
-}
-
 .foot {
     height: 50px;
 }
