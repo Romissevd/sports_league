@@ -8,6 +8,7 @@
 </head>
 <body>
 <header>
+    <div class="wrapper">
     <div class="img_logo">
         <a href="{% url 'index' %}" ><img src="{% static "img/balls_logo.png" %}"></a>
     </div>
@@ -19,12 +20,13 @@
             <p>Здравтсвуйте, Гость</p>
         <div class="form_reg_log">
             <form action="{% url 'login' %}">
-                <input type="submit" class="but" value="Вход">
+                <input type="submit" class="but" value="Войти">
             </form>
             <form action="{% url 'registration' %}">
                 <input type="submit" class="but" value="Регистрация">
             </form>
         </div>
+    </div>
     </div>
 </header>
  <nav>
@@ -34,12 +36,18 @@
          <li><a href="{% url 'contacts' %}">Контакты</a></li>
      </ul>
  </nav>
-{% block content %}
-    <p>Это главная страница. Здесь что-то будет</p>
-{% endblock %}
+<div class="content">
+    <div class="wrapper">
+    {% block content %}
+        <p>Это главная страница. Здесь что-то будет</p>
+    {% endblock %}
+    </div>
+</div>
 
-<footer class="foot">
-
+<footer>
+    <div class="wrapper">
+        Это подвал
+    </div>
 </footer>
 
 </body>

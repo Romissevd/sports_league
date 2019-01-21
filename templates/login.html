@@ -1,4 +1,42 @@
 {% extends "base.html" %}
+
 {% block content %}
-    <p>Это страница входа пользователя</p>
+    <p>Это главная страница входа</p>
+
+{% if name %}
+    Hello, {{ name }}!
+{% else %}
+    {% if form.errors %}
+        {% for error in form.errors  %}
+            <li>{{ error }}</li>
+        {% endfor %}
+    {% else %}
+        Hello, user!
+    {% endif %}
+{% endif %}
+
+{% if message %}
+    {{ message }}
+{% endif %}
+
+{% if time_error %}
+    {{ time_error }}
+{% endif %}
+
+{% if form %}
+    <form action="/login/" method="post">
+        {% csrf_token %}
+        <div class="field">
+            {{ form.first_name.errors }}
+            <label id="id_last_name">Логин:</label>
+            {{ form.first_name }}
+        </div>
+        <div class="field">
+            {{ form.email.errors }}
+            <label id="id_email">Email:</label>
+            {{ form.email }}
+        </div>
+        <input type="submit" value="LogIn">
+    </form>
+{% endif %}
 {% endblock %}
