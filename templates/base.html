@@ -9,24 +9,24 @@
 <body>
 <header>
     <div class="wrapper">
-    <div class="img_logo">
-        <a href="{% url 'index' %}" ><img src="{% static "img/balls_logo.png" %}"></a>
-    </div>
-    <div class="logo_text">
-        <a href="{% url 'index' %}" class="logo_text_a">Sport-league</a>
-    </div>
-    <div class="guest">
-{#        отображать кнопки если пользователь не авторизован иначе пользователя#}
-            <p>Здравтсвуйте, Гость</p>
-        <div class="form_reg_log">
-            <form action="{% url 'login' %}">
-                <input type="submit" class="but" value="Войти">
-            </form>
-            <form action="{% url 'registration' %}">
-                <input type="submit" class="but" value="Регистрация">
-            </form>
+        <div class="img_logo">
+            <a href="{% url 'index' %}" ><img src="{% static "img/balls_logo.png" %}"></a>
         </div>
-    </div>
+        <div class="logo_text">
+            <a href="{% url 'index' %}" class="logo_text_a">Sport-league</a>
+        </div>
+        <div class="guest">
+    {#        отображать кнопки если пользователь не авторизован иначе пользователя#}
+            <p>Здравтсвуйте, Гость</p>
+            <div class="form_reg_log">
+                <form action="{% url 'login' %}">
+                    <input type="submit" class="but" value="Войти">
+                </form>
+                <form action="{% url 'registration' %}">
+                    <input type="submit" class="but" value="Регистрация">
+                </form>
+            </div>
+        </div>
     </div>
 </header>
  <nav>

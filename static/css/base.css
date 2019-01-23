@@ -13,26 +13,22 @@ header {
 
 .wrapper {
     max-width: 1024px;
-    /*background: #f8f8f8;*/
     margin: 0 auto;
 }
 
 .img_logo {
-    display: inline-block;
-    width: 20%;
-    min-height: 90px;
+    float: left;
 }
 
 .logo_text {
-    display: inline-block;
-    text-align: center;
-    width: 60%;
-    left: 40%;
+    float: left;
+    -webkit-filter: drop-shadow(-5px -5px 5px #797979);
+    filter: drop-shadow(-5px -5px 5px #797979);
 }
 
 .logo_text_a {
-    color: black;
-    font-size: 45pt;
+    color: #333333;
+    font-size: 55pt;
     font-style: italic;
     font-weight: bold;
     text-decoration: none;
@@ -41,36 +37,30 @@ header {
 .img_logo img {
     width: 125px;
     height: 125px;
-    position: absolute;
-    left: 100px;
     -webkit-filter: drop-shadow(-5px -5px 5px #222);
     filter: drop-shadow(-5px -5px 5px #222);
 }
 
 .guest {
-    display: inline-block;
-    padding: 2px 0 2px 0;
-    position: absolute;
-    right: 1%;
+    padding-top: 20px;
+    float: right;
 }
 
 .guest form {
-    display: inline-block;
+    float: left;
     margin-right: 5px;
 }
 
 .guest p {
-    margin-top: 0;
-    margin-bottom: 2px;
+    margin: 0;
+    padding-bottom: 5px;
 }
-
 
 nav {
     background-color: #333333;
-    text-align-last: center;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    /*padding-top: 30px;*/
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    height: 35px;
 }
 
 nav ul {
@@ -80,18 +70,17 @@ nav ul {
 
 nav ul li {
     display: inline-block;
+    margin-right: 20px;
 }
 
 nav li a {
-    display: block;
-    width: 10em;
-    /*border: 1px #9BFF86 solid;*/
-    padding: 2px;
-    -moz-border-radius: 2px; /* Firefox */
-    -webkit-border-radius: 2px; /* Safari 4 */
-    border-radius: 5px; /* IE 9, Safari 5, Chrome */
-    margin-right: -4px;
-    text-align: center;
+    padding: 7px 10px 6px 10px;
+    line-height: 35px;
+    /*-moz-border-radius: 2px; !* Firefox *!*/
+    /*-webkit-border-radius: 2px; !* Safari 4 *!*/
+    /*border-radius: 5px; !* IE 9, Safari 5, Chrome *!*/
+    /*margin-right: -4px;*/
+    /*text-align: center;*/
     text-decoration: none;
     color: #f8f8f8;
     /*background: -moz-linear-gradient(#333333, #666666);*/
@@ -109,29 +98,27 @@ nav ul li a:hover {
 input.but {
     font: 14pt DialogInput;
     color: #f8f8f8;
-    border: 1px #4a2dad solid;
+    border: 1px #111111 solid;
     padding: 2px;
     -moz-border-radius: 5px; /* Firefox */
     -webkit-border-radius: 5px; /* Safari 4 */
     border-radius: 5px; /* IE 9, Safari 5, Chrome */
-    background: -moz-linear-gradient(#1AA3D6, #2235B4);
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(#1AA3D6), to(#2235B4));
+    background: -moz-linear-gradient(#666666, #333333);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#666666), to(#333333));
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1AA3D6', endColorstr='#2235B4');
     outline: none;
 }
 
 input.but:active {
-    background: -moz-linear-gradient(#2235B4, #1AA3D6);
-    background: -webkit-gradient(linear, 0 0, 0 100%, from(#2235B4), to(#1AA3D6));
+    background: -moz-linear-gradient(#333333, #666666);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#333333), to(#666666));
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2235B4', endColorstr='#1AA3D6');
 }
 
 .content {
-    max-width: 1024px; /*максимальная ширина может иметь другое значение*/
     padding: 0 15px;
     margin: 0 auto;
-    height: 750px;
-    /*text-align-last: center;*/
+    min-height: 750px;
 }
 
 footer {
