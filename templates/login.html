@@ -1,17 +1,24 @@
-{% extends "base.html" %}
-
-{% block content %}
-    <p>Это главная страница входа</p>
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sport-league</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/login.css" %}" />
+</head>
+<body>
+<div class="login">
+<p>Это страница входа</p>
+<a href="/">На главную</a>
 {% if name %}
-    Hello, {{ name }}!
+    Здравствуйте, {{ name }}!
 {% else %}
     {% if form.errors %}
         {% for error in form.errors  %}
             <li>{{ error }}</li>
         {% endfor %}
     {% else %}
-        Hello, user!
+        Здравствуйте, Гость!
     {% endif %}
 {% endif %}
 
@@ -27,16 +34,18 @@
     <form action="/login/" method="post">
         {% csrf_token %}
         <div class="field">
-            {{ form.first_name.errors }}
-            <label id="id_last_name">Логин:</label>
-            {{ form.first_name }}
-        </div>
-        <div class="field">
             {{ form.email.errors }}
             <label id="id_email">Email:</label>
             {{ form.email }}
         </div>
-        <input type="submit" value="LogIn">
+        <div class="field">
+            {{ form.first_name.errors }}
+            <label id="id_last_name">Пароль:</label>
+            {{ form.password }}
+        </div>
+        <input type="submit" value="Войти">
     </form>
+    <a href="{% url 'login' %}">Забыли пароль?</a>
 {% endif %}
-{% endblock %}
+</div>
+</body>

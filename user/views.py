@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from user.form import LoginForm
 from django.http import HttpResponse
 
 
@@ -8,7 +9,7 @@ from django.http import HttpResponse
 
 def login(request):
 
-    return render(request, 'login.html')
+    return render(request, 'login.html', {'form': LoginForm})
 
 def registration(request):
 
