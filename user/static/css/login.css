@@ -1,0 +1,87 @@
+html, body {
+    background-color: #E9EBFF;
+    font: 14pt 'Oswald', sans-serif;
+    margin: 0 0;
+}
+
+.login {
+    position: absolute;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 400px;
+    height: 300px;
+    background-color: #333333;
+    color: #E9EBFF;
+    border: 2px #dd4f0f solid;
+    border-radius: 10px;
+}
+
+input {
+    width: 220px;
+    height: 30px;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    font-size: 14pt;
+    border-color: #dd4f0f;
+}
+
+.field {
+    clear: both;
+    text-align: right;
+    line-height: 35px;
+}
+
+
+label {
+    float: left;
+    padding-right: 10px;
+}
+
+.main {
+    margin-right: 40px;
+    margin-left: 40px;
+}
+
+.button {
+    width: 222px;
+    height: 35px;
+    float: right;
+}
+
+.links {
+    text-align: center;
+    clear: both;
+}
+
+.links a{
+    color: #E9EBFF;
+    font-size: 10pt;
+    padding-right: 40px;
+    padding-left: 40px;
+}
+
+.social {
+    clear: both;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.social a {
+    width: 50px;
+    height: 50px;
+}
+
+.social img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+p {
+    text-align: center;
+    font-size: 18pt;
+}
