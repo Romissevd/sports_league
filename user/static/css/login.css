@@ -81,7 +81,8 @@ label {
     margin-left: 10px;
 }
 
-p {
+h2 {
     text-align: center;
     font-size: 18pt;
+    font-style: inherit;
 }

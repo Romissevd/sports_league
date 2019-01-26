@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="login">
-<p>Авторизация</p>
+<h2>Авторизация</h2>
 
 {#Если пользователь уже авторизован перенаправитье его на главную или на ту с которой пришел#}
 {% if name %}
@@ -23,6 +23,12 @@
     {% endif %}
 {% endif %}
 
+{% if errors %}
+    {% for error in errors  %}
+        <li>{{ error }}</li>
+    {% endfor %}
+{% endif %}
+
 {% if message %}
     {{ message }}
 {% endif %}
@@ -33,7 +39,7 @@
 
 {% if form %}
     <div class="main">
-    <form action="/user/login/" method="post">
+    <form action="{% url 'sign_in' %}" method="post">
         {% csrf_token %}
         <div class="field">
             {{ form.email.errors }}
@@ -41,8 +47,8 @@
             {{ form.email }}
         </div>
         <div class="field">
-            {{ form.first_name.errors }}
-            <label id="id_last_name">Пароль:</label>
+            {{ form.password.errors }}
+            <label id="id_password">Пароль:</label>
             {{ form.password }}
         </div>
         <input type="submit" value="Войти" class="button">
