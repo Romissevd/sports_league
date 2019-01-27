@@ -33,9 +33,11 @@ def sign_in(request):
 
     errors = []
     if request.method == 'POST':
-        if not request.POST.get('email', ''):
+        email = request.POST.get('email', '')
+        passwd = request.POST.get('password', '')
+        if not email:
             errors.append('Введите email')
-        if not request.POST.get('password', ''):
+        if not passwd:
             errors.append('Введите пароль')
         if errors:
             return render(request, 'login.html', {
@@ -44,15 +46,20 @@ def sign_in(request):
                 })
 
         user = auth.authenticate(
-            username=request.POST['email'],
-            password=request.POST['password'],
+            username=email,
+            password=passwd,
         )
 
         if user is not None:
             auth.login(request, user)
-        return HttpResponseRedirect('/')
-
-
+            return HttpResponseRedirect('/')
+        else:
+            errors.append('Неверные email или пароль.')
+            errors.append('Попробуйте еще раз.')
+            return render(request, 'login.html', {
+                'form': LoginForm,
+                'errors': errors,
+            })
 
 
 def registration(request):
