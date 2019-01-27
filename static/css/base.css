@@ -41,19 +41,20 @@ header {
     filter: drop-shadow(-5px -5px 5px #222);
 }
 
-.guest {
-    padding-top: 20px;
+.user {
     float: right;
 }
 
-.guest form {
-    float: left;
-    margin-right: 5px;
+.user p {
+    margin: 0 10px 0 0;
+    padding-top: 15px;
+    padding-bottom: 5px;
+    font-size: 10pt;
 }
 
-.guest p {
-    margin: 0;
-    padding-bottom: 5px;
+.user form {
+    float: left;
+    margin-right: 5px;
 }
 
 nav {
@@ -96,7 +97,7 @@ nav ul li a:hover {
 }
 
 input.but {
-    font: 14pt DialogInput;
+    font: 12pt DialogInput;
     color: #f8f8f8;
     border: 1px #111111 solid;
     padding: 2px;

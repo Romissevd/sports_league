@@ -15,9 +15,9 @@
         <div class="logo_text">
             <a href="{% url 'index' %}" class="logo_text_a">Sport-league</a>
         </div>
-        <div class="guest">
+        <div class="user">
             {% if user.is_authenticated %}
-                <p>Вы вошли как, {{ user.first_name }} {{ user.last_name }}</p>
+                <p>Вы вошли как,<br>{{ user.first_name }} {{ user.last_name }}</p>
                 <form action="{% url 'logout' %}">
 {#                    {% csrf_token %}#}
                     <input type="submit" class="but" value="Выйти">
@@ -35,14 +35,13 @@
                 </form>
                 </div>
             {% endif %}
-    {#        отображать кнопки если пользователь не авторизован иначе пользователя#}
-
         </div>
     </div>
 </header>
  <nav>
      <ul>
          <li><a href="{% url 'index' %}">Главная</a></li>
+         <li><a href="{% url 'index' %}">Новости</a></li>
          <li><a href="{% url 'abouts' %}">О нас</a></li>
          <li><a href="{% url 'contacts' %}">Контакты</a></li>
      </ul>
@@ -50,7 +49,7 @@
 <div class="content">
     <div class="wrapper">
     {% block content %}
-        <p>Это главная страница. Здесь что-то будет</p>
+        <p>Это базовая страница. Здесь что-то будет</p>
     {% endblock %}
     </div>
 </div>
