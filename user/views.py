@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from user.form import LoginForm
+from .form import LoginForm
 from django.http import HttpResponse, HttpResponseRedirect
-from user.models import User
+from django.contrib import auth
+from .models import User
 
 
 class UserSignIn:
@@ -13,16 +14,23 @@ class UserSignIn:
 
 def login(request):
 
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/')
+
     return render(request, 'login.html', {'form': LoginForm})
 
 
 def logout(request):
 
-    return render(request, 'index.html', {'user': False})
+    auth.logout(request)
+    return HttpResponseRedirect('/')
 
 
 def sign_in(request):
-    # проверить если пользователь уже авторизован то перенаправить его на главную
+
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/')
+
     errors = []
     if request.method == 'POST':
         if not request.POST.get('email', ''):
@@ -34,25 +42,17 @@ def sign_in(request):
                 'form': LoginForm,
                 'errors': errors,
                 })
-        user_sign_in = User.objects.get(
-            email=request.POST['email'],
-            password=request.POST['password']
+
+        user = auth.authenticate(
+            username=request.POST['email'],
+            password=request.POST['password'],
         )
-        if not user_sign_in:
-            errors.append('Неверно введен email или пароль.')
-            return render(request, 'login.html', {
-                'form': LoginForm,
-                'errors': errors,
-            })
-        else:
-            user = UserSignIn(
-                user_sign_in.first_name,
-                user_sign_in.last_name,
-                )
-            return render(request, 'index.html', {
-                'user': user,
-            })
-        # return HttpResponseRedirect('/')
+
+        if user is not None:
+            auth.login(request, user)
+        return HttpResponseRedirect('/')
+
+
 
 
 def registration(request):

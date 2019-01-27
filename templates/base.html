@@ -16,18 +16,21 @@
             <a href="{% url 'index' %}" class="logo_text_a">Sport-league</a>
         </div>
         <div class="guest">
-            {% if user %}
+            {% if user.is_authenticated %}
                 <p>Вы вошли как, {{ user.first_name }} {{ user.last_name }}</p>
                 <form action="{% url 'logout' %}">
+{#                    {% csrf_token %}#}
                     <input type="submit" class="but" value="Выйти">
                 </form>
             {% else %}
                 <p>Здравтсвуйте, Гость</p>
                 <div class="form_reg_log">
                 <form action="{% url 'login' %}">
+{#                    {% csrf_token %}#}
                     <input type="submit" class="but" value="Войти">
                 </form>
                 <form action="{% url 'registration' %}">
+{#                    {% csrf_token %}#}
                     <input type="submit" class="but" value="Регистрация">
                 </form>
                 </div>
