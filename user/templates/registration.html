@@ -1,7 +1,50 @@
 {% extends "base.html" %}
 {% block content %}
-    {% if user.is_atenication %}
+    {% if user.is_authenticated  %}
+        <p>Вы уже зарегистрированы и вошли в систему.</p>
+        <p>Вернуться на<a href="{% url 'index' %}"> главную страницу...</a></p>
+    {% else %}
+        {% if form %}
+            <h2>Регистрация</h2>
+            <p>Для выполнения регистрации, пожалуйста заполните необходимые поля.</p>
+            <form action="{% url 'sign_up' %}" class="registr" method="post">
+                {% csrf_token %}
+{#                {{ form.as_p }}#}
+                <div class="field">
+                    <label class="username">Username:</label>
+                    {{ form.username }}
+                </div>
+                <div class="field">
+                    <label class="first_name">Имя:</label>
+                    {{ form.first_name }}
+                </div>
+                <div class="field">
+                    <label class="last_name">Фамилия:</label>
+                    {{ form.last_name }}
+                </div>
+                <div class="field">
+                    <label class="email">Email:</label>
+                    {{ form.email }}
+                </div>
+                <div class="field">
+                    <label class="password1">Пароль:</label>
+                    {{ form.password1 }}
+                </div>
+                <div class="field">
+                    <label class="password2">Повторите пароль:</label>
+                    {{ form.password2 }}
+                </div>
+{#                <div class="field">#}
+{#                    <label class="pol">Пол:</label>#}
+{#                    {{ form.pol }}#}
+{#                </div>#}
+                <input type="submit" value="Зарегистрироваться" class="button">
+            </form>
+        {% else %}
+            <p style="color: red">Что-то пошло не так</p>
+        {% endif %}
+    {% endif %}
 
-    <h2>Регистрация</h2>
+
 
 {% endblock %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .form import LoginForm
+from .form import LoginForm, RegistrationForm
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 
@@ -63,4 +63,29 @@ def sign_in(request):
 
 def registration(request):
 
-    return render(request, 'registration.html')
+    return render(request, 'registration.html', {
+        'form': RegistrationForm,
+    })
+
+
+def sign_up(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        # print(form)
+        if form.is_valid():
+            print("OK")
+            # form.cleaned_data.update(username=form.cleaned_data['email'])
+            form.save()
+            email = form.cleaned_data.get('email')
+            print(email)
+            my_password = form.cleaned_data.get('password1')
+            user = auth.authenticate(username=email, password=my_password)
+            auth.login(request, user)
+            return HttpResponseRedirect('/')
+        else:
+            return render(request, 'registration.html', {
+                'form': RegistrationForm,
+            })
+
+    else:
+        return HttpResponseRedirect('/')
