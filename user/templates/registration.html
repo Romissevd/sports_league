@@ -7,13 +7,16 @@
         {% if form %}
             <h2>Регистрация</h2>
             <p>Для выполнения регистрации, пожалуйста заполните необходимые поля.</p>
+            {% if form.errors %}
+                {{ form.errors }}
+            {% endif %}
+            {% if error %}
+                {{ error }}
+            {% endif %}
+
+
             <form action="{% url 'sign_up' %}" class="registr" method="post">
                 {% csrf_token %}
-{#                {{ form.as_p }}#}
-                <div class="field">
-                    <label class="username">Username:</label>
-                    {{ form.username }}
-                </div>
                 <div class="field">
                     <label class="first_name">Имя:</label>
                     {{ form.first_name }}
@@ -34,10 +37,6 @@
                     <label class="password2">Повторите пароль:</label>
                     {{ form.password2 }}
                 </div>
-{#                <div class="field">#}
-{#                    <label class="pol">Пол:</label>#}
-{#                    {{ form.pol }}#}
-{#                </div>#}
                 <input type="submit" value="Зарегистрироваться" class="button">
             </form>
         {% else %}

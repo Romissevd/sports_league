@@ -28,18 +28,12 @@ class RegistrationForm(UserCreationForm):
         max_length=50,
     )
 
-    # pol = forms.CharField(
-    #     max_length=2,
-    # )
-
     class Meta:
 
         model = User
         fields = ('first_name',
                   'last_name',
-                  'username',
                   'email',
                   'password1',
                   'password2',
-                  # 'pol',
                   )

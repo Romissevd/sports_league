@@ -2,13 +2,7 @@ from django.shortcuts import render
 from .form import LoginForm, RegistrationForm
 from django.http import HttpResponseRedirect
 from django.contrib import auth
-
-
-class UserSignIn:
-
-    def __init__(self, first_name, last_name):
-        self.first_name = first_name
-        self.last_name = last_name
+from django.contrib.auth.models import User
 
 
 def login(request):
@@ -71,20 +65,36 @@ def registration(request):
 def sign_up(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
-        # print(form)
         if form.is_valid():
-            print("OK")
-            # form.cleaned_data.update(username=form.cleaned_data['email'])
-            form.save()
+
             email = form.cleaned_data.get('email')
-            print(email)
-            my_password = form.cleaned_data.get('password1')
-            user = auth.authenticate(username=email, password=my_password)
+            password = form.cleaned_data.get('password1')
+
+            try:
+                User.objects.get(username=email)
+            except User.DoesNotExist:
+                pass
+            else:
+                return render(request, 'registration.html', {
+                    'form': form,
+                    'error': 'Увы, пользователь с таким email уже зарегестирован.'
+                })
+
+            User.objects.create_user(
+                username=email,
+                password=password,
+                first_name=form.cleaned_data.get('first_name'),
+                last_name=form.cleaned_data.get('last_name'),
+                email=email,
+            )
+            user = auth.authenticate(username=email, password=password)
             auth.login(request, user)
             return HttpResponseRedirect('/')
+
         else:
+            print(form.errors)
             return render(request, 'registration.html', {
-                'form': RegistrationForm,
+                'form': form,
             })
 
     else:

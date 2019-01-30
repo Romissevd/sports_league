@@ -1,12 +1,8 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
-class User(models.Model):
+class Profile(models.Model):
 
-    first_name = models.CharField(max_length=20)
-    last_name = models.CharField(max_length=30)
-    password = models.CharField(max_length=20)
-    email = models.EmailField()
-    reg_date = models.DateTimeField('registration_date')
-    last_login_date = models.DateTimeField()
-
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    pol = models.CharField(max_length=2)
