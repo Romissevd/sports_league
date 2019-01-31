@@ -3,6 +3,7 @@ from .form import LoginForm, RegistrationForm
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.models import User
+from .models import Profile
 
 
 def login(request):
@@ -69,6 +70,14 @@ def sign_up(request):
 
             email = form.cleaned_data.get('email')
             password = form.cleaned_data.get('password1')
+            first_name = form.cleaned_data.get('first_name')
+            last_name = form.cleaned_data.get('last_name')
+
+            if not first_name.isalpha() or not last_name.isalpha():
+                return render(request, 'registration.html', {
+                    'form': form,
+                    'error': 'Имя и фамилия дожны состоять только из букв.'
+                })
 
             try:
                 User.objects.get(username=email)
@@ -83,12 +92,14 @@ def sign_up(request):
             User.objects.create_user(
                 username=email,
                 password=password,
-                first_name=form.cleaned_data.get('first_name'),
-                last_name=form.cleaned_data.get('last_name'),
+                first_name=first_name,
+                last_name=last_name,
                 email=email,
             )
+
             user = auth.authenticate(username=email, password=password)
             auth.login(request, user)
+
             return HttpResponseRedirect('/')
 
         else:

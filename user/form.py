@@ -28,12 +28,14 @@ class RegistrationForm(UserCreationForm):
         max_length=50,
     )
 
+    email = forms.EmailField()
+
     class Meta:
 
         model = User
         fields = ('first_name',
                   'last_name',
-                  'email',
+                  # 'email',
                   'password1',
                   'password2',
                   )
