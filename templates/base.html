@@ -10,14 +10,14 @@
 <header>
     <div class="wrapper">
         <div class="img_logo">
-            <a href="{% url 'index' %}" ><img src="{% static "img/balls_logo.png" %}"></a>
+            <a href="{% url 'index' %}"><img src="{% static "img/balls_logo.png" %}"></a>
         </div>
         <div class="logo_text">
             <a href="{% url 'index' %}" class="logo_text_a">Sport-league</a>
         </div>
         <div class="guest">
             {% if user.is_authenticated %}
-                <p>Вы вошли как, {{ user.first_name }} {{ user.last_name }}</p>
+                <p>Вы вошли как, <a href="{% url 'account' %}">{{ user.get_full_name}}</a></p>
                 <form action="{% url 'logout' %}">
 {#                    {% csrf_token %}#}
                     <input type="submit" class="but" value="Выйти">

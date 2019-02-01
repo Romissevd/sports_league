@@ -3,7 +3,6 @@ from .form import LoginForm, RegistrationForm
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.models import User
-from .models import Profile
 
 
 def login(request):
@@ -100,7 +99,7 @@ def sign_up(request):
             user = auth.authenticate(username=email, password=password)
             auth.login(request, user)
 
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect('{}'.format(request.path))
 
         else:
             print(form.errors)
@@ -109,4 +108,19 @@ def sign_up(request):
             })
 
     else:
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('{}'.format(request.path))
+
+
+def account(request):
+
+    user_data = User.objects.get(email=request.user)
+    print(user_data)
+
+    return render(request, 'account.html', {
+        'user_data': user_data,
+    })
+
+
+def change_account(request):
+
+    return render(request, 'change_account.html')

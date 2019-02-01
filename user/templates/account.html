@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% if error %}
+    <p>Вы не вошли в аккаунт. Для входа перейдите по <a href="{% url 'login' %}">ссылке</a></p>
+{% endif %}
+<h4>{{ user_data.get_full_name }}</h4>
+{#    {% if not user_data.avatar %}#}
+        <img src="{% static 'img/avatar.png' %}">
+{#    {% endif %}#}
+    <p>Email: {{ user_data.email }}</p>
+    <p>Пол: {% if user_data.profile.pol %}
+        {{ user_data.profile.pol }}
+    {% else %}
+        ---------
+    {% endif %}</p>
+    <p>Возраст:</p>
+    <p>Страна:</p>
+    <p>Город:</p>
+    <p>О себе:</p>
+    <a href="{% url 'change_account' %}">Изменить</a>
+{% endblock %}
