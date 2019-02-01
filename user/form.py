@@ -39,3 +39,25 @@ class RegistrationForm(UserCreationForm):
                   'password1',
                   'password2',
                   )
+
+
+class ChangeUserForm(RegistrationForm):
+
+    gender = forms.CharField(
+        max_length=1,
+    )
+
+    # date_of_birth = forms.DateField(
+    # )
+
+    country = forms.CharField(
+        max_length=50,
+    )
+
+    city = forms.CharField(
+        max_length=100,
+    )
+
+    about_me = forms.CharField(
+        widget=forms.Textarea,
+    )

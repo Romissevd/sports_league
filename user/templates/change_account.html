@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+{% if form %}
+    <form action="{% url 'account' %}" class="registr" method="post">
+                {% csrf_token %}
+                <div class="field">
+                    <label class="first_name">Имя:</label>
+                    {{ form.first_name }}
+                </div>
+                <div class="field">
+                    <label class="last_name">Фамилия:</label>
+                    {{ form.last_name }}
+                </div>
+                <div class="field">
+                    <label class="email">Email:</label>
+                    {{ form.email }}
+                </div>
+{#                <div class="field">#}
+{#                    <label class="age">Возраст:</label>#}
+{#                    {{ form.date_of_birth }}#}
+{#                </div>#}
+                <div class="field">
+                    <label class="gender">Пол:</label>
+                    {{ form.gender }}
+                </div>
+                <div class="field">
+                    <label class="country">Страна:</label>
+                    {{ form.country }}
+                </div>
+                <div class="field">
+                    <label class="city">Город:</label>
+                    {{ form.city }}
+                </div>
+                <div class="field">
+                    <label class="about_my">О себе:</label>
+                    {{ form.about_me }}
+                </div>
+                <div class="field">
+                    <label class="password1">Пароль:</label>
+                    {{ form.password1 }}
+                </div>
+                <div class="field">
+                    <label class="password2">Повторите пароль:</label>
+                    {{ form.password2 }}
+                </div>
+                <input type="submit" value="Сохранить" class="button">
+            </form>
+{% endif %}
+{% endblock %}

@@ -1,8 +1,9 @@
 from django.shortcuts import render
-from .form import LoginForm, RegistrationForm
+from .form import LoginForm, RegistrationForm, ChangeUserForm
 from django.http import HttpResponseRedirect
 from django.contrib import auth
 from django.contrib.auth.models import User
+from .models import Profile
 
 
 def login(request):
@@ -113,8 +114,11 @@ def sign_up(request):
 
 def account(request):
 
-    user_data = User.objects.get(email=request.user)
-    print(user_data)
+    if request.method=='POST':
+        change_account_save(request)
+
+
+    user_data = User.objects.get(username=request.user)
 
     return render(request, 'account.html', {
         'user_data': user_data,
@@ -123,4 +127,27 @@ def account(request):
 
 def change_account(request):
 
-    return render(request, 'change_account.html')
+    # form = ChangeUser
+
+    return render(request, 'change_account.html', {
+        'form': ChangeUserForm,
+    })
+
+
+def change_account_save(request):
+    form = ChangeUserForm(request.POST)
+    if form.is_valid():
+        user = User.objects.get(username=request.user)
+        # User.objects.update(
+        #     email=form.cleaned_data.get('email'),
+        #     # profile__gender=form.cleaned_data.get('gender'),
+        #     # profile__country=form.cleaned_data.get('country'),
+        #     # profile__city=form.cleaned_data.get('city'),
+        # )
+        # Profile(user=user,
+        # # user.profile.objects.update(
+        #     gender=form.cleaned_data.get('gender'),
+        #     country=form.cleaned_data.get('country'),
+        #     city=form.cleaned_data.get('city'),
+        # )
+    return None

@@ -5,7 +5,11 @@ from django.contrib.auth.models import User
 class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    pol = models.CharField(max_length=2)
+    gender = models.CharField(max_length=1)
+    country = models.CharField(max_length=50)
+    city = models.CharField(max_length=100)
+    about_me = models.CharField(max_length=1000, blank=True, default='')
+    date_of_birth = models.DateField(blank=True, null=True)
 
     def __str__(self):
         return '{first_name} {last_name}'.format(
