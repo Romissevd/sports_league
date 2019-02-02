@@ -4,24 +4,24 @@
 {% if error %}
     <p>Вы не вошли в аккаунт. Для входа перейдите по <a href="{% url 'login' %}">ссылке</a></p>
 {% endif %}
-<h4>{{ user_data.get_full_name }}</h4>
+<h4>{{ user.get_full_name }}</h4>
 {#    {% if not user_data.avatar %}#}
         <img src="{% static 'img/avatar.png' %}">
 {#    {% endif %}#}
-    <p>Email: {{ user_data.email }}</p>
-    <p>Пол: {% if user_data.profile.gender %}
-        {{ user_data.profile.gender }}
+    <p>Email: {{ user.email }}</p>
+    <p>Пол: {% if user.profile.gender %}
+        {{ user.profile.gender }}
     {% else %}
         ---------
     {% endif %}</p>
     <p>Возраст:</p>
-    <p>Страна: {% if user_data.profile.country %}
-        {{ user_data.profile.country }}
+    <p>Страна: {% if user.profile.country %}
+        {{ user.profile.country }}
     {% else %}
         ---------
     {% endif %}</p>
-    <p>Город: {% if user_data.profile.city %}
-        {{ user_data.profile.city }}
+    <p>Город: {% if user.profile.city %}
+        {{ user.profile.city }}
     {% else %}
         ---------
     {% endif %}</p>

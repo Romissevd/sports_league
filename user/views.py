@@ -89,13 +89,15 @@ def sign_up(request):
                     'error': 'Увы, пользователь с таким email уже зарегестирован.'
                 })
 
-            User.objects.create_user(
+            profile_user = User.objects.create_user(
                 username=email,
                 password=password,
                 first_name=first_name,
                 last_name=last_name,
                 email=email,
             )
+
+            Profile.objects.create(user=profile_user)
 
             user = auth.authenticate(username=email, password=password)
             auth.login(request, user)
@@ -114,14 +116,19 @@ def sign_up(request):
 
 def account(request):
 
+    user = request.user
+
     if request.method=='POST':
-        change_account_save(request)
+        users = change_account_save(request)
+        # if users:
+        #     user = users.email
 
 
-    user_data = User.objects.get(username=request.user)
+    print("{}".format(user) * 10)
+    user_data = User.objects.get(username=user)
 
     return render(request, 'account.html', {
-        'user_data': user_data,
+        'user': user_data,
     })
 
 
@@ -137,17 +144,43 @@ def change_account(request):
 def change_account_save(request):
     form = ChangeUserForm(request.POST)
     if form.is_valid():
+
         user = User.objects.get(username=request.user)
-        # User.objects.update(
-        #     email=form.cleaned_data.get('email'),
-        #     # profile__gender=form.cleaned_data.get('gender'),
-        #     # profile__country=form.cleaned_data.get('country'),
-        #     # profile__city=form.cleaned_data.get('city'),
-        # )
-        # Profile(user=user,
-        # # user.profile.objects.update(
-        #     gender=form.cleaned_data.get('gender'),
-        #     country=form.cleaned_data.get('country'),
-        #     city=form.cleaned_data.get('city'),
-        # )
+        email = form.cleaned_data.get('email')
+        print("OK" * 80)
+        try:
+            User.objects.get(username=email)
+        except User.DoesNotExist:
+            user.username = email
+        # else:
+        #     return render(request, 'registration.html', {
+        #         'form': RegistrationForm,
+        #         'error': 'Увы, пользователь с таким email уже зарегестирован.'
+        #     })
+
+        first_name = form.cleaned_data.get('first_name')
+        last_name = form.cleaned_data.get('last_name')
+        if not first_name.isalpha() or not last_name.isalpha():
+            return render(request, 'registration.html', {
+                'form': RegistrationForm,
+                'error': 'Имя и фамилия дожны состоять только из букв.'
+            })
+        else:
+            user.first_name = first_name
+            user.last_name = last_name
+
+        user.email = email
+        user.set_password(form.cleaned_data.get('password1'))
+        user.save()
+
+        user.profile.gender = form.cleaned_data.get('gender')
+        user.profile.country = form.cleaned_data.get('country')
+        user.profile.city = form.cleaned_data.get('city')
+        user.profile.save()
+        # authe = auth.authenticate(username=email, password=form.cleaned_data.get('password1'))
+        # login(request, authe)
+        return user.email
+
+        # # user = auth.authenticate(username=email, password=form.cleaned_data.get('password1'))
+        # auth.login(request, auth.authenticate(username=email, password=form.cleaned_data.get('password1')))
     return None
