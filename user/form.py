@@ -41,7 +41,18 @@ class RegistrationForm(UserCreationForm):
                   )
 
 
-class ChangeUserForm(RegistrationForm):
+class ChangeUserForm(forms.Form):
+
+    # user_avatar = forms.ImageField()
+
+    first_name = forms.CharField(
+        max_length=30,
+        help_text='Имя должно состоять из букв'
+    )
+
+    last_name = forms.CharField(
+        max_length=50,
+    )
 
     gender = forms.CharField(
         max_length=1,

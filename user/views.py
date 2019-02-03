@@ -64,6 +64,7 @@ def registration(request):
 
 
 def sign_up(request):
+
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
@@ -116,71 +117,42 @@ def sign_up(request):
 
 def account(request):
 
-    user = request.user
-
-    if request.method=='POST':
-        users = change_account_save(request)
-        # if users:
-        #     user = users.email
-
-
-    print("{}".format(user) * 10)
-    user_data = User.objects.get(username=user)
+    if request.method == 'POST':
+        if change_account_save(request):
+            return change_account(request, 'Имя и фамилия дожны состоять только из букв.')
 
     return render(request, 'account.html', {
-        'user': user_data,
+        'user': User.objects.get(username=request.user),
     })
 
 
-def change_account(request):
-
-    # form = ChangeUser
+def change_account(request, error=''):
 
     return render(request, 'change_account.html', {
         'form': ChangeUserForm,
+        'error': error,
     })
 
 
 def change_account_save(request):
+
     form = ChangeUserForm(request.POST)
     if form.is_valid():
-
         user = User.objects.get(username=request.user)
-        email = form.cleaned_data.get('email')
-        print("OK" * 80)
-        try:
-            User.objects.get(username=email)
-        except User.DoesNotExist:
-            user.username = email
-        # else:
-        #     return render(request, 'registration.html', {
-        #         'form': RegistrationForm,
-        #         'error': 'Увы, пользователь с таким email уже зарегестирован.'
-        #     })
 
         first_name = form.cleaned_data.get('first_name')
         last_name = form.cleaned_data.get('last_name')
         if not first_name.isalpha() or not last_name.isalpha():
-            return render(request, 'registration.html', {
-                'form': RegistrationForm,
-                'error': 'Имя и фамилия дожны состоять только из букв.'
-            })
+            return True
         else:
             user.first_name = first_name
             user.last_name = last_name
 
-        user.email = email
-        user.set_password(form.cleaned_data.get('password1'))
-        user.save()
-
         user.profile.gender = form.cleaned_data.get('gender')
         user.profile.country = form.cleaned_data.get('country')
         user.profile.city = form.cleaned_data.get('city')
+        user.profile.about_me = form.cleaned_data.get('about_me')
+        user.save()
         user.profile.save()
-        # authe = auth.authenticate(username=email, password=form.cleaned_data.get('password1'))
-        # login(request, authe)
-        return user.email
 
-        # # user = auth.authenticate(username=email, password=form.cleaned_data.get('password1'))
-        # auth.login(request, auth.authenticate(username=email, password=form.cleaned_data.get('password1')))
     return None

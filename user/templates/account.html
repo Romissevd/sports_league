@@ -5,26 +5,45 @@
     <p>Вы не вошли в аккаунт. Для входа перейдите по <a href="{% url 'login' %}">ссылке</a></p>
 {% endif %}
 <h4>{{ user.get_full_name }}</h4>
-{#    {% if not user_data.avatar %}#}
+
+    {% if user.user_avatar %}
+        <p>Тут должен быть загружен аватар</p>
+    {% else %}
         <img src="{% static 'img/avatar.png' %}">
-{#    {% endif %}#}
+    {% endif %}
+
     <p>Email: {{ user.email }}</p>
+
     <p>Пол: {% if user.profile.gender %}
         {{ user.profile.gender }}
     {% else %}
         ---------
     {% endif %}</p>
-    <p>Возраст:</p>
+
+    <p>Дата рождения:{% if user.profile.date_of_birth %}
+        {{ user.profile.date_of_birth }}
+    {% else %}
+        ---------
+    {% endif %}</p>
+
     <p>Страна: {% if user.profile.country %}
         {{ user.profile.country }}
     {% else %}
         ---------
     {% endif %}</p>
+
     <p>Город: {% if user.profile.city %}
         {{ user.profile.city }}
     {% else %}
         ---------
     {% endif %}</p>
-    <p>О себе:</p>
+
+    <p>О себе:{% if user.profile.about_me %}
+        {{ user.profile.about_me }}
+    {% else %}
+        ---------
+    {% endif %}</p>
+{# если это страница авторизованного пользователя, то можно изменять #}
     <a href="{% url 'change_account' %}">Изменить</a>
+
 {% endblock %}
