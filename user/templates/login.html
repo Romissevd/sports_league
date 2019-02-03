@@ -18,6 +18,8 @@
         {% for error in form.errors  %}
             <li>{{ error }}</li>
         {% endfor %}
+{#    {% else %}#}
+{#        Здравствуйте, Гость!#}
     {% endif %}
 {% endif %}
 
@@ -40,10 +42,12 @@
     <form action="{% url 'sign_in' %}" method="post">
         {% csrf_token %}
         <div class="field">
+            {{ form.email.errors }}
             <label id="id_email">Email:</label>
             {{ form.email }}
         </div>
         <div class="field">
+            {{ form.password.errors }}
             <label id="id_password">Пароль:</label>
             {{ form.password }}
         </div>

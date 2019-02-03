@@ -12,7 +12,7 @@ html, body {
     bottom: 0;
     left: 0;
     width: 400px;
-    height: 300px;
+    height: 320px;
     background-color: #333333;
     color: #E9EBFF;
     border: 2px #dd4f0f solid;
@@ -34,7 +34,6 @@ input {
     line-height: 35px;
 }
 
-
 label {
     float: left;
     padding-right: 10px;
@@ -46,9 +45,10 @@ label {
 }
 
 .button {
-    width: 222px;
+    width: 224px;
     height: 35px;
     float: right;
+    background: #E9EBFF;
 }
 
 .links {
@@ -85,4 +85,19 @@ h2 {
     text-align: center;
     font-size: 18pt;
     font-style: inherit;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.error {
+    height: 2em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    padding-left: 40px;
+
+}
+
+.error_item {
+    color: #dd6148;
+    list-style-type: none;
 }
