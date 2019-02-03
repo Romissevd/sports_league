@@ -6,7 +6,7 @@ class Profile(models.Model):
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     user_avatar = models.ImageField()
-    gender = models.CharField(max_length=1)
+    gender = models.CharField(max_length=10)
     country = models.CharField(max_length=50)
     city = models.CharField(max_length=100)
     about_me = models.CharField(max_length=1000, blank=True, default='')

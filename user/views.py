@@ -138,20 +138,44 @@ def change_account_save(request):
 
     form = ChangeUserForm(request.POST)
     if form.is_valid():
+
         user = User.objects.get(username=request.user)
 
         first_name = form.cleaned_data.get('first_name')
         last_name = form.cleaned_data.get('last_name')
-        if not first_name.isalpha() or not last_name.isalpha():
-            return True
-        else:
-            user.first_name = first_name
-            user.last_name = last_name
+        gender = form.cleaned_data.get('gender')
+        country = form.cleaned_data.get('country')
+        city = form.cleaned_data.get('city')
+        about_me = form.cleaned_data.get('about_me')
+        date_of_birth = form.cleaned_data.get('date_of_birth')
 
-        user.profile.gender = form.cleaned_data.get('gender')
-        user.profile.country = form.cleaned_data.get('country')
-        user.profile.city = form.cleaned_data.get('city')
-        user.profile.about_me = form.cleaned_data.get('about_me')
+        if first_name:
+            if first_name.isalpha():
+                user.first_name = first_name
+            else:
+                return True
+
+        if last_name:
+            if last_name.isalpha():
+                user.last_name = last_name
+            else:
+                return True
+
+        if gender:
+            user.profile.gender = gender
+
+        if country:
+            user.profile.country = country
+
+        if city:
+            user.profile.city = city
+
+        if date_of_birth:
+            user.profile.date_of_birth = date_of_birth
+
+        if about_me:
+            user.profile.about_me = about_me
+
         user.save()
         user.profile.save()
 

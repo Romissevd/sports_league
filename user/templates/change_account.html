@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+<script src="{% static 'js/birth_day.js' %}"></script>
 {% block content %}
 
     {% if error %}
@@ -20,8 +21,8 @@
                     <label class="last_name">Фамилия:</label>
                     {{ form.last_name }}
                 </div>
-                <div class="field">
-                    <label class="age">Возраст:</label>
+                <div class="datepicker">
+                    <label class="date_of_birth">Дата рождения:</label>
                     {{ form.date_of_birth }}
                 </div>
                 <div class="field">
