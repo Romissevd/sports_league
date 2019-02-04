@@ -116,13 +116,49 @@ input.but:active {
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2235B4', endColorstr='#1AA3D6');
 }
 
-.content {
-    padding: 0 15px;
-    margin: 0 auto;
+.widget {
+    width: 150px;
+    border: 2px #333333 solid;
     min-height: 750px;
+    float: left;
+}
+
+.sport {
+    width: 140px;
+}
+
+.widget h5 {
+    margin-bottom: 5px;
+    margin-left: 10px;
+}
+
+.widget-list {
+    padding-left: 10px;
+    margin-top: 0;
+}
+
+.championship {
+    font-size: 10pt;
+    list-style-type: none;
+    border: 2px #666666 solid;
+    margin-bottom: 2px;
+}
+
+.championship a {
+    text-decoration: none;
+    color: black;
+}
+
+.content {
+    /*width: 850px;*/
+    margin-left: 25px;
+    padding: 0 15px;
+    min-height: 750px;
+    overflow: auto;
 }
 
 footer {
+    clear: both;
     height: 150px;
     background: #333333;
 }

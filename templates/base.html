@@ -15,7 +15,7 @@
         <div class="logo_text">
             <a href="{% url 'index' %}" class="logo_text_a">Sport-league</a>
         </div>
-        <div class="guest">
+        <div class="user">
             {% if user.is_authenticated %}
                 <p>Вы вошли как, <a href="{% url 'account' %}">{{ user.get_full_name}}</a></p>
                 <form action="{% url 'logout' %}">
@@ -43,12 +43,46 @@
  <nav>
      <ul>
          <li><a href="{% url 'index' %}">Главная</a></li>
+         <li><a href="{% url 'news' %}">Новости</a></li>
+         {% if user.is_authenticated %}
+            <li><a href="{% url 'index' %}">Участники</a></li>
+         {% endif %}
          <li><a href="{% url 'abouts' %}">О нас</a></li>
          <li><a href="{% url 'contacts' %}">Контакты</a></li>
      </ul>
  </nav>
-<div class="content">
+
     <div class="wrapper">
+
+        <div class="widget">
+            <div class="sport">
+                <h5 class="widget-title">Футбол</h5>
+                <ul class="widget-list">
+                    <li class="championship"><a href="/">Лига Чемпионов</a></li>
+                    <li class="championship"><a href="/">Лига Европы</a></li>
+                    <li class="championship"><a href="/">Чемпионат Украины</a></li>
+                    <li class="championship"><a href="/">Чемпионат Аглии</a></li>
+                    <li class="championship"><a href="/">Чемпионат Испании</a></li>
+                    <li class="championship"><a href="/">Чемпионат Италии</a></li>
+                    <li class="championship"><a href="/">Чемпионат мира</a></li>
+                </ul>
+            </div>
+            <div class="sport">
+                <h5 class="widget-title">Хоккей</h5>
+                <ul class="widget-list">
+                    <li class="championship"><a href="/">НХЛ</a></li>
+                    <li class="championship"><a href="/">КХЛ</a></li>
+                </ul>
+            </div>
+            <div class="sport">
+                <h5 class="widget-title">Теннис</h5>
+                <ul class="widget-list">
+                    <li class="championship"><a href="/">Australian Open</a></li>
+                    <li class="championship"><a href="/">Большой шлем</a></li>
+                </ul>
+            </div>
+        </div>
+ <div class="content">
     {% block content %}
         <p>Это главная страница. Здесь что-то будет</p>
     {% endblock %}
