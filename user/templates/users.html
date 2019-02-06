@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+    <ul>
+    {% for one_user in all_users %}
+        <li class="one_user"><a href="account/{{ one_user }}/">{{ one_user }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

@@ -45,7 +45,7 @@
          <li><a href="{% url 'index' %}">Главная</a></li>
          <li><a href="{% url 'news' %}">Новости</a></li>
          {% if user.is_authenticated %}
-            <li><a href="{% url 'index' %}">Участники</a></li>
+            <li><a href="{% url 'users' %}">Участники</a></li>
          {% endif %}
          <li><a href="{% url 'abouts' %}">О нас</a></li>
          <li><a href="{% url 'contacts' %}">Контакты</a></li>

@@ -115,11 +115,20 @@ def sign_up(request):
         return HttpResponseRedirect('{}'.format(request.path))
 
 
-def account(request):
+def account(request, name=None):
 
     if request.method == 'POST':
         if change_account_save(request):
             return change_account(request, 'Имя и фамилия дожны состоять только из букв.')
+
+    if name:
+        # проверить есть ли пользователь?
+        try: pass
+
+        except: pass
+        return render(request, 'account.html', {
+            'user': User.objects.get(username=name),
+        })
 
     return render(request, 'account.html', {
         'user': User.objects.get(username=request.user),
@@ -180,3 +189,12 @@ def change_account_save(request):
         user.profile.save()
 
     return None
+
+
+def all_users(request):
+
+    users = User.objects.all()
+
+    return render(request, 'users.html', {
+        'all_users': users,
+    })
