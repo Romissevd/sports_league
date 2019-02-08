@@ -6,14 +6,6 @@ from django.contrib.auth.models import User
 from .models import Profile
 
 
-def login(request):
-
-    if request.user.is_authenticated:
-        return HttpResponseRedirect('/')
-
-    return render(request, 'login.html', {'form': LoginForm})
-
-
 def logout(request):
 
     auth.logout(request)
@@ -55,15 +47,14 @@ def sign_in(request):
                 'errors': errors,
             })
 
-
-def registration(request):
-
-    return render(request, 'registration.html', {
-        'form': RegistrationForm,
-    })
+    else:
+        return render(request, 'login.html', {'form': LoginForm})
 
 
 def sign_up(request):
+
+    if request.user.is_authenticated:
+        return HttpResponseRedirect('/')
 
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
@@ -112,7 +103,9 @@ def sign_up(request):
             })
 
     else:
-        return HttpResponseRedirect('{}'.format(request.path))
+        return render(request, 'registration.html', {
+            'form': RegistrationForm,
+        })
 
 
 def account(request, name=None):
@@ -127,11 +120,11 @@ def account(request, name=None):
 
         except: pass
         return render(request, 'account.html', {
-            'user': User.objects.get(username=name),
+            'view_user': User.objects.get(username=name),
         })
 
     return render(request, 'account.html', {
-        'user': User.objects.get(username=request.user),
+        'view_user': User.objects.get(username=request.user),
     })
 
 

@@ -2,32 +2,32 @@
 {% load static %}
 {% block content %}
 {% if error %}
-    <p>Вы не вошли в аккаунт. Для входа перейдите по <a href="{% url 'login' %}">ссылке</a></p>
+    <p>Вы не вошли в аккаунт. Для входа перейдите по <a href="{% url 'sign_in' %}">ссылке</a></p>
 {% endif %}
-<h4>{{ user.get_full_name }}</h4>
+<h4>{{ view_user.get_full_name }}</h4>
 
-    {% if user.user_avatar %}
+    {% if view_user.user_avatar %}
         <p>Тут должен быть загружен аватар</p>
     {% else %}
         <img src="{% static 'img/avatar.png' %}">
     {% endif %}
 
-    <p>Email: {{ user.email }}</p>
+    <p>Email: {{ view_user.email }}</p>
 
-    <p>Пол: {% if user.profile.gender %}
-        {{ user.profile.gender }}
+    <p>Пол: {% if view_user.profile.gender %}
+        {{ view_user.profile.gender }}
     {% else %}
         ---------
     {% endif %}</p>
 
-    <p>Дата рождения:{% if user.profile.date_of_birth %}
-        {{ user.profile.date_of_birth }}
+    <p>Дата рождения:{% if view_user.profile.date_of_birth %}
+        {{ view_user.profile.date_of_birth }}
     {% else %}
         ---------
     {% endif %}</p>
 
-    <p>Страна: {% if user.profile.country %}
-        {{ user.profile.country }}
+    <p>Страна: {% if view_user.profile.country %}
+        {{ view_user.profile.country }}
     {% else %}
         ---------
     {% endif %}</p>
@@ -38,13 +38,16 @@
         ---------
     {% endif %}</p>
 
-    <p>О себе:{% if user.profile.about_me %}
-        {{ user.profile.about_me }}
+    <p>О себе:{% if view_user.profile.about_me %}
+        {{ view_user.profile.about_me }}
     {% else %}
         ---------
     {% endif %}</p>
-{# если это страница авторизованного пользователя, то можно изменять #}
-    <a href="{% url 'change_account' %}">Изменить</a>
 
+    {% if user.is_authenticated %}
+        {% ifequal user.email view_user.email %}
+            <a href="{% url 'change_account' %}">Изменить</a>
+        {% endifequal %}
+    {% endif %}
     <p>Тут еще статистика профиля будет</p>
 {% endblock %}

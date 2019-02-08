@@ -25,11 +25,11 @@
             {% else %}
                 <p>Здравтсвуйте, Гость</p>
                 <div class="form_reg_log">
-                <form action="{% url 'login' %}">
+                <form action="{% url 'sign_in' %}">
 {#                    {% csrf_token %}#}
                     <input type="submit" class="but" value="Войти">
                 </form>
-                <form action="{% url 'registration' %}">
+                <form action="{% url 'sign_up' %}">
 {#                    {% csrf_token %}#}
                     <input type="submit" class="but" value="Регистрация">
                 </form>
