@@ -38,7 +38,7 @@ def sign_in(request):
 
         if user is not None:
             auth.login(request, user)
-            return HttpResponseRedirect('/')
+            return HttpResponseRedirect("{}".format(request.path))
         else:
             errors.append('Неверные email или пароль.')
             errors.append('Попробуйте еще раз.')
@@ -115,16 +115,16 @@ def account(request, name=None):
             return change_account(request, 'Имя и фамилия дожны состоять только из букв.')
 
     if name:
-        # проверить есть ли пользователь?
-        try: pass
-
-        except: pass
-        return render(request, 'account.html', {
-            'view_user': User.objects.get(username=name),
-        })
+        try:
+            views_user = User.objects.get(username=name)
+        except User.DoesNotExist:
+            # ошибка если нет такого пользователя
+            return HttpResponseRedirect('/')
+    else:
+        views_user = User.objects.get(username=request.user)
 
     return render(request, 'account.html', {
-        'view_user': User.objects.get(username=request.user),
+        'view_user': views_user,
     })
 
 
@@ -181,7 +181,7 @@ def change_account_save(request):
         user.save()
         user.profile.save()
 
-    return None
+    return False
 
 
 def all_users(request):
