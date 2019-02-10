@@ -42,7 +42,9 @@ class RegistrationForm(UserCreationForm):
 
 class ChangeUserForm(forms.Form):
 
-    # user_avatar = forms.ImageField()
+    user_avatar = forms.ImageField(
+
+    )
 
     first_name = forms.CharField(
         max_length=30,

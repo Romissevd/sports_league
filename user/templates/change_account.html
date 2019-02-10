@@ -8,11 +8,12 @@
 {% endif %}
 
 {% if form %}
-    <form action="{% url 'account' %}" class="registr" method="post">
+    <form action="{% url 'account' %}" class="registr" method="post" enctype='multipart/form-data'>
                 {% csrf_token %}
-{#                <div class="field">#}
-{#                    {{ form.user_avatar }}#}
-{#                </div>#}
+                <div class="field">
+                    <label class="avatar">Загрузите аватарку</label>
+                    {{ form.user_avatar }}
+                </div>
                 <div class="field">
                     <label class="first_name">Имя:</label>
                     {{ form.first_name }}
@@ -21,7 +22,7 @@
                     <label class="last_name">Фамилия:</label>
                     {{ form.last_name }}
                 </div>
-                <div class="datepicker">
+                <div class="field">
                     <label class="date_of_birth">Дата рождения:</label>
                     {{ form.date_of_birth }}
                 </div>

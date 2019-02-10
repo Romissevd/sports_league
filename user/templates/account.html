@@ -6,8 +6,8 @@
 {% endif %}
 <h4>{{ view_user.get_full_name }}</h4>
 
-    {% if view_user.user_avatar %}
-        <p>Тут должен быть загружен аватар</p>
+    {% if view_user.profile.user_avatar %}
+        <img src="{{ view_user.profile.user_avatar.url }}" width="120"/>
     {% else %}
         <img src="{% static 'img/avatar.png' %}">
     {% endif %}
