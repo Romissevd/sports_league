@@ -3,8 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Sport-league</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}" />
+    {% block extra_head %}
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}" />
+    {% endblock %}
 </head>
 <body>
 <header>

@@ -155,7 +155,7 @@ input.but:active {
 }
 
 .content {
-    max-width: 680px;
+    width: 680px;
     margin-left: auto;
     margin-right: auto;
     padding: 0 15px;

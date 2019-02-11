@@ -1,4 +1,9 @@
 {% extends "base.html" %}
+{% block extra_head %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/base.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/registration.css' %}"/>
+{% endblock %}
 {% block content %}
     {% if user.is_authenticated  %}
         <p>Вы уже зарегистрированы и вошли в систему.</p>
@@ -39,7 +44,9 @@
                     <label class="password2">Повторите пароль:</label>
                     {{ form.password2 }}
                 </div>
-                <input type="submit" value="Зарегистрироваться" class="button">
+                <div class="field">
+                    <input type="submit" value="Регистрация" class="button">
+                </div>
             </form>
         {% else %}
             <p style="color: red">Что-то пошло не так</p>
