@@ -123,8 +123,6 @@ def account(request, name=None):
     else:
         views_user = User.objects.get(username=request.user)
 
-        # print(views_user.profile.)
-
     return render(request, 'account.html', {
         'view_user': views_user,
     })
@@ -152,10 +150,9 @@ def change_account_save(request):
         city = form.cleaned_data.get('city')
         about_me = form.cleaned_data.get('about_me')
         date_of_birth = form.cleaned_data.get('date_of_birth')
+
         if 'user_avatar' in request.FILES:
-            print('YES')
             user.profile.user_avatar = request.FILES['user_avatar']
-        # avatar = form.cleaned_data.get('avatar')
 
         if first_name:
             if first_name.isalpha():
@@ -183,9 +180,6 @@ def change_account_save(request):
 
         if about_me:
             user.profile.about_me = about_me
-
-        # if form.user_avatar:
-        #     user.profile.user_avatar = form.user_avatar
 
         user.save()
         user.profile.save()

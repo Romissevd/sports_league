@@ -1,9 +1,7 @@
 {% extends "base.html" %}
-{% load static %}
-<script src="{% static 'js/birth_day.js' %}"></script>
 {% block content %}
-
-    {% if error %}
+{# не реализованная задача #}
+{% if error %}
     <p>{{ error }}</p>
 {% endif %}
 
@@ -11,7 +9,7 @@
     <form action="{% url 'account' %}" class="registr" method="post" enctype='multipart/form-data'>
                 {% csrf_token %}
                 <div class="field">
-                    <label class="avatar">Загрузите аватарку</label>
+                    <label class="avatar">Загрузите аватарку - </label>
                     {{ form.user_avatar }}
                 </div>
                 <div class="field">
