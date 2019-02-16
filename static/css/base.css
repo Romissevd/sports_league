@@ -158,6 +158,7 @@ input.but:active {
     width: 680px;
     margin-left: auto;
     margin-right: auto;
+    margin-top: 20px;
     padding: 0 15px;
     min-height: 750px;
     float: left;

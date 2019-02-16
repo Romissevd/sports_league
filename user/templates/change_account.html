@@ -1,47 +1,50 @@
 {% extends "base.html" %}
+{% block extra_head %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/change_account.css' %}"/>
+{% endblock %}
 {% block content %}
-{# не реализованная задача #}
-{% if error %}
-    <p>{{ error }}</p>
-{% endif %}
+    {# не реализованная задача #}
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
 
-{% if form %}
-    <form action="{% url 'account' %}" class="registr" method="post" enctype='multipart/form-data'>
-                {% csrf_token %}
-                <div class="field">
-                    <label class="avatar">Загрузите аватарку - </label>
-                    {{ form.user_avatar }}
-                </div>
-                <div class="field">
-                    <label class="first_name">Имя:</label>
-                    {{ form.first_name }}
-                </div>
-                <div class="field">
-                    <label class="last_name">Фамилия:</label>
-                    {{ form.last_name }}
-                </div>
-                <div class="field">
-                    <label class="date_of_birth">Дата рождения:</label>
-                    {{ form.date_of_birth }}
-                </div>
-                <div class="field">
-                    <label class="gender">Пол:</label>
-                    {{ form.gender }}
-                </div>
-                <div class="field">
-                    <label class="country">Страна:</label>
-                    {{ form.country }}
-                </div>
-                <div class="field">
-                    <label class="city">Город:</label>
-                    {{ form.city }}
-                </div>
-                <div class="field">
-                    <label class="about_me">О себе:</label>
-                    {{ form.about_me }}
-                </div>
-                <input type="submit" value="Сохранить" class="button">
-            </form>
-{% endif %}
-
+    {% if form %}
+        <form action="{% url 'account' %}" class="change_account" method="post" enctype='multipart/form-data'>
+            {% csrf_token %}
+            <div class="field">
+                <label class="avatar"><b>Загрузите аватарку -</b> </label>
+                {{ form.user_avatar }}
+            </div>
+            <div class="field">
+                <label class="first_name"><b>Имя:</b></label>
+                {{ form.first_name }}
+            </div>
+            <div class="field">
+                <label class="last_name"><b>Фамилия:</b></label>
+                {{ form.last_name }}
+            </div>
+            <div class="field">
+                <label class="date_of_birth"><b>Дата рождения:</b></label>
+                {{ form.date_of_birth }}
+            </div>
+            <div class="field">
+                <label class="gender"><b>Пол:</b></label>
+                {{ form.gender }}
+            </div>
+            <div class="field">
+                <label class="country"><b>Страна:</b></label>
+                {{ form.country }}
+            </div>
+            <div class="field">
+                <label class="city"><b>Город:</b></label>
+                {{ form.city }}
+            </div>
+            <div class="field_about">
+                <label class="about_me"><b>О себе:</b></label>
+                {{ form.about_me }}
+            </div>
+            <input type="submit" value="Сохранить" class="button">
+        </form>
+    {% endif %}
 {% endblock %}

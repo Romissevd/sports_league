@@ -125,6 +125,7 @@ def account(request, name=None):
 
     return render(request, 'account.html', {
         'view_user': views_user,
+        'user': views_user,
     })
 
 

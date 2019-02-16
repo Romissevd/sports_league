@@ -1,0 +1,46 @@
+.change_account .field, .field_about, .button {
+    text-align: right;
+    margin-bottom: 10px;
+    margin-right: 140px;
+}
+
+.change_account label {
+    margin-right: 20px;
+}
+
+.change_account input, select, textarea {
+    width: 220px;
+    height: 35px;
+    border-radius: 5px;
+    font-size: 14pt;
+    border-color: #dd4f0f;
+}
+
+.change_account select {
+    width: 224px;
+    background-color: #f8f8f8;
+}
+
+.change_account textarea {
+    width: 350px;
+    height: 7em;
+    font-size: 12pt;
+    vertical-align: top;
+}
+
+.change_account .button {
+    text-align: center;
+    float: right;
+    height: 40px;
+    width: 224px;
+    color: #f8f8f8;
+    background: -moz-linear-gradient(#666666, #333333);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#666666), to(#333333));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#1AA3D6', endColorstr='#2235B4');
+}
+
+.change_account .button:active {
+    background: -moz-linear-gradient(#333333, #666666);
+    background: -webkit-gradient(linear, 0 0, 0 100%, from(#333333), to(#666666));
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#2235B4', endColorstr='#1AA3D6');
+}

@@ -42,6 +42,8 @@ class RegistrationForm(UserCreationForm):
 
 class ChangeUserForm(forms.Form):
 
+    # 1. добавить проверку форматов файлов изображения
+    # 2. удалить старую аватарку новую добавить иначе забьют память
     user_avatar = forms.ImageField(
         required=False,
     )

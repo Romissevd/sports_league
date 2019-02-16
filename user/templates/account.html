@@ -9,55 +9,55 @@
 {% endif %}
 <h3>{{ view_user.get_full_name }}</h3>
     <div class="avatar">
-    {% if view_user.profile.user_avatar %}
-        <img src="{{ view_user.profile.user_avatar.url }}" width="180"/>
-    {% else %}
-        <img src="{% static 'img/avatar.png' %}" width="180"/>
-    {% endif %}
+        {% if view_user.profile.user_avatar %}
+            <img src="{{ view_user.profile.user_avatar.url }}" width="180"/>
+        {% else %}
+            <img src="{% static 'img/avatar.png' %}" width="180"/>
+        {% endif %}
     </div>
     <div class="user_info">
-    <p>Email: {{ view_user.email }}</p>
+        <p><b>Email:</b> {{ view_user.email }}</p>
 
-    <p>Пол: {% if view_user.profile.gender %}
-        {{ view_user.profile.gender }}
-    {% else %}
-        ---------
-    {% endif %}</p>
+        <p><b>Пол</b>: {% if view_user.profile.gender %}
+            {{ view_user.profile.gender }}
+        {% else %}
+            ---------
+        {% endif %}</p>
 
-    <p>Дата рождения:{% if view_user.profile.date_of_birth %}
-        {{ view_user.profile.date_of_birth }}
-    {% else %}
-        ---------
-    {% endif %}</p>
+        <p><b>Дата рождения</b>:{% if view_user.profile.date_of_birth %}
+            {{ view_user.profile.date_of_birth }}
+        {% else %}
+            ---------
+        {% endif %}</p>
 
-    <p>Страна: {% if view_user.profile.country %}
-        {{ view_user.profile.country }}
-    {% else %}
-        ---------
-    {% endif %}</p>
+        <p><b>Страна:</b> {% if view_user.profile.country %}
+            {{ view_user.profile.country }}
+        {% else %}
+            ---------
+        {% endif %}</p>
 
-    <p>Город: {% if user.profile.city %}
-        {{ user.profile.city }}
-    {% else %}
-        ---------
-    {% endif %}</p>
+        <p><b>Город:</b> {% if user.profile.city %}
+            {{ user.profile.city }}
+        {% else %}
+            ---------
+        {% endif %}</p>
     </div>
     <div class="user_about">
-    <p>О себе:{% if view_user.profile.about_me %}
-        {{ view_user.profile.about_me }}
-    {% else %}
-        ---------
-    {% endif %}</p>
-    <div class="change_account">
-    {% if user.is_authenticated %}
-        {% ifequal user.email view_user.email %}
-            <a href="{% url 'change_account' %}">Изменить</a>
-        {% endifequal %}
-    {% endif %}
+        <p><b>О себе:</b>{% if view_user.profile.about_me %}
+            {{ view_user.profile.about_me }}
+        {% else %}
+            ---------
+        {% endif %}</p>
+    <div class="link_change_account">
+        {% if user.is_authenticated %}
+            {% ifequal user.email view_user.email %}
+                <a href="{% url 'change_account' %}">Изменить</a>
+            {% endifequal %}
+        {% endif %}
     </div>
     </div>
     <div class="user_statistic">
-    <p>Тут будет отображена статистика профиля будет</p>
-    <p>Где учавствует, сколько очков заработал, на каком месте и т.п.</p>
+        <p>Тут будет отображена статистика профиля будет</p>
+        <p>Где учавствует, сколько очков заработал, на каком месте и т.п.</p>
     </div>
 {% endblock %}
