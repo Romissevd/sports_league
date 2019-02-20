@@ -55,7 +55,6 @@ def search_list_teams(driver, num_league, number_row_country):
                     num_league,
                 )):
             list_teams.append(team)
-            # print("-" * 8, team.text, "==", team.find_element_by_tag_name("a").get_attribute('href'))
     return list_teams
 
 
