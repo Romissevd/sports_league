@@ -5,7 +5,8 @@ import os
 from parser import site
 from bs4 import BeautifulSoup
 from selenium import webdriver, common
-from parser.data import save_country
+from parser.data import save_team
+from parser.db import FCDataBase
 
 
 WEBDRIVER = "chromedriver"
@@ -59,54 +60,69 @@ def search_list_teams(driver, num_league, number_row_country):
 
 
 def open_site(url):
-    driver = run_webdriver(WEBDRIVER)
-    driver.get(url)
-    time.sleep(5)
-    page = driver.page_source
-    number_row_country = 1
-    path_country_list = '#page_teams_1_block_teams_index_club_teams_2 > ul > li'
-    for country_info in search_list_info(path_country_list, page):
-        ru_name_country = country_info.text.strip()
-        save_country(ru_name_country)
-        print(country_info.text.strip())
-        driver.find_element_by_xpath('//li[@data-area_id="{}"]'.format(country_info["data-area_id"])).click()
-        time.sleep(10)
-        num_league = 1
-        path_leagues = '#page_teams_1_block_teams_index_club_teams_2 > ul >' \
-                       'li.expandable.loaded.expanded:nth-child({}) > ul > li'.format(number_row_country)
-        for leagues in search_list_info(path_leagues, driver.page_source):
-            try:
-                # in not leagues
-                path_search_leagues = '//*[@id="page_teams_1_block_teams_index_club_teams_2"]' \
-                                      '/ul/li[{}]/ul[@class="competitions"]'.format(number_row_country)
-                driver.find_element_by_xpath(path_search_leagues)
-            except:
-                lst_teams = driver.find_element_by_xpath(
-                    '//*[@id="page_teams_1_block_teams_index_club_teams_2"]/ul/li[{}]/ul[@class="teams"]'.format(
-                        number_row_country))
-                for team in lst_teams.find_elements_by_tag_name("a"):
-                    print("-" * 8, team.text, '==', team.get_attribute('href'))
-                break
+    try:
+        db = FCDataBase()
+        driver = run_webdriver(WEBDRIVER)
+        driver.get(url)
+        time.sleep(5)
+        page = driver.page_source
+        number_row_country = 1
+        path_country_list = '#page_teams_1_block_teams_index_club_teams_2 > ul > li'
+        for country_info in search_list_info(path_country_list, page):
+            ru_name_country = country_info.text.strip()
+            #print(country_id(db, ru_name_country))
+            print(country_info.text.strip())
+            driver.find_element_by_xpath('//li[@data-area_id="{}"]'.format(country_info["data-area_id"])).click()
+            time.sleep(10)
+            num_league = 1
+            path_leagues = '#page_teams_1_block_teams_index_club_teams_2 > ul >' \
+                           'li.expandable.loaded.expanded:nth-child({}) > ul > li'.format(number_row_country)
+            for leagues in search_list_info(path_leagues, driver.page_source):
+                try:
+                    # in not leagues
+                    path_search_leagues = '//*[@id="page_teams_1_block_teams_index_club_teams_2"]' \
+                                          '/ul/li[{}]/ul[@class="competitions"]'.format(number_row_country)
+                    driver.find_element_by_xpath(path_search_leagues)
+                except:
+                    lst_teams = driver.find_elements_by_xpath(
+                        '//*[@id="page_teams_1_block_teams_index_club_teams_2"]/ul/li[{}]/ul[@class="teams"]/li'.format(
+                            number_row_country))
+                    league_name = ""
+                    save_team(db, ru_name_country, league_name, lst_teams)
+                    # for team in lst_teams.find_elements_by_tag_name("a"):
+                    #
+                    #     print("-" * 8, team.text, '==', team.get_attribute('href'))
+                    break
 
-            league_name = leagues.text
-            print("---- ", league_name)
+                league_name = leagues.text
+                # print("---- ", league_name)
 
-            teams = search_list_teams(driver, num_league, number_row_country)
-            if not teams:
-                break
 
-            for team in teams:
-                print("-" * 8, team.text, '==', team.find_element_by_tag_name("a").get_attribute('href'))
 
-            num_league += 1
+                teams = search_list_teams(driver, num_league, number_row_country)
 
-            time.sleep(5)
-            if num_league == 4:
-                break
-        number_row_country += 1
-    driver.close()
+                if not teams:
+                    break
+
+                save_team(db, ru_name_country, league_name, teams)
+
+                # for team in teams:
+                #     print("-" * 8, team.text, '==', team.find_element_by_tag_name("a").get_attribute('href'))
+
+                num_league += 1
+
+                time.sleep(5)
+                if num_league == 4:
+                    break
+            number_row_country += 1
+        driver.close()
+    except:
+        pass
+    finally:
+        db.close()
 
 
 if __name__ == '__main__':
+
 
     open_site(URL)

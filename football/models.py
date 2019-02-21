@@ -20,16 +20,15 @@ class League(models.Model):
 
 class DictionaryClubName(models.Model):
 
-    en_name = models.CharField(max_length=200)
-    ru_name = models.CharField(max_length=200, default='')
+    club_name = models.CharField(max_length=200)
 
 
 class ParsingData(models.Model):
 
-    name = models.OneToOneField(DictionaryClubName, on_delete=models.CASCADE)
+    name_id = models.IntegerField(default=0)
     link_for_parsing = models.URLField(default='')
-    country = models.ForeignKey(CountryRuName, on_delete=models.CASCADE)
-    league = models.ForeignKey(League, on_delete=models.CASCADE)
+    country_id = models.IntegerField(default=0)
+    league_id = models.IntegerField(default=0)
 
 
 # class FootballClub(models.Model):
