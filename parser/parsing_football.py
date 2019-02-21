@@ -13,6 +13,7 @@ WEBDRIVER = "chromedriver"
 URL = site.Site.url
 allLinks = []
 
+
 def path_to_driver_browser(webDriver):
     '''Returns path to the webdriver'''
     path = os.path.abspath('../..')
@@ -123,6 +124,5 @@ def open_site(url):
 
 
 if __name__ == '__main__':
-
 
     open_site(URL)

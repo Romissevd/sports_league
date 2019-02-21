@@ -4,14 +4,12 @@ def country_id(db, country):
               (country,) )
     find_country = db.cursor.fetchone()
     if find_country:
-        print('Есть такая страна')
         return find_country[0]
 
     else:
         db.query("""INSERT INTO football_countryruname (country_name) VALUES (%s) RETURNING id;""",
                   (country, ))
         db.save()
-        print("added country")
         return db.cursor.fetchone()[0]
 
 
@@ -21,14 +19,12 @@ def league_id(db, league):
               (league,) )
     find_league = db.cursor.fetchone()
     if find_league:
-        print('Есть такая league')
         return find_league[0]
 
     else:
         db.query("""INSERT INTO football_league (league_name) VALUES (%s) RETURNING id;""",
                   (league, ))
         db.save()
-        print("added league")
         return db.cursor.fetchone()[0]
 
 
@@ -37,14 +33,12 @@ def club_name_id(db, club):
              (club,))
     find_club = db.cursor.fetchone()
     if find_club:
-        print('Есть такой club')
         return find_club[0]
 
     else:
         db.query("""INSERT INTO football_dictionaryclubname (club_name) VALUES (%s) RETURNING id;""",
                  (club,))
         db.save()
-        print("added club")
         return db.cursor.fetchone()[0]
 
 
