@@ -36,10 +36,10 @@ def download_image(url):
     return num_image
 
 
-def select_fc(db, fc_info, country_id, num_image):
+def select_fc(db, fc_info, country_id, num_image, team_id):
     db.query(
-        """SELECT * FROM football_footballclub WHERE fc_en_name = %s AND email = %s AND address = %s AND country_id = %s AND num_image = %s;""",
-        (fc_info['fc_en_name'], fc_info['email'], fc_info['address'], country_id, num_image))
+        """SELECT * FROM football_footballclub WHERE fc_en_name = %s AND email = %s AND address = %s AND country_id = %s AND num_image = %s AND fc_id_name_dictionary_id = %s;""",
+        (fc_info['fc_en_name'], fc_info['email'], fc_info['address'], country_id, num_image, team_id))
 
     find_fc = db.cursor.fetchone()
     if find_fc:
@@ -48,7 +48,7 @@ def select_fc(db, fc_info, country_id, num_image):
         return False
 
 
-def save(db, dct_info, country_id):
+def save(db, dct_info, country_id, team_id):
 
     id_stadium = stadium_id(db, dct_info['stadium'])
     num_img = 0
@@ -57,10 +57,10 @@ def save(db, dct_info, country_id):
         print('logo = ', dct_info['fc_logo'])
         num_img = download_image(dct_info['fc_logo'])
 
-    if not select_fc(db, dct_info, country_id, num_img):
+    if not select_fc(db, dct_info, country_id, num_img, team_id):
         db.query(
-            """INSERT INTO football_footballclub (fc_en_name, email, fax, address, phone, site, stadium_id, country_id, num_image) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);""",
-            (dct_info['fc_en_name'], dct_info['email'], dct_info['fax'], dct_info['address'], dct_info['phone'], dct_info['official_site'], id_stadium, country_id, num_img))
+            """INSERT INTO football_footballclub (fc_en_name, email, fax, address, phone, site, stadium_id, country_id, num_image, fc_id_name_dictionary_id, year_of_foundation) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s , %s, %s);""",
+            (dct_info['fc_en_name'], dct_info['email'], dct_info['fax'], dct_info['address'], dct_info['phone'], dct_info['official_site'], id_stadium, country_id, num_img, team_id, dct_info['foundation']))
 
         db.save()
     return

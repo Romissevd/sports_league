@@ -18,9 +18,19 @@ class ParserInfoFC():
 
     def bs_find_info(self):
         bs_obj = BS(self.open_site(), "html.parser")
+
+        if self.find_not_found_page(bs_obj):
+            return False
         self.bs_find_en_name(bs_obj)
         self.bs_find_team_info(bs_obj)
         self.bs_info_stadium(bs_obj)
+
+    def find_not_found_page(self, bs):
+        not_found = bs.select_one('#doc4 > h1')
+        if not_found:
+            if not_found.text == 'Page not found':
+                return True
+        return False
 
     def bs_find_en_name(self, bs):
         fc_en_name = bs.select_one("#subheading > h1")
@@ -66,7 +76,8 @@ class ParserInfoFC():
 
 
     def get_info_fc(self):
-        self.bs_find_info()
+        if self.bs_find_info():
+            return False
         return self.fc_info
 
 
@@ -75,12 +86,22 @@ def parser_data_processing(dct_info):
     if address:
         address = ', '.join([loc.strip() for loc in address.split("\n")])
 
+    foundation_year = dct_info.get('основан', 0)
+    if foundation_year:
+        for val in foundation_year.split('.'):
+            if len(val) == 4:
+                foundation_year = val
+            for val_1 in foundation_year.split(' / '):
+                if len(val_1) == 4:
+                    foundation_year = val_1
+            break
+
     stadium_info = dct_info.get('stadium', {})
     stadium_info = {
         'stadium_name': stadium_info.get('имя', ''),
         'city': stadium_info.get('город', ''),
         'url_image_stadium': stadium_info.get('image_stadium', ''),
-        'capacity': stadium_info.get('вмещает', ''),
+        'capacity': stadium_info.get('вмещает', 0),
     }
 
 
@@ -89,7 +110,7 @@ def parser_data_processing(dct_info):
         'phone': dct_info.get('телефон', ''),
         'email': dct_info.get('эл. почта', ''),
         'fax': dct_info.get('факс', ''),
-        'foundation': dct_info.get('основан', ''),
+        'foundation': foundation_year,
         'official_site': dct_info.get('official_site', ''),
         'fc_en_name': dct_info.get('fc_en_name', ''),
         'fc_logo': dct_info.get('fc_logo'),
@@ -100,16 +121,25 @@ def parser_data_processing(dct_info):
 
 db = FCDataBase()
 #country = country_id(db, "Англия")
-id_country = [66] #, 65, 43, 112]
+id_country = [174, 178]
 for country in id_country:
-    db.query("""SELECT link_for_parsing FROM football_parsingdata WHERE country_id = %s;""",
+    db.query("""SELECT link_for_parsing, name_id FROM football_parsingdata WHERE country_id = %s OFFSET 3;""",
              (country,))
     num = 1
-    for url_team in db.cursor.fetchall():
+    for team in db.cursor.fetchall():
 
-        parser_info_team = ParserInfoFC(url_team[0])
+        # print(team)
+        # if num < 82:
+        #     num += 1
+        #     continue
+        # if num > 85:
+        #     break
+
+        parser_info_team = ParserInfoFC(team[0])
         data_fc = parser_info_team.get_info_fc()
-        save(db, parser_data_processing(data_fc), country)
+        if not data_fc:
+            continue
+        save(db, parser_data_processing(data_fc), country, team[1])
 
         print(data_fc['fc_en_name'])
 

@@ -35,8 +35,9 @@ class ParsingData(models.Model):
 class FootballClub(models.Model):
 
     fc_en_name = models.CharField(max_length=200, default='')
+    fc_id_name_dictionary = models.ForeignKey(DictionaryClubName, on_delete=models.CASCADE)
     num_image = models.IntegerField(default=0)
-    date_of_foundation = models.DateField(null=True)
+    year_of_foundation = models.IntegerField(max_length=4, default=0)
     address = models.CharField(max_length=200, default='')
     country = models.ForeignKey(CountryRuName, on_delete=models.CASCADE)
     phone = models.CharField(max_length=200, default='')
