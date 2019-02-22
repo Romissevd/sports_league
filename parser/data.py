@@ -55,19 +55,14 @@ def save_team(db, country, league, teams):
         except:
             url_team = ''
 
-
         id_team = club_name_id(db, name_team)
 
         db.query("""SELECT * FROM football_parsingdata WHERE country_id = %s AND league_id = %s AND name_id = %s;""",
                  (id_country, id_league, id_team))
 
         find_team = db.cursor.fetchone()
-        if find_team:
-            print('Есть такая team')
-
-        else:
+        if not find_team:
             db.query("""INSERT INTO football_parsingdata (link_for_parsing, country_id, league_id, name_id) VALUES (%s, %s, %s, %s) RETURNING id;""",
                      (url_team, id_country, id_league, id_team))
             db.save()
-            print("added team")
     return
