@@ -4,7 +4,7 @@ import time
 import os
 from parser import site
 from bs4 import BeautifulSoup
-from selenium import webdriver, common
+from selenium import webdriver
 from parser.data import save_team
 from parser.db import FCDataBase
 
