@@ -1,5 +1,3 @@
-__author__ = 'Roman Evdokimov'
-
 import time
 import os
 from parser import site
