@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+    <img src="/media{{ image }}"/>
+    <ul>
+        <li>{{ team_info.fc_en_name }} = {{ team_info.fc_id_name_dictionary.club_name}}</li>
+        <li>{{ team_info.country.country_name }}</li>
+        <li>{{ team_info.stadium.stadium_name }}</li>
+        <li>{{ team_info.stadium.city }}</li>
+    </ul>
+{% endblock %}

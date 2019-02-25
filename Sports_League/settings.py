@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ["*"] #"*" - позволяет выполнить войти с
 
 INSTALLED_APPS = [
     'user.apps.UserConfig',
+    'football.apps.FootballConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
