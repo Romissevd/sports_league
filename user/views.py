@@ -114,6 +114,8 @@ def account(request, name=None):
         if change_account_save(request):
             return change_account(request, 'Имя и фамилия дожны состоять только из букв.')
 
+    data_user_views = {}
+
     if name:
         try:
             views_user = User.objects.get(username=name)
@@ -122,11 +124,11 @@ def account(request, name=None):
             return HttpResponseRedirect('/')
     else:
         views_user = User.objects.get(username=request.user)
+        data_user_views.update(user=views_user)
 
-    return render(request, 'account.html', {
-        'view_user': views_user,
-        'user': views_user,
-    })
+    data_user_views.update(view_user=views_user)
+
+    return render(request, 'account.html',data_user_views)
 
 
 def change_account(request, error=''):
