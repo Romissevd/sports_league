@@ -3,11 +3,47 @@
 {% load static %}
 
 {% block content %}
+    <h2>{{ team_info.fc_id_name_dictionary.club_name}}</h2>
     <img src="/media{{ image }}"/>
     <ul>
-        <li>{{ team_info.fc_en_name }} = {{ team_info.fc_id_name_dictionary.club_name}}</li>
-        <li>{{ team_info.country.country_name }}</li>
-        <li>{{ team_info.stadium.stadium_name }}</li>
-        <li>{{ team_info.stadium.city }}</li>
+        <li>Официальное название: {{ team_info.fc_en_name }}</li>
+        {% if team_info.year_of_foundation %}
+            <li>Основан в {{ team_info.year_of_foundation }} году</li>
+        {% endif %}
+        {% if team_info.address %}
+            <li>Адрес: {{ team_info.address }}</li>
+        {% endif %}
+        <p>Контакты клуба</p>
+        {% if team_info.phone %}
+            <li>Телефон: {{ team_info.phone }}</li>
+        {% endif %}
+        {% if team_info.fax %}
+            <li>Факс: {{ team_info.fax }}</li>
+        {% endif %}
+        {% if team_info.email %}
+            <li>Email: {{ team_info.email }}</li>
+        {% endif %}
+        {% if team_info.site %}
+            <li><a href="{{ team_info.site }}">Официальный сайт</a></li>
+        {% endif %}
     </ul>
+
+    {% if team_info.stadium.stadium_name %}
+        <h3>Стадион команды</h3>
+        <ul>
+        <li>Название: {{ team_info.stadium.stadium_name }}</li>
+        {% if team_info.country.country_name %}
+            <li>Страна - {{ team_info.country.country_name }}</li>
+        {% endif %}
+        {% if team_info.stadium.city %}
+            <li>Город: {{ team_info.stadium.city }}</li>
+        {% endif %}
+        {% if team_info.stadium.capacity %}
+            <li>Вместимость {{ team_info.stadium.capacity }} зрителя/(ей)</li>
+        {% endif %}
+        {% if team_info.stadium.url_stadium %}
+            <li><a href="{{ team_info.stadium.url_stadium }}">Официальный сайт стадиона</a></li>
+        {% endif %}
+        </ul>
+    {% endif %}
 {% endblock %}
