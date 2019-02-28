@@ -26,10 +26,10 @@ class DictionaryClubName(models.Model):
 
 class ParsingData(models.Model):
 
-    name_id = models.IntegerField(default=0)
+    name_id = models.ForeignKey(DictionaryClubName, on_delete=models.CASCADE)
     link_for_parsing = models.URLField(default='')
-    country_id = models.IntegerField(default=0)
-    league_id = models.IntegerField(default=0)
+    country_id = models.ForeignKey(CountryRuName, on_delete=models.CASCADE)
+    league_id = models.ForeignKey(League, on_delete=models.CASCADE)
 
 
 class FootballClub(models.Model):
