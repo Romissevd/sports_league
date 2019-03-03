@@ -23,6 +23,7 @@ def team(request, team_name):
 
 def league(request, country, league_id):
     teams = []
+    # Добавить try/except к ParsingData ?
     for team in ParsingData.objects.filter(country_id=country, league_id=league_id):
         try:
             teams.append(FootballClub.objects.get(fc_id_name_dictionary=team.name_id))

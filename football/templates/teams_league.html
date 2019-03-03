@@ -5,7 +5,7 @@
 {% block content %}
     <ul>
     {% for team in teams  %}
-       <li><a href="team/{{ team.fc_en_name }}/">{{ team.fc_id_name_dictionary.club_name }}</a></li>
+       <li><a href="/football/team/{{ team.fc_en_name }}/">{{ team.fc_id_name_dictionary.club_name }}</a></li>
     {% endfor %}
     </ul>
 
