@@ -42,7 +42,7 @@
             <li>Вместимость {{ team_info.stadium.capacity }} зрителя/(ей)</li>
         {% endif %}
         {% if team_info.stadium.url_stadium %}
-            <li><a href="{{ team_info.stadium.url_stadium }}">Официальный сайт стадиона</a></li>
+            <img src="{{ team_info.stadium.url_stadium }}"/>
         {% endif %}
         </ul>
     {% endif %}

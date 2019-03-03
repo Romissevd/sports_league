@@ -121,7 +121,7 @@ def parser_data_processing(dct_info):
 
 
 db = FCDataBase()
-id_country = [] # 2, 6, 43, 65, 66, 112, 129, 134, 167, 174, 176, 178,
+id_country = [] # 2, 6, 43, 65, 66, 112, 129, 134, 164, 167, 174, 176, 178,
 for country in id_country:
     db.query("""SELECT link_for_parsing, name_id_id FROM football_parsingdata WHERE country_id_id = %s;""",
              (country,))

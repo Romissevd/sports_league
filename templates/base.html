@@ -60,11 +60,13 @@
                 <ul class="widget-list">
                     <li class="championship"><a href="{% url 'cl' %}">Лига<br>Чемпионов</a></li>
                     <li class="championship"><a href="/">Лига<br>Европы</a></li>
-                    <li class="championship"><a href="/" >Чемпионат<br>Украины</a></li>
-                    <li class="championship"><a href="/">Чемпионат<br>Англии</a></li>
-                    <li class="championship"><a href="/">Чемпионат<br>Испании</a></li>
-                    <li class="championship"><a href="/">Чемпионат<br>Италии</a></li>
-                    <li class="championship"><a href="/">Чемпионат<br>Германии</a></li>
+                    <li class="championship"><a href="{% url 'ukraine' %}" >Украина</a></li>
+                    <li class="championship"><a href="{% url 'england' %}">Англия</a></li>
+                    <li class="championship"><a href="{% url 'spain' %}">Испания</a></li>
+                    <li class="championship"><a href="{% url 'italy' %}">Италия</a></li>
+                    <li class="championship"><a href="{% url 'germany' %}">Германия</a></li>
+                    <li class="championship"><a href="{% url 'france' %}">Франция</a></li>
+                    <li class="championship"><a href="{% url 'turkey' %}">Турция</a></li>
                     <li class="championship"><a href="{% url 'all_teams' %}">Все команды</a></li>
                 </ul>
             </div>

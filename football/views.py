@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import FootballClub, ParsingData
+from .models import FootballClub, ParsingData, CountryRuName
 
 # Create your views here.
 
@@ -7,6 +7,23 @@ from .models import FootballClub, ParsingData
 def champions_league(request):
     teams = FootballClub.objects.filter(country__country_name="Англия")
     return render(request, "champions_league.html", {"teams": teams})
+
+
+def championship(request, ru_name_country):
+    country = CountryRuName.objects.get(country_name=ru_name_country)
+    teams = FootballClub.objects.filter(country__country_name=ru_name_country)
+    leag = []
+    print(len(teams))
+    for team in teams:
+        info = ParsingData.objects.get(name_id=team.fc_id_name_dictionary, country_id=country.id)
+        leag.append({
+            'league': info.league_id.league_name,
+            'team_name': info.name_id.club_name,
+            'fc_en_name': team.fc_en_name,
+        }
+        )
+    leag = sorted(leag, key=lambda k: k['league'])
+    return render(request, "champions_league.html", {"leagues": leag})
 
 
 def team(request, team_name):
