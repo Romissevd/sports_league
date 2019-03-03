@@ -119,16 +119,16 @@ def parser_data_processing(dct_info):
 
     return processed_data
 
+
 db = FCDataBase()
-#country = country_id(db, "Англия")
-id_country = [174, 178]
+id_country = [] # 2, 6, 43, 65, 66, 112, 129, 134, 167, 174, 176, 178,
 for country in id_country:
-    db.query("""SELECT link_for_parsing, name_id FROM football_parsingdata WHERE country_id = %s OFFSET 3;""",
+    db.query("""SELECT link_for_parsing, name_id_id FROM football_parsingdata WHERE country_id_id = %s;""",
              (country,))
     num = 1
     for team in db.cursor.fetchall():
 
-        # print(team)
+        print(team)
         # if num < 82:
         #     num += 1
         #     continue
