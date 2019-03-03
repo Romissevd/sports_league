@@ -1,18 +1,6 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <p>Иформация о лиге чемпионов</p>
 
-    {% regroup leagues by league as league_list %}
-    <ul>
-    {% for league in league_list %}
-        <li>{{ league.grouper }}
-        <ul>
-        {% for team in league.list %}
-            <li><a href="team/{{ team.fc_en_name }}/">{{ team.team_name }}</a></li>
-        {% endfor %}
-        </ul>
-        </li>
-
-    {% endfor %}
-    </ul>
 {% endblock %}

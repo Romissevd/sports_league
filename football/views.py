@@ -11,19 +11,8 @@ def champions_league(request):
 
 def championship(request, ru_name_country):
     country = CountryRuName.objects.get(country_name=ru_name_country)
-    teams = FootballClub.objects.filter(country__country_name=ru_name_country)
-    leag = []
-    print(len(teams))
-    for team in teams:
-        info = ParsingData.objects.get(name_id=team.fc_id_name_dictionary, country_id=country.id)
-        leag.append({
-            'league': info.league_id.league_name,
-            'team_name': info.name_id.club_name,
-            'fc_en_name': team.fc_en_name,
-        }
-        )
-    leag = sorted(leag, key=lambda k: k['league'])
-    return render(request, "champions_league.html", {"leagues": leag})
+    leagues = ParsingData.objects.filter(country_id=country.id).distinct('league_id')
+    return render(request, "country_leagues.html", {"leagues": leagues, "country": country})
 
 
 def team(request, team_name):
@@ -32,8 +21,11 @@ def team(request, team_name):
     return render(request, "team.html", {"team_info": team_info, "image": img})
 
 
-def all_teams(request):
-    teams = FootballClub.objects.all()
-    data = ParsingData.objects.all()
-
-    return render(request, "all_teams.html", {"teams": teams, "data": data})
+def league(request, country, league_id):
+    teams = []
+    for team in ParsingData.objects.filter(country_id=country, league_id=league_id):
+        try:
+            teams.append(FootballClub.objects.get(fc_id_name_dictionary=team.name_id))
+        except FootballClub.DoesNotExist:
+            continue
+    return render(request, "teams_league.html", {"teams": teams})

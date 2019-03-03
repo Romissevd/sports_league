@@ -11,6 +11,6 @@ urlpatterns = [
     path('ukraine/', views.championship, {'ru_name_country': 'Украина'}, name='ukraine'),
     path('france/', views.championship, {'ru_name_country': 'Франция'}, name='france'),
     path('turkey/', views.championship, {'ru_name_country': 'Турция'}, name='turkey'),
-    path('all_teams/', views.all_teams, name='all_teams'),
     re_path(r'team/(?P<team_name>[\w|\W]+)/', views.team),
+    re_path(r'league/(?P<country>[\w|\W]+)/(?P<league_id>[\d]+)/', views.league),
 ]
