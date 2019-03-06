@@ -25,7 +25,7 @@ SECRET_KEY = 'k3go3!hwe%c=fh+20(v2m*r+rfcq+_ey24tya=5d)5-4kw6p^='
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"] #"*" - позволяет выполнить войти с любого устройства находящегося в сети
+ALLOWED_HOSTS = ["*"] #"*" - позволяет выполнить вход с любого устройства находящегося в сети
 
 
 # Application definition

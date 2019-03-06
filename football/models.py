@@ -1,3 +1,4 @@
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 
@@ -45,3 +46,9 @@ class FootballClub(models.Model):
     email = models.EmailField(default='')
     site = models.URLField(default='')
     stadium = models.ForeignKey(FCStadium, on_delete=models.CASCADE)
+
+
+class APIChampionsLeague(models.Model):
+
+    date = models.DateTimeField()
+    data = JSONField()
