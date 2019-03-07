@@ -1,6 +1,11 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <p>Иформация о лиге чемпионов</p>
-
+    {% for match in data.data.matches %}
+        <pre>
+        {{ match.stage }}
+        {{ match.homeTeam.name }} - {{ match.awayTeam.name }}
+        {{ match.score.fullTime.homeTeam }} - {{ match.score.fullTime.awayTeam }}
+        </pre>
+    {% endfor %}
 {% endblock %}

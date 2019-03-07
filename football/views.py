@@ -1,12 +1,14 @@
 from django.shortcuts import render
-from .models import FootballClub, ParsingData, CountryRuName
+from .models import FootballClub, ParsingData, CountryRuName, APIChampionsLeague
 
 # Create your views here.
 
 
 def champions_league(request):
-    teams = FootballClub.objects.filter(country__country_name="Англия")
-    return render(request, "champions_league.html", {"teams": teams})
+    data = APIChampionsLeague.objects.all().order_by('-id')[0]
+    # for key, val in data.data.items():
+    #     print(key,'==', val)
+    return render(request, "champions_league.html", {"data": data})
 
 
 def championship(request, ru_name_country):
