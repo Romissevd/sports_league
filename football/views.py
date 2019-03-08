@@ -3,12 +3,49 @@ from .models import FootballClub, ParsingData, CountryRuName, APIChampionsLeague
 
 # Create your views here.
 
+def team_game(name):
+    try:
+        team = FootballClub.objects.get(fc_en_name=name)
+        img = "/fc_logo/{}.png".format(team.num_image)
+        return {'team': team, 'image': img}
+    except FootballClub.MultipleObjectsReturned:
+        team = FootballClub.objects.filter(fc_en_name=name)
+        img = "/fc_logo/{}.png".format(team[0].num_image)
+        return {'team': team[0], 'image': img}
+    except FootballClub.DoesNotExist:
+        names = ' '.join([x for x in name.split(' ') if len(x) > 2])
+        print('name = ',names)
+        try:
+            team = FootballClub.objects.get(fc_en_name__contains=names)
+            img = "/fc_logo/{}.png".format(team.num_image)
+            return {'team': team, 'image': img}
+        except FootballClub.MultipleObjectsReturned:
+            team = FootballClub.objects.filter(fc_en_name__contains=names)
+            img = "/fc_logo/{}.png".format(team[0].num_image)
+            return {'team': team[0], 'image': img}
+        except FootballClub.DoesNotExist:
+            return {'team': name}
+
 
 def champions_league(request):
-    data = APIChampionsLeague.objects.all().order_by('-id')[0]
-    # for key, val in data.data.items():
-    #     print(key,'==', val)
-    return render(request, "champions_league.html", {"data": data})
+    print(FootballClub.objects.filter(fc_en_name='FK Dynamo Kyiv'))
+
+
+# def champions_league(request):
+    datas = APIChampionsLeague.objects.all().order_by('-id')[0]
+    data = {'matches': []}
+
+    for match in datas.data['matches']:
+        # print(match)
+        m = {}
+        m.update(stage=match['stage'])
+        m.update(homeTeam=team_game(match['homeTeam']['name']))
+        m.update(awayTeam=team_game(match['awayTeam']['name']))
+        data['matches'].append(m)
+    # print(data)
+    # data = json.loads(data)
+    # print(data)
+    return render(request, "champions_league.html", {"data": {"data": data}})
 
 
 def championship(request, ru_name_country):
