@@ -2,12 +2,12 @@
 {% load static %}
 {% block content %}
     {% for match in data.data.matches %}
-        <pre>
+        <p>
         {{ match.stage }}
             {% if not match.homeTeam.image %}
                 {{ match.homeTeam.team }}
             {% else %}
-                <img src="/media{{ match.homeTeam.image }}" width="30px"/>{{ match.homeTeam.team.fc_id_name_dictionary.club_name }}
+                {{ match.homeTeam.team.fc_id_name_dictionary.club_name }}<img src="/media{{ match.homeTeam.image }}" width="30px"/>
             {% endif %}
         -
         {% if not match.awayTeam.image %}
@@ -15,8 +15,7 @@
             {% else %}
                 <img src="/media{{ match.awayTeam.image }}" width="30px"/>{{ match.awayTeam.team.fc_id_name_dictionary.club_name }}
             {% endif %}
-{#        <img src="/media{{ match.homeTeam.image }}" width="30px"/>{{ match.homeTeam.team.fc_id_name_dictionary.club_name }} - {{ match.awayTeam.team.fc_id_name_dictionary.club_name }}<img src="/media{{ match.awayTeam.image }}" width="30px"/>#}
-        {{ match.score.fullTime.homeTeam }} - {{ match.score.fullTime.awayTeam }}
-        </pre>
+        {{ match.score.homeTeam }} - {{ match.score.awayTeam }}
+        </p>
     {% endfor %}
 {% endblock %}
