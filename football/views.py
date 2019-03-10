@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import FootballClub, ParsingData, CountryRuName, APIChampionsLeague
+from django.http import HttpResponseRedirect
+from .models import FootballClub, ParsingData, CountryRuName, APIMatches
 
 # Create your views here.
 
@@ -36,10 +37,7 @@ def team_game(name):
 
 def champions_league(request):
     # print(FootballClub.objects.filter(fc_en_name='FK Dynamo Kyiv'))
-
-
-# def champions_league(request):
-    datas = APIChampionsLeague.objects.all().order_by('-id')[0]
+    datas = APIMatches.objects.all().order_by('-id')[0]
     data = {'matches': []}
 
     for match in datas.data['matches']:
@@ -69,6 +67,16 @@ def team(request, team_name):
 
 
 def league(request, country, league_id):
+
+    return HttpResponseRedirect('teams')
+
+
+def matches(request, country, league_id):
+
+    return render(request, "matches.html")
+
+
+def teams(request, country, league_id):
     teams = []
     # Добавить try/except к ParsingData ?
     for team in ParsingData.objects.filter(country_id=country, league_id=league_id):
@@ -76,4 +84,10 @@ def league(request, country, league_id):
             teams.append(FootballClub.objects.get(fc_id_name_dictionary=team.name_id))
         except FootballClub.DoesNotExist:
             continue
-    return render(request, "teams_league.html", {"teams": teams})
+
+    return render(request, "teams.html",  {"teams": teams})
+
+
+def table(request, country, league_id):
+
+    return render(request, "table.html")
