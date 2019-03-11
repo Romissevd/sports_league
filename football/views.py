@@ -91,3 +91,8 @@ def teams(request, country,  country_id, league_id):
 def table(request, country, country_id, league_id):
 
     return render(request, "table.html")
+
+
+def calendar_games(request, country, country_id, league_id):
+
+    return render(request, "calendar_games.html")

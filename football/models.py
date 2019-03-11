@@ -61,3 +61,10 @@ class APIMatches(models.Model):
     league_code = models.CharField(max_length=10)
     data = JSONField()
 
+
+class CodeLeague(models.Model):
+
+    league_code = models.CharField(max_length=10)
+    league = models.ForeignKey(League, on_delete=models.CASCADE)
+    country = models.ForeignKey(CountryRuName, on_delete=models.CASCADE)
+
