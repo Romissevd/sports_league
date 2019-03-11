@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import FootballClub, ParsingData, CountryRuName, APIMatches
+from .models import FootballClub, ParsingData, CountryRuName, APIMatches, CodeLeague
 
 # Create your views here.
 
@@ -72,8 +72,25 @@ def league(request, country, country_id, league_id):
 
 
 def matches(request, country, country_id, league_id):
+    try:
+        code = CodeLeague.objects.get(country=country.capitalize(), league=league_id)
+    except CodeLeague.DoesNotExist:
+        return render(request, "matches.html", {"data": {}})
 
-    return render(request, "matches.html")
+    datas = APIMatches.objects.filter(league_code=code.league_code).order_by('-id')[0]
+    data = {'matches': []}
+
+    for match in datas.data['matches']:
+        # print(match)
+        m = {}
+        m.update(stage=match['stage'])
+        m.update(homeTeam=team_game(match['homeTeam']['name']))
+        m.update(awayTeam=team_game(match['awayTeam']['name']))
+        m.update(score={'homeTeam': match['score']['fullTime']['homeTeam'],
+                        'awayTeam': match['score']['fullTime']['awayTeam']})
+        data['matches'].append(m)
+
+    return render(request, "matches.html", {"data": {"data": data}})
 
 
 def teams(request, country,  country_id, league_id):

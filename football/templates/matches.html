@@ -3,24 +3,26 @@
 {% block content %}
 
     {% include "navigation_league.html" %}
+    {% if not data %}
+        <p>Здесь будет информация о матчах</p>
+    {% else %}
 
-    <p>Здесь будет информация о матчах</p>
-
-{#    {% for match in data.data.matches %}#}
-{#        <p>#}
-{#        {{ match.stage }}#}
-{#            {% if not match.homeTeam.image %}#}
-{#                {{ match.homeTeam.team }}#}
-{#            {% else %}#}
-{#                {{ match.homeTeam.team.fc_id_name_dictionary.club_name }}<img src="/media{{ match.homeTeam.image }}" width="30px"/>#}
-{#            {% endif %}#}
-{#        -#}
-{#        {% if not match.awayTeam.image %}#}
-{#                {{ match.awayTeam.team }}#}
-{#            {% else %}#}
-{#                <img src="/media{{ match.awayTeam.image }}" width="30px"/>{{ match.awayTeam.team.fc_id_name_dictionary.club_name }}#}
-{#            {% endif %}#}
-{#        {{ match.score.homeTeam }} - {{ match.score.awayTeam }}#}
-{#        </p>#}
-{#    {% endfor %}#}
+    {% for match in data.data.matches %}
+        <p>
+        {{ match.stage }}
+            {% if not match.homeTeam.image %}
+                {{ match.homeTeam.team }}
+            {% else %}
+                {{ match.homeTeam.team.fc_id_name_dictionary.club_name }}<img src="/media{{ match.homeTeam.image }}" width="30px"/>
+            {% endif %}
+        -
+        {% if not match.awayTeam.image %}
+                {{ match.awayTeam.team }}
+            {% else %}
+                <img src="/media{{ match.awayTeam.image }}" width="30px"/>{{ match.awayTeam.team.fc_id_name_dictionary.club_name }}
+            {% endif %}
+        {{ match.score.homeTeam }} - {{ match.score.awayTeam }}
+        </p>
+    {% endfor %}
+    {% endif %}
 {% endblock %}
