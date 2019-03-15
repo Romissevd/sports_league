@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import FootballClub, ParsingData, CountryRuName, APIMatches, CodeLeague
+from .models import FootballClub, ParsingData, CountryRuName, APIMatches, CodeLeague, APITables
 from datetime import datetime
 
 
@@ -119,7 +119,21 @@ def teams(request, country,  country_id, league_id):
 
 def table(request, country, country_id, league_id):
 
-    return render(request, "table.html")
+    try:
+        code = CodeLeague.objects.get(country=country.capitalize(), league=league_id)
+    except CodeLeague.DoesNotExist:
+        return render(request, "table.html", {})
+
+    table_info = APITables.objects.filter(league_code=code.league_code).order_by('-id')[0]
+
+    table = []
+
+    for team in table_info.tables["standings"][0]['table']:
+        team_info = team
+        team_info.update(team=team_game(team['team']['name']))
+        table.append(team_info)
+
+    return render(request, "table.html", {"table": table})
 
 
 def calendar_games(request, country, country_id, league_id):

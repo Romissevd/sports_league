@@ -4,7 +4,45 @@
 
     {% include "navigation_league.html" %}
 
-    <p>Здесь будет отображена турнирная таблица</p>
-
-
+    {% if not table %}
+        <p>Здесь будет отображена турнирная таблица</p>
+    {% else %}
+        <table>
+        <caption>Турнирная таблица</caption>
+        <tr>
+            <th>Место</th>
+            <th></th>
+            <th>Название</th>
+            <th>Игры</th>
+            <th>Очки</th>
+            <th>Мячи</th>
+            <th>В</th>
+            <th>Н</th>
+            <th>П</th>
+        </tr>
+        {% for team in table %}
+            <tr>
+            <td>{{ team.position }}</td>
+            <td>
+            {% if team.team.image %}
+                <img src="/media{{ team.team.image }}" width="20px">
+            {% endif %}
+            </td>
+            <td>
+            {% if not team.team.team.fc_en_name %}
+                {{ team.team.team }}
+            {% else %}
+                <a href="/football/team/{{ team.team.team.fc_en_name }}/">{{ team.team.team.fc_id_name_dictionary.club_name }}</a>
+            {% endif %}
+            </td>
+            <td>{{ team.playedGames }}</td>
+            <td>{{ team.points }}</td>
+            <td>{{ team.goalsFor }} - {{ team.goalsAgainst }}</td>
+            <td>{{ team.won }}</td>
+            <td>{{ team.draw }}</td>
+            <td>{{ team.lost }}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    {% endif %}
 {% endblock %}
