@@ -10,6 +10,7 @@ FORMAT_DATE_JSON = "%Y-%m-%dT%H:%M:%SZ"
 
 # Create your views here.
 
+
 def team_game(name):
     try:
         team = FootballClub.objects.get(fc_en_name=name)
@@ -43,7 +44,7 @@ def team_game(name):
 
 def champions_league(request):
     # print(FootballClub.objects.filter(fc_en_name='FK Dynamo Kyiv'))
-    datas = APIMatches.objects.all().order_by('-id')[0]
+    datas = APIMatches.objects.filter(league_code="CL").order_by('-id')[0]
     data = {'matches': []}
 
     for match in datas.data['matches']:
@@ -83,23 +84,23 @@ def matches(request, country, country_id, league_id):
     except CodeLeague.DoesNotExist:
         return render(request, "matches.html", {})
 
-    datas = APIMatches.objects.filter(league_code=code.league_code).order_by('-id')[0]
+    league_info = APIMatches.objects.filter(league_code=code.league_code).order_by('-id')[0]
     data = {'matches': []}
 
-    for match in datas.data['matches']:
+    for match in league_info.data['matches']:
         # print(match)
-        m = {}
+        match_info = {}
         score_home_team = match['score']['fullTime']['homeTeam']
         score_away_team = match['score']['fullTime']['awayTeam']
         if score_home_team is None and score_away_team is None:
             continue
-        m.update(stage=match['stage'])
-        m.update(homeTeam=team_game(match['homeTeam']['name']))
-        m.update(awayTeam=team_game(match['awayTeam']['name']))
-        m.update(score={'homeTeam': score_home_team, 'awayTeam': score_away_team})
+        match_info.update(stage=match['stage'])
+        match_info.update(homeTeam=team_game(match['homeTeam']['name']))
+        match_info.update(awayTeam=team_game(match['awayTeam']['name']))
+        match_info.update(score={'homeTeam': score_home_team, 'awayTeam': score_away_team})
         date = datetime.strptime(match['utcDate'], FORMAT_DATE_JSON)
-        m.update(date=datetime.strftime(date, FORMAT_DATE))
-        data['matches'].append(m)
+        match_info.update(date=datetime.strftime(date, FORMAT_DATE))
+        data['matches'].append(match_info)
 
     return render(request, "matches.html", {"data": data})
 
@@ -128,20 +129,19 @@ def calendar_games(request, country, country_id, league_id):
     except CodeLeague.DoesNotExist:
         return render(request, "matches.html", {})
 
-    datas = APIMatches.objects.filter(league_code=code.league_code).order_by('-id')[0]
+    league_info = APIMatches.objects.filter(league_code=code.league_code).order_by('-id')[0]
     data = {'matches': []}
 
-    for match in datas.data['matches']:
-
-        m = {}
+    for match in league_info.data['matches']:
+        match_info = {}
         status = match['status']
         if status == "FINISHED":
             continue
-        m.update(matchday=match['matchday'])
-        m.update(homeTeam=team_game(match['homeTeam']['name']))
-        m.update(awayTeam=team_game(match['awayTeam']['name']))
+        match_info.update(matchday=match['matchday'])
+        match_info.update(homeTeam=team_game(match['homeTeam']['name']))
+        match_info.update(awayTeam=team_game(match['awayTeam']['name']))
         date = datetime.strptime(match['utcDate'], FORMAT_DATE_JSON)
-        m.update(date=datetime.strftime(date, FORMAT_DATE + " " + FORMAT_TIME))
-        data['matches'].append(m)
+        match_info.update(date=datetime.strftime(date, FORMAT_DATE + " " + FORMAT_TIME))
+        data['matches'].append(match_info)
 
     return render(request, "calendar_games.html", {"data": data})

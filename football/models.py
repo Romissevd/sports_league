@@ -67,3 +67,10 @@ class CodeLeague(models.Model):
     league_code = models.CharField(max_length=10)
     country = models.CharField(max_length=100)
     league = models.ForeignKey(League, on_delete=models.CASCADE)
+
+
+class APITables(models.Model):
+
+    date = models.DateTimeField()
+    league_code = models.CharField(max_length=10)
+    tables = JSONField()
