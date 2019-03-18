@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import FootballClub, ParsingData, CountryRuName, APIMatches, CodeLeague, APITables
 from datetime import datetime
+from collections import OrderedDict
 
 
 FORMAT_DATE = "%d-%B-%Y"
@@ -144,18 +145,33 @@ def calendar_games(request, country, country_id, league_id):
         return render(request, "matches.html", {})
 
     league_info = APIMatches.objects.filter(league_code=code.league_code).order_by('-id')[0]
-    data = {'matches': []}
+    # data = {'matches': []}
+    match_info = {}
 
     for match in league_info.data['matches']:
-        match_info = {}
+        print(match)
+
         status = match['status']
         if status == "FINISHED":
             continue
-        match_info.update(matchday=match['matchday'])
-        match_info.update(homeTeam=team_game(match['homeTeam']['name']))
-        match_info.update(awayTeam=team_game(match['awayTeam']['name']))
-        date = datetime.strptime(match['utcDate'], FORMAT_DATE_JSON)
-        match_info.update(date=datetime.strftime(date, FORMAT_DATE + " " + FORMAT_TIME))
-        data['matches'].append(match_info)
+        matchday = match['matchday']
+        if not match_info.get(matchday):
+            match_info.update({matchday: dict()})
 
-    return render(request, "calendar_games.html", {"data": data})
+        date = datetime.strptime(match['utcDate'], FORMAT_DATE_JSON)
+        date_match = datetime.strftime(date, FORMAT_DATE)
+        if not match_info[matchday].get(date_match):
+            match_info[matchday].update({date_match: dict()})
+
+        time_match = datetime.strftime(date, FORMAT_TIME)
+        if not match_info[matchday][date_match].get(time_match):
+            match_info[matchday][date_match].update({time_match: list()})
+
+        game = {}
+        game.update(homeTeam=team_game(match['homeTeam']['name']))
+        game.update(awayTeam=team_game(match['awayTeam']['name']))
+        match_info[matchday][date_match][time_match].append(game)
+
+    match_info = OrderedDict(sorted(match_info.items(), key=lambda item: item[0]))
+
+    return render(request, "calendar_games.html", {"data": match_info})

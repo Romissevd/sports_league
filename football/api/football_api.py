@@ -8,8 +8,10 @@ from datetime import datetime
 
 
 CODE_LEAGUE = [
-    'CL', # Champions_League - Europe
-    'PL', # Premiere League - England
+    # 'CL', # Champions_League - Europe
+    # 'PL', # Premiere League - England
+    'SA', # Seria A - Italy
+    'PD', # Primera Division - Spain
 ]
 
 
@@ -27,6 +29,7 @@ def api_data_league(league_code):
             data=info_json,
             league_code=league_code,
         )
+
 
 def api_data_table(league_code):
     data_league = APIData(
@@ -46,5 +49,5 @@ def api_data_table(league_code):
 
 if __name__ == "__main__":
     for code_league in CODE_LEAGUE:
-        # api_data_league(code_league)
-        api_data_table(code_league)
+        api_data_league(code_league)
+        # api_data_table(code_league)
