@@ -41,10 +41,10 @@ class APIData:
 
 if __name__ == "__main__":
 
-    cl = APIData(APIUserData.SITE, "competitions/CL/matches", APIUserData.HEADERS)
-    print(cl.data_json())
-    val = APIData('http://ip.jsontest.com/ ')
-    print(val.data_json())
+    # cl = APIData(APIUserData.SITE, "competitions/CL/matches", APIUserData.HEADERS)
+    # print(cl.data_json())
+    # val = APIData('http://ip.jsontest.com/ ')
+    # print(val.data_json())
     pl_table = APIData(APIUserData.SITE, "competitions/PL/standings", APIUserData.HEADERS)
     print(pl_table.data_json())
 

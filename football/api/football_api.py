@@ -5,6 +5,7 @@ from football.api.api_data import APIData
 from football.api.account_info import APIUserData
 from football.models import APIMatches, APITables
 from datetime import datetime
+from football.db.standings import Standings
 
 
 CODE_LEAGUE = [
@@ -40,14 +41,23 @@ def api_data_table(league_code):
 
     info_json = data_league.data_json()
     if info_json is not None:
-        APITables.objects.create(
-            date=datetime.now(),
-            tables=info_json,
-            league_code=league_code,
-        )
+
+        country = info_json['competition']['area']['name']
+        start_year = info_json['season']['startDate'].split('-')[0]
+        end_year = info_json['season']['endDate'].split('-')[0]
+
+        table_name = '_'.join([country, league_code, start_year, end_year])
+
+        Standings().search_table(table_name)
+
+        # APITables.objects.create(
+        #     date=datetime.now(),
+        #     tables=info_json,
+        #     league_code=league_code,
+        # )
 
 
 if __name__ == "__main__":
     for code_league in CODE_LEAGUE:
-        api_data_league(code_league)
-        # api_data_table(code_league)
+        # api_data_league(code_league)
+        api_data_table(code_league)

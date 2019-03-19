@@ -8,8 +8,8 @@
         <p>Здесь будет информация о матчах</p>
     {% else %}
     <ul>
-    {% for tour, matchday in data.items %}
-        <li>{{ tour }} - й тур</li>
+    {% for round, matchday in data.items %}
+        <li>{{ round }} - й тур</li>
         <ul>
         {% for date, time in matchday.items %}
             <li>{{ date }}</li>

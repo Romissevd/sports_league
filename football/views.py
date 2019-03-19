@@ -129,7 +129,10 @@ def table(request, country, country_id, league_id):
 
     table = []
 
+    print(table_info)
+
     for team in table_info.tables["standings"][0]['table']:
+        print(team)
         team_info = team
         team_info.update(team=team_game(team['team']['name']))
         table.append(team_info)
@@ -149,7 +152,6 @@ def calendar_games(request, country, country_id, league_id):
     match_info = {}
 
     for match in league_info.data['matches']:
-        print(match)
 
         status = match['status']
         if status == "FINISHED":
