@@ -5,7 +5,7 @@ from football.api.account_info import APIUserData
 
 class APIData:
 
-    def __init__(self, site, request='', headers={}):
+    def __init__(self, site, request='', headers=dict()):
         self.site = site
         self.request = request
         self.headers = headers

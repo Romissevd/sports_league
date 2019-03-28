@@ -15,6 +15,12 @@ class CountryRuName(models.Model):
     country_name = models.CharField(max_length=50)
 
 
+class CountryEnName(models.Model):
+
+    country_name = models.CharField(max_length=50)
+    ru_name = models.ForeignKey(CountryRuName, on_delete=models.CASCADE)
+
+
 class League(models.Model):
 
     league_name = models.CharField(max_length=100)
@@ -36,7 +42,7 @@ class ParsingData(models.Model):
 class FootballClub(models.Model):
 
     fc_en_name = models.CharField(max_length=200, default='')
-    # alt_name = models.CharField(max_length=200, default='')
+    alt_name = models.CharField(max_length=200, default='')
     fc_id_name_dictionary = models.ForeignKey(DictionaryClubName, on_delete=models.CASCADE)
     num_image = models.IntegerField(default=0)
     year_of_foundation = models.IntegerField(default=0)
