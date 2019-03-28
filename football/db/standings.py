@@ -16,7 +16,7 @@ class Standings(FCDataBase):
                 won INTEGER NOT NULL, 
                 draw INTEGER NOT NULL,
                 lost INTEGER NOT NULL,
-                CONSTRAINT unique_{name} UNIQUE (team_id, team_name, playedGames));""".format(name=name)
+                CONSTRAINT unique_{name} UNIQUE (team_name));""".format(name=name)
         self.query(table)
         self.save()
         self.close()
@@ -30,17 +30,9 @@ class Standings(FCDataBase):
         result = None
         for item in self.cursor:
             result = item
-        # self.close()
+        self.close()
         return result
 
-    def update_team(self, table_name, team_info):
-        # sel_team = self.select_team(table_name, team_info)
-        # if sel_team is None:
-        self.insert_team(table_name, team_info)
-        # else:
-        #     upd = """
-        #     UPDATE
-        #     """
 
     def insert_team(self, table_name, team_info):
         ins = """
@@ -67,7 +59,7 @@ class Standings(FCDataBase):
             %(won)s, 
             %(draw)s, 
             %(lost)s
-        ) ON CONFLICT (team_id, team_name, playedGames) DO UPDATE SET
+        ) ON CONFLICT (team_name) DO UPDATE SET
             team_id = EXCLUDED.team_id,
             playedGames = EXCLUDED.playedGames, 
             points = EXCLUDED.points, 

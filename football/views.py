@@ -3,11 +3,13 @@ from django.http import HttpResponseRedirect
 from .models import FootballClub, ParsingData, CountryRuName, APIMatches, CodeLeague, APITables
 from datetime import datetime
 from collections import OrderedDict
+from football.db.standings import Standings
 
 
 FORMAT_DATE = "%d-%B-%Y"
 FORMAT_TIME = "%H:%M"
 FORMAT_DATE_JSON = "%Y-%m-%dT%H:%M:%SZ"
+SEASON = 2018
 
 # Create your views here.
 
@@ -26,21 +28,26 @@ def team_game(name):
         img = "/fc_logo/{}.png".format(club.num_image)
         return {'team': club, 'image': img}
     except FootballClub.DoesNotExist:
-        names = ' '.join([x for x in name.split(' ') if len(x) > 2])
         try:
-            team = FootballClub.objects.get(fc_en_name__contains=names)
+            team = FootballClub.objects.get(alt_name=name)
             img = "/fc_logo/{}.png".format(team.num_image)
             return {'team': team, 'image': img}
-        except FootballClub.MultipleObjectsReturned:
-            team = FootballClub.objects.filter(fc_en_name__contains=names)
-            club = team[0]
-            for t in team:
-                if club.num_image > t.num_image:
-                    club = t
-            img = "/fc_logo/{}.png".format(club.num_image)
-            return {'team': club, 'image': img}
         except FootballClub.DoesNotExist:
-            return {'team': name}
+            names = ' '.join([x for x in name.split(' ') if len(x) > 2])
+            try:
+                team = FootballClub.objects.get(fc_en_name__contains=names)
+                img = "/fc_logo/{}.png".format(team.num_image)
+                return {'team': team, 'image': img}
+            except FootballClub.MultipleObjectsReturned:
+                team = FootballClub.objects.filter(fc_en_name__contains=names)
+                club = team[0]
+                for t in team:
+                    if club.num_image > t.num_image:
+                        club = t
+                img = "/fc_logo/{}.png".format(club.num_image)
+                return {'team': club, 'image': img}
+            except FootballClub.DoesNotExist:
+                return {'team': name}
 
 
 def champions_league(request):
@@ -129,12 +136,14 @@ def table(request, country, country_id, league_id):
 
     table = []
 
-    print(table_info)
+    # print(table_info)
 
     for team in table_info.tables["standings"][0]['table']:
-        print(team)
+        # print(team)
         team_info = team
         team_info.update(team=team_game(team['team']['name']))
+        print(team_info)
+        print("___"*40)
         table.append(team_info)
 
     return render(request, "table.html", {"table": table})
