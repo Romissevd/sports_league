@@ -12,7 +12,7 @@ from football.db.team import Team
 
 CODES_LEAGUES = [
     # 'CL', # Champions_League - Europe
-    # 'PL', # Premiere League - England
+    'PL', # Premiere League - England
     'SA', # Seria A - Italy
     'PD', # Primera Division - Spain
 ]
@@ -42,6 +42,8 @@ def forming_table_name(*args):
 def api_data_table(data):
 
     Standings().create_table(data['table_name'])
+    for team in data['teams']:
+        Standings().update_team(data['table_name'], team)
 
 
         # APITables.objects.create(
@@ -65,16 +67,17 @@ def source_data_conversion_1(league_code):
         end_year = data_league['season']['endDate'].split('-')[0]
         data.update(table_name=forming_table_name(country, league_code, start_year, end_year))
         for standing in data_league['standings']:
-            data.update(teams=[])
             if standing['type'] == 'TOTAL':
+                data.update(teams=[])
                 for team in standing['table']:
                     team_name = team['team']['name']
                     id_team = Team().search_team(team_name, id_ru_name_country)
-                    # add_team = team
-                    # id_team = get_id_team()
-                    # print(team)
-                    print(id_team)
-                    print("--" * 40)
+                    if id_team is None:
+                        id_team = 1546 # 1546 - None in DB
+                    team.update(id_team=id_team, team_name=team_name)
+                    data['teams'].append(team)
+
+        api_data_table(data)
 
 if __name__ == "__main__":
     for code_league in CODES_LEAGUES:
