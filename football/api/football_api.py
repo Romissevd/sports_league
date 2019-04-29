@@ -1,6 +1,7 @@
 import django
 django.setup()
 
+import json
 from football.api.api_data import APIData
 from football.api.account_info import APIUserData
 from football.models import APIMatches, APITables
@@ -13,10 +14,10 @@ from football.db.team import Team
 CODES_LEAGUES = [
     # 'CL', # Champions_League - Europe
     'PL', # Premiere League - England
-    'SA', # Seria A - Italy
-    'PD', # Primera Division - Spain
-    'BL1', # Bundesliga - Germany
-    'FL1', # Ligue 1 - France
+    # 'SA', # Seria A - Italy
+    # 'PD', # Primera Division - Spain
+    # 'BL1', # Bundesliga - Germany
+    # 'FL1', # Ligue 1 - France
 ]
 
 
@@ -50,11 +51,12 @@ def api_data_table(league_code):
     )
     info_json = data_league.data_json()
     if info_json is not None:
-        APITables.objects.create(
-            date=datetime.now(),
-            tables=info_json,
-            league_code=league_code,
-        )
+        print(json.dumps(info_json, indent=4, sort_keys=True))
+        # APITables.objects.create(
+        #     date=datetime.now(),
+        #     tables=info_json,
+        #     league_code=league_code,
+        # )
 
 
 # def source_data_conversion_1(league_code):

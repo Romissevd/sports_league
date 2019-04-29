@@ -1,5 +1,10 @@
 {% extends "base.html" %}
-{% load static %}
+
+{% block extra_head %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/standing.css' %}"/>
+{% endblock %}
+
 {% block content %}
 
     {% include "navigation_league.html" %}
@@ -7,7 +12,7 @@
     {% if not table %}
         <p>Здесь будет отображена турнирная таблица</p>
     {% else %}
-        <table>
+        <table class="standing">
         <caption>Турнирная таблица</caption>
         <tr>
             <th>Место</th>
@@ -20,27 +25,27 @@
             <th>Н</th>
             <th>П</th>
         </tr>
-        {% for team in table %}
+        {% for row in table %}
             <tr>
-            <td>{{ team.position }}</td>
-            <td>
-            {% if team.team.image %}
-                <img src="/media{{ team.team.image }}" width="20px">
-            {% endif %}
-            </td>
-            <td>
-            {% if not team.team.team.fc_en_name %}
-                {{ team.team.team }}
-            {% else %}
-                <a href="/football/team/{{ team.team.team.fc_en_name }}/">{{ team.team.team.fc_id_name_dictionary.club_name }}</a>
-            {% endif %}
-            </td>
-            <td>{{ team.playedGames }}</td>
-            <td>{{ team.points }}</td>
-            <td>{{ team.goalsFor }} - {{ team.goalsAgainst }}</td>
-            <td>{{ team.won }}</td>
-            <td>{{ team.draw }}</td>
-            <td>{{ team.lost }}</td>
+                <td>{{ row.position }}</td>
+                <td>
+                {% if row.team.image %}
+                    <img src="/media{{ row.team.image }}" width="20px">
+                {% endif %}
+                </td>
+                <td>
+                {% if not row.team.team_in_db.fc_en_name %}
+                    {{ row.team.team_in_db }}
+                {% else %}
+                    <a href="/football/team/{{ row.team.team_in_db.fc_en_name }}/">{{ row.team.team_in_db.fc_id_name_dictionary.club_name }}</a>
+                {% endif %}
+                </td>
+                <td>{{ row.playedGames }}</td>
+                <td>{{ row.points }}</td>
+                <td>{{ row.goalsFor }} - {{ row.goalsAgainst }}</td>
+                <td>{{ row.won }}</td>
+                <td>{{ row.draw }}</td>
+                <td>{{ row.lost }}</td>
             </tr>
         {% endfor %}
         </table>

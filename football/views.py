@@ -14,11 +14,11 @@ SEASON = 2018
 # Create your views here.
 
 
-def team_game(name):
+def search_team_in_db(name):
     try:
         team = FootballClub.objects.get(fc_en_name=name)
         img = "/fc_logo/{}.png".format(team.num_image)
-        return {'team': team, 'image': img}
+        return {'team_in_db': team, 'image': img}
     except FootballClub.MultipleObjectsReturned:
         team = FootballClub.objects.filter(fc_en_name=name)
         club = team[0]
@@ -26,18 +26,18 @@ def team_game(name):
             if club.num_image > t.num_image:
                 club = t
         img = "/fc_logo/{}.png".format(club.num_image)
-        return {'team': club, 'image': img}
+        return {'team_in_db': club, 'image': img}
     except FootballClub.DoesNotExist:
         try:
             team = FootballClub.objects.get(alt_name=name)
             img = "/fc_logo/{}.png".format(team.num_image)
-            return {'team': team, 'image': img}
+            return {'team_in_db': team, 'image': img}
         except FootballClub.DoesNotExist:
             names = ' '.join([x for x in name.split(' ') if len(x) > 2])
             try:
                 team = FootballClub.objects.get(fc_en_name__contains=names)
                 img = "/fc_logo/{}.png".format(team.num_image)
-                return {'team': team, 'image': img}
+                return {'team_in_db': team, 'image': img}
             except FootballClub.MultipleObjectsReturned:
                 team = FootballClub.objects.filter(fc_en_name__contains=names)
                 club = team[0]
@@ -45,9 +45,9 @@ def team_game(name):
                     if club.num_image > t.num_image:
                         club = t
                 img = "/fc_logo/{}.png".format(club.num_image)
-                return {'team': club, 'image': img}
+                return {'team_in_db': club, 'image': img}
             except FootballClub.DoesNotExist:
-                return {'team': name}
+                return {'team_in_db': name}
 
 
 def champions_league(request):
@@ -59,8 +59,8 @@ def champions_league(request):
         # print(match)
         m = {}
         m.update(stage=match['stage'])
-        m.update(homeTeam=team_game(match['homeTeam']['name']))
-        m.update(awayTeam=team_game(match['awayTeam']['name']))
+        m.update(homeTeam=search_team_in_db(match['homeTeam']['name']))
+        m.update(awayTeam=search_team_in_db(match['awayTeam']['name']))
         m.update(score={'homeTeam': match['score']['fullTime']['homeTeam'], 'awayTeam': match['score']['fullTime']['awayTeam']})
         data['matches'].append(m)
     # print(data)
@@ -103,8 +103,8 @@ def matches(request, country, country_id, league_id):
         if score_home_team is None and score_away_team is None:
             continue
         match_info.update(stage=match['stage'])
-        match_info.update(homeTeam=team_game(match['homeTeam']['name']))
-        match_info.update(awayTeam=team_game(match['awayTeam']['name']))
+        match_info.update(homeTeam=search_team_in_db(match['homeTeam']['name']))
+        match_info.update(awayTeam=search_team_in_db(match['awayTeam']['name']))
         match_info.update(score={'homeTeam': score_home_team, 'awayTeam': score_away_team})
         date = datetime.strptime(match['utcDate'], FORMAT_DATE_JSON)
         match_info.update(date=datetime.strftime(date, FORMAT_DATE))
@@ -133,17 +133,14 @@ def table(request, country, country_id, league_id):
         return render(request, "table.html", {})
 
     table_info = APITables.objects.filter(league_code=code.league_code).order_by('-id')[0]
+    # TODO берется последнее значение в БД по id, может лучше по дате? И проверить
+    #  результат должен удовлетворять нашему запросу
 
     table = []
 
-    # print(table_info)
-
     for team in table_info.tables["standings"][0]['table']:
-        # print(team)
         team_info = team
-        team_info.update(team=team_game(team['team']['name']))
-        print(team_info)
-        print("___"*40)
+        team_info.update(team=search_team_in_db(team['team']['name']))
         table.append(team_info)
 
     return render(request, "table.html", {"table": table})
@@ -179,8 +176,8 @@ def calendar_games(request, country, country_id, league_id):
             match_info[matchday][date_match].update({time_match: list()})
 
         game = {}
-        game.update(homeTeam=team_game(match['homeTeam']['name']))
-        game.update(awayTeam=team_game(match['awayTeam']['name']))
+        game.update(homeTeam=search_team_in_db(match['homeTeam']['name']))
+        game.update(awayTeam=search_team_in_db(match['awayTeam']['name']))
         match_info[matchday][date_match][time_match].append(game)
 
     match_info = OrderedDict(sorted(match_info.items(), key=lambda item: item[0]))
