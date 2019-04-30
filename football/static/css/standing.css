@@ -1,4 +1,10 @@
-table {
-    background-color: #1e525d;
+table, caption {
+    background-color: #00eaa5;
     font-style: italic;
+    color: #2e5c64;
+}
+
+table a {
+    text-decoration: none;
+    color: #2e5c64;
 }

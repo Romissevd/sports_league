@@ -7,32 +7,37 @@
         <p>Здесь будет информация о матчах</p>
     {% else %}
 
-    {% for match in data.matches %}
-        <p>
-        {{ match.date }}
-{#        {{ match.stage }}#}
+    {% regroup data.matches by date as match_grouping_by_date %}
 
-        {% if not match.homeTeam.image %}
-            {{ match.homeTeam.team }}
-        {% else %}
-            <a href="/football/team/{{ match.homeTeam.team.fc_en_name }}">
-                {{ match.homeTeam.team.fc_id_name_dictionary.club_name }}
-                <img src="/media{{ match.homeTeam.image }}" width="30px"/>
-            </a>
-        {% endif %}
-        -
-        {% if not match.awayTeam.image %}
-            {{ match.awayTeam.team }}
-        {% else %}
-            <a href="/football/team/{{ match.awayTeam.team.fc_en_name }}">
-                <img src="/media{{ match.awayTeam.image }}" width="30px"/>
-                {{ match.awayTeam.team.fc_id_name_dictionary.club_name }}
-            </a>
-        {% endif %}
-
-        <pre>{{ match.score.homeTeam }} - {{ match.score.awayTeam }}</pre>
-
-{#        </p>#}
+    {% for match_list in match_grouping_by_date %}
+        <table>
+        <caption>{{ match_list.grouper }}</caption>
+        {% for match in match_list.list %}
+            <tr>
+            <td>
+                {% if not match.homeTeam.image %}
+                    {{ match.homeTeam.team }}
+                {% else %}
+                    <a href="/football/team/{{ match.homeTeam.team_in_db.fc_en_name }}">
+                        {{ match.homeTeam.team_in_db.fc_id_name_dictionary.club_name }}
+                        <img src="/media{{ match.homeTeam.image }}" width="30px"/>
+                    </a>
+                {% endif %}
+            </td>
+            <td>{{ match.score.homeTeam }} : {{ match.score.awayTeam }}</td>
+            <td>
+                {% if not match.awayTeam.image %}
+                    {{ match.awayTeam.team }}
+                {% else %}
+                    <a href="/football/team/{{ match.awayTeam.team_in_db.fc_en_name }}">
+                        <img src="/media{{ match.awayTeam.image }}" width="30px"/>
+                        {{ match.awayTeam.team_in_db.fc_id_name_dictionary.club_name }}
+                    </a>
+                {% endif %}
+            </td>
+            {% endfor %}
+            </tr>
+        </table>
     {% endfor %}
     {% endif %}
 {% endblock %}
