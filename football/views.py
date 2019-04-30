@@ -96,7 +96,6 @@ def matches(request, country, country_id, league_id):
     data = {'matches': []}
 
     for match in league_info.data['matches']:
-        # print(match)
         match_info = {}
         score_home_team = match['score']['fullTime']['homeTeam']
         score_away_team = match['score']['fullTime']['awayTeam']
@@ -153,33 +152,41 @@ def calendar_games(request, country, country_id, league_id):
     except CodeLeague.DoesNotExist:
         return render(request, "matches.html", {})
 
-    league_info = APIMatches.objects.filter(league_code=code.league_code).order_by('-id')[0]
-    # data = {'matches': []}
-    match_info = {}
+    match_info = []
+
+    try:
+        league_info = APIMatches.objects.filter(league_code=code.league_code).order_by('-id')[0]
+        # TODO берется последнее значение в БД по id, может лучше по дате? И проверить
+        #  результат должен удовлетворять нашему запросу
+    except IndexError:
+        return render(request, "calendar_games.html", {"data": match_info})
+
 
     for match in league_info.data['matches']:
-
+        d = dict()
         status = match['status']
         if status == "FINISHED":
             continue
         matchday = match['matchday']
-        if not match_info.get(matchday):
-            match_info.update({matchday: dict()})
+        # if not match_info.get(matchday):
+        d.update(matchday=matchday)
 
         date = datetime.strptime(match['utcDate'], FORMAT_DATE_JSON)
         date_match = datetime.strftime(date, FORMAT_DATE)
-        if not match_info[matchday].get(date_match):
-            match_info[matchday].update({date_match: dict()})
+        # if not match_info[matchday].get(date_match):
+        #     match_info[matchday].update({date_match: dict()})
+        d.update(date_match=date_match)
 
         time_match = datetime.strftime(date, FORMAT_TIME)
-        if not match_info[matchday][date_match].get(time_match):
-            match_info[matchday][date_match].update({time_match: list()})
+        # if not match_info[matchday][date_match].get(time_match):
+        #     match_info[matchday][date_match].update({time_match: list()})
+        d.update(time_match=time_match)
 
         game = {}
         game.update(homeTeam=search_team_in_db(match['homeTeam']['name']))
         game.update(awayTeam=search_team_in_db(match['awayTeam']['name']))
-        match_info[matchday][date_match][time_match].append(game)
+        d.update(game=game)
+        match_info.append(d)
 
-    match_info = OrderedDict(sorted(match_info.items(), key=lambda item: item[0]))
-
+    # match_info = OrderedDict(sorted(match_info.items(), key=lambda item: item[0] and sorted(item[1].items(), key=lambda i: i[0])))
     return render(request, "calendar_games.html", {"data": match_info})
