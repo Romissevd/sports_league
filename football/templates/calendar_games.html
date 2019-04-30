@@ -8,100 +8,53 @@
         <p>Здесь будет информация о матчах</p>
     {% else %}
 
-        {% regroup data|dictsort:'date_match' by matchday as matchdays %}
+        {% regroup data by matchday as matchdays %}
 
         {% for round in matchdays %}
             <table>
                 <caption>{{ round.grouper }} - й тур</caption>
 
+                {% regroup round.list by date_match as dates %}
 
-                    {% regroup round.list by date_match as dates %}
-
-                    {% for date in dates %}
+                {% for date in dates %}
                     <tr>
-                    <td>{{ date.grouper }}</td>
+                        <td>{{ date.grouper }}</td>
+                    </tr>
 
-                        {% regroup date.list by time_match as times %}
+                    {% regroup date.list by time_match as times %}
 
-                        {% for time in times %}
+                    {% for time in times %}
+
+                        {% for match in time.list %}
                             <tr>
                                 <td>{{ time.grouper }}</td>
-                                {% for match in time.list %}
-                                    <td>
-                                        {{ match.game.homeTeam.team_in_db.fc_id_name_dictionary.club_name }} -
-                                        {{ match.game.awayTeam.team_in_db.fc_id_name_dictionary.club_name }}
-                                    </td>
-                                {% endfor %}
+                                <td>
+                                    {% if not match.game.homeTeam.image %}
+                                        {{ match.game.homeTeam.team }}
+                                    {% else %}
+                                        <a href="/football/team/{{ match.game.homeTeam.team_in_db.fc_en_name }}">
+                                            {{ match.game.homeTeam.team_in_db.fc_id_name_dictionary.club_name }}
+                                            <img src="/media{{ match.game.homeTeam.image }}" width="30px"/>
+                                        </a>
+                                    {% endif %}
+                                </td>
+                                <td> - </td>
+                                <td>
+                                    {% if not match.game.awayTeam.image %}
+                                        {{ match.game.awayTeam.team }}
+                                    {% else %}
+                                        <a href="/football/team/{{ match.game.awayTeam.team_in_db.fc_en_name }}">
+                                            <img src="/media{{ match.game.awayTeam.image }}" width="30px"/>
+                                            {{ match.game.awayTeam.team_in_db.fc_id_name_dictionary.club_name }}
+                                        </a>
+                                    {% endif %}
+                                </td>
                             </tr>
                         {% endfor %}
+
                     {% endfor %}
-                </tr>
+                {% endfor %}
             </table>
         {% endfor %}
-
-{#        {% endfor %}#}
-{#    <ul>#}
-{#    {% for round, matchday in data.items %}#}
-{#        <li>{{ round }} - й тур</li>#}
-{#        <ul>#}
-{#        {% for date, time in matchday.items %}#}
-{#            <li>{{ date }}</li>#}
-{#            <ul>#}
-{#            {% for time_match, game in time.items %}#}
-{#                <li>{{ time_match }}</li>#}
-{#                <ul>#}
-{#                {% for match in game%}#}
-{#                    <li>#}
-{#                    {% if not match.homeTeam.image %}#}
-{#                        {{ match.homeTeam.team }}#}
-{#                    {% else %}#}
-{#                        <a href="/football/team/{{ match.homeTeam.team_in_db.fc_en_name }}">#}
-{#                            {{ match.homeTeam.team_in_db.fc_id_name_dictionary.club_name }}#}
-{#                            <img src="/media{{ match.homeTeam.image }}" width="30px"/>#}
-{#                        </a>#}
-{#                    {% endif %}#}
-{#                    -#}
-{#                    {% if not match.awayTeam.image %}#}
-{#                        {{ match.awayTeam.team }}#}
-{#                    {% else %}#}
-{#                        <a href="/football/team/{{ match.awayTeam.team_in_db.fc_en_name }}">#}
-{#                            <img src="/media{{ match.awayTeam.image }}" width="30px"/>#}
-{#                            {{ match.awayTeam.team_in_db.fc_id_name_dictionary.club_name }}#}
-{#                        </a>#}
-{#                    {% endif %}#}
-{#                    </li>#}
-{#                {% endfor %}#}
-{#                </ul>#}
-{#            {% endfor %}#}
-{#            </ul>#}
-{#        {% endfor %}#}
-{#        </ul>#}
-{##}
-{#        <p>#}
-{#        {{ match.matchday }} - й тур#}
-{#        {{ match.date }}#}
-{#        #}
-{##}
-{#        {% if not match.homeTeam.image %}#}
-{#            {{ match.homeTeam.team }}#}
-{#        {% else %}#}
-{#            <a href="/football/team/{{ match.homeTeam.team.fc_en_name }}">#}
-{#                {{ match.homeTeam.team.fc_id_name_dictionary.club_name }}#}
-{#                <img src="/media{{ match.homeTeam.image }}" width="30px"/>#}
-{#            </a>#}
-{#        {% endif %}#}
-{#        -#}
-{#        {% if not match.awayTeam.image %}#}
-{#            {{ match.awayTeam.team }}#}
-{#        {% else %}#}
-{#            <a href="/football/team/{{ match.awayTeam.team.fc_en_name }}">#}
-{#                <img src="/media{{ match.awayTeam.image }}" width="30px"/>#}
-{#                {{ match.awayTeam.team.fc_id_name_dictionary.club_name }}#}
-{#            </a>#}
-{#        {% endif %}#}
-{##}
-{#    {% endfor %}#}
-{#    </ul>#}
     {% endif %}
-
 {% endblock %}
