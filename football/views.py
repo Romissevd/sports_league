@@ -83,7 +83,7 @@ def team(request, team_name):
 
 def league(request, country, country_id, league_id):
 
-    return HttpResponseRedirect('teams')
+    return HttpResponseRedirect('table')
 
 
 def matches(request, country, country_id, league_id):
@@ -113,18 +113,6 @@ def matches(request, country, country_id, league_id):
         data['matches'].append(match_info)
 
     return render(request, "matches.html", {"data": data})
-
-
-def teams(request, country,  country_id, league_id):
-    teams = []
-    # Добавить try/except к ParsingData ?
-    for team in ParsingData.objects.filter(country_id=country_id, league_id=league_id):
-        try:
-            teams.append(FootballClub.objects.get(fc_id_name_dictionary=team.name_id, country_id=country_id))
-        except FootballClub.DoesNotExist:
-            continue
-
-    return render(request, "teams.html",  {"teams": teams})
 
 
 def table(request, country, country_id, league_id):

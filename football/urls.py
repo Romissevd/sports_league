@@ -15,6 +15,5 @@ urlpatterns = [
     re_path(r'(?P<country>[\w|\W]+)/(?P<country_id>[\w|\W]+)/(?P<league_id>[\d]+)/matches', views.matches),
     re_path(r'(?P<country>[\w|\W]+)/(?P<country_id>[\w|\W]+)/(?P<league_id>[\d]+)/calendar', views.calendar_games),
     re_path(r'(?P<country>[\w|\W]+)/(?P<country_id>[\w|\W]+)/(?P<league_id>[\d]+)/table', views.table),
-    re_path(r'(?P<country>[\w|\W]+)/(?P<country_id>[\w|\W]+)/(?P<league_id>[\d]+)/teams', views.teams),
     re_path(r'(?P<country>[\w|\W]+)/(?P<country_id>[\w|\W]+)/(?P<league_id>[\d]+)/', views.league),
 ]
