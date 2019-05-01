@@ -22,6 +22,7 @@ CODES_LEAGUES = [
     'FL1', # Ligue 1 - France
     'DED', # Eredivisie - Netherlands
     'PPL', # Primeira Liga - Portugal
+    'BSA', # Serie A - Brazil
 ]
 
 

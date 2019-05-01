@@ -59,8 +59,8 @@ def save(db, dct_info, country_id, team_id):
 
     if not select_fc(db, dct_info, country_id, num_img, team_id):
         db.query(
-            """INSERT INTO football_footballclub (fc_en_name, email, fax, address, phone, site, stadium_id, country_id, num_image, fc_id_name_dictionary_id, year_of_foundation) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s , %s, %s);""",
-            (dct_info['fc_en_name'], dct_info['email'], dct_info['fax'], dct_info['address'], dct_info['phone'], dct_info['official_site'], id_stadium, country_id, num_img, team_id, dct_info['foundation']))
+            """INSERT INTO football_footballclub (fc_en_name, email, fax, address, phone, site, stadium_id, country_id, num_image, fc_id_name_dictionary_id, year_of_foundation, alt_name) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s , %s, %s, %s);""",
+            (dct_info['fc_en_name'], dct_info['email'], dct_info['fax'], dct_info['address'], dct_info['phone'], dct_info['official_site'], id_stadium, country_id, num_img, team_id, dct_info['foundation'], ''))
 
         db.save()
     return
