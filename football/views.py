@@ -1,9 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import FootballClub, ParsingData, CountryRuName, APIMatches, CodeLeague, APITables
+from .models import FootballClub, APIMatches, CodeLeague, APITables, CountryEnName
 from datetime import datetime
-from collections import OrderedDict
-from football.db.standings import Standings
 
 
 FORMAT_DATE = "%d-%B-%Y"
@@ -69,9 +67,9 @@ def champions_league(request):
     return render(request, "champions_league.html", {"data": {"data": data}})
 
 
-def championship(request, ru_name_country):
-    country = CountryRuName.objects.get(country_name=ru_name_country)
-    leagues = ParsingData.objects.filter(country_id=country.id).distinct('league_id')
+def championship(request, name_country):
+    country = CountryEnName.objects.get(country_name=name_country)
+    leagues = CodeLeague.objects.filter(country=name_country.capitalize())
     return render(request, "country_leagues.html", {"leagues": leagues, "country": country})
 
 
@@ -177,5 +175,4 @@ def calendar_games(request, country, country_id, league_id):
         match_dt.update(game=game)
         match_info.append(match_dt)
 
-    # match_info = OrderedDict(sorted(match_info.items(), key=lambda item: item[0] and sorted(item[1].items(), key=lambda i: i[0])))
     return render(request, "calendar_games.html", {"data": match_info})

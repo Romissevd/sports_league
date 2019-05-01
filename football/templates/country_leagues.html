@@ -5,7 +5,7 @@
 {% block content %}
     <ul>
     {% for league in leagues %}
-        <li><a href="{{ country.id }}/{{ league.league_id_id }}/">{{ league.league_id.league_name }}</a></li>
+        <li><a href="{{ country.ru_name_id }}/{{ league.league_id }}/">{{ league.league.league_name }}</a></li>
     {% endfor %}
     </ul>
 {% endblock %}

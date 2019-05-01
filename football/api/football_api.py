@@ -16,10 +16,12 @@ CODES_LEAGUES = [
     'PL', # Premiere League - England
     # 'ELC', # Championship - England
     #####'FAC', # League One - England
-    # 'SA', # Seria A - Italy
-    # 'PD', # Primera Division - Spain
-    # 'BL1', # Bundesliga - Germany
-    # 'FL1', # Ligue 1 - France
+    'SA', # Seria A - Italy
+    'PD', # Primera Division - Spain
+    'BL1', # Bundesliga - Germany
+    'FL1', # Ligue 1 - France
+    'DED', # Eredivisie - Netherlands
+    'PPL', # Primeira Liga - Portugal
 ]
 
 
