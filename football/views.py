@@ -48,8 +48,9 @@ def search_team_in_db(name):
                 return {'team_in_db': name}
 
 
-def champions_league(request):
+def champions_league(request, stage='groups'):
     # print(FootballClub.objects.filter(fc_en_name='FK Dynamo Kyiv'))
+    print(stage)
     datas = APIMatches.objects.filter(league_code="CL").order_by('-id')[0]
     data = {'matches': []}
 
@@ -64,7 +65,7 @@ def champions_league(request):
     # print(data)
     # data = json.loads(data)
     # print(data)
-    return render(request, "champions_league.html", {"data": {"data": data}})
+    return render(request, "champions_league.html", {"data": data})
 
 
 def championship(request, name_country):

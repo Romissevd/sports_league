@@ -1,7 +1,14 @@
 {% extends "base.html" %}
 {% load static %}
 {% block content %}
-    {% for match in data.data.matches %}
+
+    <ul class="list-stages_LC">
+        <li class="stage"><a href="{% url 'preliminary' %}">Предварительный этап</a></li>
+        <li class="stage"><a href="{% url 'groups' %}">Групповой этап</a></li>
+        <li class="stage"><a href="{% url 'finals' %}">Плей-офф</a></li>
+    </ul>
+
+    {% for match in data.matches %}
         <p>
         {{ match.stage }}
             {% if not match.homeTeam.image %}

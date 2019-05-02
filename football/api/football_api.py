@@ -2,6 +2,7 @@ import django
 django.setup()
 
 import json
+import time
 from football.api.api_data import APIData
 from football.api.account_info import APIUserData
 from football.models import APIMatches, APITables
@@ -92,6 +93,8 @@ def api_data_table(league_code):
 
 if __name__ == "__main__":
     for code_league in CODES_LEAGUES:
+        print(code_league)
         api_data_league(code_league)
         # source_data_conversion_1(code_league)
         api_data_table(code_league)
+        time.sleep(15)
