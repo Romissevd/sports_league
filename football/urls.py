@@ -3,10 +3,10 @@ from . import views
 
 
 urlpatterns = [
-    path('champions_league/', views.champions_league, name='cl'),
-    path('preliminary/', views.champions_league, {'stage': 'preliminary'}, name='preliminary'),
-    path('groups/', views.champions_league, {'stage': 'groups'}, name='groups'),
-    path('finals/', views.champions_league, {'stage': 'finals'}, name='finals'),
+    path('champions_league/', views.champions_league, {'stage': 'preliminary'}, name='cl'),
+    path('champions_league/preliminary/', views.champions_league, {'stage': 'preliminary'}, name='preliminary'),
+    path('champions_league/groups/', views.champions_league, {'stage': 'groups'}, name='groups'),
+    path('champions_league/finals/', views.champions_league, {'stage': 'finals'}, name='finals'),
     path('england/', views.championship, {'name_country': 'England'}, name='england'),
     path('spain/', views.championship, {'name_country': 'Spain'}, name='spain'),
     path('italy/', views.championship, {'name_country': 'Italy'}, name='italy'),

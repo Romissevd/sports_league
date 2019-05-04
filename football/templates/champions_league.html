@@ -25,4 +25,40 @@
         {{ match.score.homeTeam }} - {{ match.score.awayTeam }}
         </p>
     {% endfor %}
+
+    {% if standings %}
+        {% for group in standings %}
+            {{ group.group }}
+            <table>
+            <tr>
+                <th>Название</th>
+                <th>Игр</th>
+                <th>В</th>
+                <th>Н</th>
+                <th>П</th>
+                <th>З</th>
+                <th>П</th>
+                <th>О</th>
+            </tr>
+            {% for team in group.table %}
+                <tr>
+                    <td>
+                    {% if not team.team.team_in_db.fc_en_name %}
+                        {{ team.team.team_in_db }}
+                    {% else %}
+                        <a href="/football/team/{{ team.team.team_in_db.fc_en_name }}/">{{ team.team.team_in_db.fc_id_name_dictionary.club_name }} ({{ team.team.team_in_db.country.country_name }})</a>
+                    {% endif %}
+                    </td>
+                    <td>{{ team.playedGames }}</td>
+                    <td>{{ team.won }}</td>
+                    <td>{{ team.draw }}</td>
+                    <td>{{ team.lost }}</td>
+                    <td>{{ team.goalsFor }}</td>
+                    <td>{{ team.goalsAgainst }}</td>
+                    <td>{{ team.points }}</td>
+                </tr>
+            {% endfor %}
+            <table>
+        {% endfor %}
+    {% endif %}
 {% endblock %}

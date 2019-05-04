@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import FootballClub, APIMatches, CodeLeague, APITables, CountryEnName
 from datetime import datetime
+from football.leagues.champions_leaague import dct_cl_stages
 
 
 FORMAT_DATE = "%d-%B-%Y"
@@ -48,24 +49,43 @@ def search_team_in_db(name):
                 return {'team_in_db': name}
 
 
-def champions_league(request, stage='groups'):
-    # print(FootballClub.objects.filter(fc_en_name='FK Dynamo Kyiv'))
-    print(stage)
+def champions_league(request, stage):
+
+    stages = dct_cl_stages[stage]
+    standings_group = False
+
     datas = APIMatches.objects.filter(league_code="CL").order_by('-id')[0]
     data = {'matches': []}
 
     for match in datas.data['matches']:
         # print(match)
         m = {}
-        m.update(stage=match['stage'])
-        m.update(homeTeam=search_team_in_db(match['homeTeam']['name']))
-        m.update(awayTeam=search_team_in_db(match['awayTeam']['name']))
-        m.update(score={'homeTeam': match['score']['fullTime']['homeTeam'], 'awayTeam': match['score']['fullTime']['awayTeam']})
-        data['matches'].append(m)
+        if match['stage'] in stages:
+            m.update(stage=match['stage'])
+            m.update(homeTeam=search_team_in_db(match['homeTeam']['name']))
+            m.update(awayTeam=search_team_in_db(match['awayTeam']['name']))
+            m.update(score={'homeTeam': match['score']['fullTime']['homeTeam'], 'awayTeam': match['score']['fullTime']['awayTeam']})
+            data['matches'].append(m)
     # print(data)
     # data = json.loads(data)
     # print(data)
-    return render(request, "champions_league.html", {"data": data})
+
+    if stage == 'groups':
+        standings = APITables.objects.filter(league_code="CL").order_by('-id')[0]
+        standings_group = []
+        for result in standings.tables['standings']:
+            if result['type'] == 'TOTAL':
+
+                for club in result['table']:
+                    team = search_team_in_db(club['team']['name'])
+                    club['team']=team
+                standings_group.append(result)
+                # print(result)
+                # print('==='*40)
+        # print(standings)
+        # standings_group = APITables.objects.filter(league_code="CL").order_by('-id')[0]
+
+    return render(request, "champions_league.html", {"data": data, "standings": standings_group})
 
 
 def championship(request, name_country):

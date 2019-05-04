@@ -13,17 +13,17 @@ from football.db.team import Team
 
 
 CODES_LEAGUES = [
-    # 'CL', # Champions_League - Europe
-    'PL', # Premiere League - England
+    'CL', # Champions_League - Europe
+    # 'PL', # Premiere League - England
     # 'ELC', # Championship - England
     #####'FAC', # League One - England
-    'SA', # Seria A - Italy
-    'PD', # Primera Division - Spain
-    'BL1', # Bundesliga - Germany
-    'FL1', # Ligue 1 - France
-    'DED', # Eredivisie - Netherlands
-    'PPL', # Primeira Liga - Portugal
-    'BSA', # Serie A - Brazil
+    # 'SA', # Seria A - Italy
+    # 'PD', # Primera Division - Spain
+    # 'BL1', # Bundesliga - Germany
+    # 'FL1', # Ligue 1 - France
+    # 'DED', # Eredivisie - Netherlands
+    # 'PPL', # Primeira Liga - Portugal
+    # 'BSA', # Serie A - Brazil
 ]
 
 
@@ -36,11 +36,12 @@ def api_data_league(league_code):
 
     info_json = data_league.data_json()
     if info_json is not None:
-        APIMatches.objects.create(
-            date=datetime.now(),
-            data=info_json,
-            league_code=league_code,
-        )
+        print(json.dumps(info_json, indent=4, sort_keys=True))
+        # APIMatches.objects.create(
+        #     date=datetime.now(),
+        #     data=info_json,
+        #     league_code=league_code,
+        # )
 
 
 def forming_table_name(*args):
@@ -57,12 +58,12 @@ def api_data_table(league_code):
     )
     info_json = data_league.data_json()
     if info_json is not None:
-        # print(json.dumps(info_json, indent=4, sort_keys=True))
-        APITables.objects.create(
-            date=datetime.now(),
-            tables=info_json,
-            league_code=league_code,
-        )
+        print(json.dumps(info_json, indent=4, sort_keys=True))
+        # APITables.objects.create(
+        #     date=datetime.now(),
+        #     tables=info_json,
+        #     league_code=league_code,
+        # )
 
 
 # def source_data_conversion_1(league_code):
@@ -96,5 +97,6 @@ if __name__ == "__main__":
         print(code_league)
         api_data_league(code_league)
         # source_data_conversion_1(code_league)
+        print('=='*80)
         api_data_table(code_league)
         time.sleep(15)
