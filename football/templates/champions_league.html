@@ -7,23 +7,25 @@
         <li class="stage"><a href="{% url 'groups' %}">Групповой этап</a></li>
         <li class="stage"><a href="{% url 'finals' %}">Плей-офф</a></li>
     </ul>
-
-    {% for match in data.matches %}
-        <p>
-        {{ match.stage }}
+    {% regroup data.matches by stage as matches_grouper %}
+    {% for matches in matches_grouper %}
+        {{ matches.grouper }}
+        {% for match in matches.list %}
+            <p>
             {% if not match.homeTeam.image %}
                 {{ match.homeTeam.team }}
             {% else %}
-                {{ match.homeTeam.team.fc_id_name_dictionary.club_name }}<img src="/media{{ match.homeTeam.image }}" width="30px"/>
+                {{ match.homeTeam.team_in_db.fc_id_name_dictionary.club_name }}<img src="/media{{ match.homeTeam.image }}" width="30px"/>
             {% endif %}
-        -
-        {% if not match.awayTeam.image %}
+            -
+            {% if not match.awayTeam.image %}
                 {{ match.awayTeam.team }}
             {% else %}
-                <img src="/media{{ match.awayTeam.image }}" width="30px"/>{{ match.awayTeam.team.fc_id_name_dictionary.club_name }}
+                <img src="/media{{ match.awayTeam.image }}" width="30px"/>{{ match.awayTeam.team_in_db.fc_id_name_dictionary.club_name }}
             {% endif %}
-        {{ match.score.homeTeam }} - {{ match.score.awayTeam }}
-        </p>
+            {{ match.score.homeTeam }} - {{ match.score.awayTeam }}
+            </p>
+        {% endfor %}
     {% endfor %}
 
     {% if standings %}

@@ -26,7 +26,6 @@ CODES_LEAGUES = [
     # 'BSA', # Serie A - Brazil
 ]
 
-
 def api_data_league(league_code):
     data_league = APIData(
         APIUserData.SITE,
@@ -36,6 +35,9 @@ def api_data_league(league_code):
 
     info_json = data_league.data_json()
     if info_json is not None:
+        with open('data_league.txt', 'w') as file_leaggue:
+            file_leaggue.write(json.dumps(info_json, indent=4, sort_keys=True))
+
         print(json.dumps(info_json, indent=4, sort_keys=True))
         # APIMatches.objects.create(
         #     date=datetime.now(),
@@ -58,7 +60,9 @@ def api_data_table(league_code):
     )
     info_json = data_league.data_json()
     if info_json is not None:
-        print(json.dumps(info_json, indent=4, sort_keys=True))
+        with open('data_table.txt', 'w') as file_leaggue:
+            file_leaggue.write(json.dumps(info_json, indent=4, sort_keys=True))
+        # print(json.dumps(info_json, indent=4, sort_keys=True))
         # APITables.objects.create(
         #     date=datetime.now(),
         #     tables=info_json,
@@ -90,7 +94,7 @@ def api_data_table(league_code):
 #                     team.update(id_team=id_team, team_name=team_name)
 #                     data['teams'].append(team)
 #
-#         api_data_table(data)
+        # api_data_table(data)
 
 if __name__ == "__main__":
     for code_league in CODES_LEAGUES:
@@ -99,4 +103,4 @@ if __name__ == "__main__":
         # source_data_conversion_1(code_league)
         print('=='*80)
         api_data_table(code_league)
-        time.sleep(15)
+        time.sleep(5)

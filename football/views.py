@@ -149,11 +149,14 @@ def table(request, country, country_id, league_id):
         return render(request, "table.html", {})
 
     table = []
+    standings = table_info.tables["standings"]
 
-    for team in table_info.tables["standings"][0]['table']:
-        team_info = team
-        team_info.update(team=search_team_in_db(team['team']['name']))
-        table.append(team_info)
+    if len(standings) > 0:
+
+        for team in standings[0]['table']: # есть ли 'table' нужно проверить
+            team_info = team
+            team_info.update(team=search_team_in_db(team['team']['name']))
+            table.append(team_info)
 
     return render(request, "table.html", {"table": table})
 
