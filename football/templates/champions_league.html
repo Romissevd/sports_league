@@ -13,13 +13,13 @@
         {% for match in matches.list %}
             <p>
             {% if not match.homeTeam.image %}
-                {{ match.homeTeam.team }}
+                {{ match.homeTeam.team_in_db }}
             {% else %}
                 {{ match.homeTeam.team_in_db.fc_id_name_dictionary.club_name }}<img src="/media{{ match.homeTeam.image }}" width="30px"/>
             {% endif %}
             -
             {% if not match.awayTeam.image %}
-                {{ match.awayTeam.team }}
+                {{ match.awayTeam.team_in_db }}
             {% else %}
                 <img src="/media{{ match.awayTeam.image }}" width="30px"/>{{ match.awayTeam.team_in_db.fc_id_name_dictionary.club_name }}
             {% endif %}

@@ -46,7 +46,7 @@ def search_team_in_db(name):
                 img = "/fc_logo/{}.png".format(club.num_image)
                 return {'team_in_db': club, 'image': img}
             except FootballClub.DoesNotExist:
-                return {'team_in_db': name}
+                return {'team_in_db': FootballClub.objects.get(id=1546)}
 
 
 def champions_league(request, stage):

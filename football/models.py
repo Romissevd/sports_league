@@ -1,5 +1,6 @@
 from django.contrib.postgres.fields import JSONField
 from django.db import models
+from datetime import datetime
 
 
 class FCStadium(models.Model):
@@ -59,6 +60,24 @@ class APIChampionsLeague(models.Model):
 
     date = models.DateTimeField()
     data = JSONField()
+
+
+class ChampionsLeagueGroupStage(models.Model):
+
+    team = models.ForeignKey(FootballClub, on_delete=models.CASCADE)
+    groups = models.CharField(max_length=1, default='')
+    position = models.IntegerField()
+    points = models.IntegerField()
+    played_games = models.IntegerField()
+    won = models.IntegerField()
+    draw = models.IntegerField()
+    lost = models.IntegerField()
+    goals_difference = models.IntegerField()
+    goals_against = models.IntegerField()
+    goals_for = models.IntegerField()
+    start_year = models.IntegerField()
+    end_year = models.IntegerField()
+    last_update = models.DateTimeField(default=datetime.now())
 
 
 class APIMatches(models.Model):

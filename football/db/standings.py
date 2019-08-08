@@ -73,3 +73,58 @@ class Standings(FCDataBase):
         self.query(ins, team_info)
         self.save()
         self.close()
+
+
+class DBChampionsLeagueGS(FCDataBase):
+
+
+    def select_team(self, table_name, data):
+        search_team = """
+        SELECT id FROM football_{table_name} WHERE team_id = %(id_team)s OR team_name = %(team_name)s;
+        """.format(table_name=table_name)
+        self.query(search_team, {'id_team': data['id_team'], 'team_name': data['team']['name']})
+        result = None
+        for item in self.cursor:
+            result = item
+        self.close()
+        return result
+
+
+    def insert_team(self, team_info):
+        ins = """
+        INSERT INTO football_championsleaguegroupstage (
+            team_id,
+            groups,
+            position, 
+            points,
+            played_games, 
+            won, 
+            draw, 
+            lost,
+            goals_difference, 
+            goals_against,
+            goals_for,
+            start_year,
+            end_year,
+            last_update 
+        ) 
+        VALUES (
+            %(team_id)s, 
+            %(groups)s,
+            %(position)s,
+            %(points)s,  
+            %(playedGames)s,
+            %(won)s, 
+            %(draw)s, 
+            %(lost)s, 
+            %(goalDifference)s, 
+            %(goalsAgainst)s, 
+            %(goalsFor)s, 
+            %(start_year)s,
+            %(end_year)s,
+            %(lastUPD)s 
+        ) 
+        """
+        self.query(ins, team_info)
+        self.save()
+        self.close()
