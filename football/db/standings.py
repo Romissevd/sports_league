@@ -92,7 +92,20 @@ class DBChampionsLeagueGS(FCDataBase):
 
     def insert_team(self, team_info):
         ins = """
-        INSERT INTO football_championsleaguegroupstage (
+        UPDATE football_championsleaguegroupstage SET 
+            groups = %(groups)s,
+            position = %(position)s,
+            points = %(points)s,
+            played_games = %(playedGames)s, 
+            won = %(won)s, 
+            draw = %(draw)s, 
+            lost = %(lost)s,
+            goals_difference = %(goalDifference)s,
+            goals_against = %(goalsAgainst)s,
+            goals_for = %(goalsFor)s, 
+            last_update = %(lastUPD)s
+            WHERE team_id = %(team_id)s AND start_year = %(start_year)s;
+            INSERT INTO football_championsleaguegroupstage (
             team_id,
             groups,
             position, 
@@ -108,7 +121,7 @@ class DBChampionsLeagueGS(FCDataBase):
             end_year,
             last_update 
         ) 
-        VALUES (
+        SELECT 
             %(team_id)s, 
             %(groups)s,
             %(position)s,
@@ -123,7 +136,8 @@ class DBChampionsLeagueGS(FCDataBase):
             %(start_year)s,
             %(end_year)s,
             %(lastUPD)s 
-        ) 
+         
+            WHERE NOT EXISTS (SELECT 1 FROM football_championsleaguegroupstage WHERE team_id = %(team_id)s AND start_year = %(start_year)s);
         """
         self.query(ins, team_info)
         self.save()
