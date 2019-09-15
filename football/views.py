@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import FootballClub, APIMatches, CodeLeague, APITables, CountryEnName
+from .models import FootballClub, APIMatches, CodeLeague, APITables, CountryEnName, ChampionsLeagueGroupStage as CLGroup
 from datetime import datetime
 from football.leagues.champions_leaague import dct_cl_stages
 
@@ -47,12 +47,13 @@ def search_team_in_db(name):
                 return {'team_in_db': club, 'image': img}
             except FootballClub.DoesNotExist:
                 return {'team_in_db': FootballClub.objects.get(id=1546)}
+                #return {'team_in_db': name}
 
 
 def champions_league(request, stage):
 
     stages = dct_cl_stages[stage]
-    standings_group = False
+    standings_group = None
 
     datas = APIMatches.objects.filter(league_code="CL").order_by('-id')[0]
     data = {'matches': []}
@@ -71,19 +72,20 @@ def champions_league(request, stage):
     # print(data)
 
     if stage == 'groups':
-        standings = APITables.objects.filter(league_code="CL").order_by('-id')[0]
-        standings_group = []
-        for result in standings.tables['standings']:
-            if result['type'] == 'TOTAL':
-
-                for club in result['table']:
-                    team = search_team_in_db(club['team']['name'])
-                    club['team']=team
-                standings_group.append(result)
-                # print(result)
-                # print('==='*40)
-        # print(standings)
-        # standings_group = APITables.objects.filter(league_code="CL").order_by('-id')[0]
+        # standings = APITables.objects.filter(league_code="CL").order_by('-id')[0]
+        # standings_group = []
+        # for result in standings.tables['standings']:
+        #     if result['type'] == 'TOTAL':
+        #
+        #         for club in result['table']:
+        #             team = search_team_in_db(club['team']['name'])
+        #             club['team']=team
+        #         standings_group.append(result)
+        #         # print(result)
+        #         # print('==='*40)
+        # # print(standings)
+        # # standings_group = APITables.objects.filter(league_code="CL").order_by('-id')[0]
+        standings_group = CLGroup.objects.filter(start_year=2017).order_by('groups', 'position')
 
     return render(request, "champions_league.html", {"data": data, "standings": standings_group})
 

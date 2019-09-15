@@ -7,30 +7,31 @@
         <li class="stage"><a href="{% url 'groups' %}">Групповой этап</a></li>
         <li class="stage"><a href="{% url 'finals' %}">Плей-офф</a></li>
     </ul>
-    {% regroup data.matches by stage as matches_grouper %}
-    {% for matches in matches_grouper %}
-        {{ matches.grouper }}
-        {% for match in matches.list %}
-            <p>
-            {% if not match.homeTeam.image %}
-                {{ match.homeTeam.team_in_db }}
-            {% else %}
-                {{ match.homeTeam.team_in_db.fc_id_name_dictionary.club_name }}<img src="/media{{ match.homeTeam.image }}" width="30px"/>
-            {% endif %}
-            -
-            {% if not match.awayTeam.image %}
-                {{ match.awayTeam.team_in_db }}
-            {% else %}
-                <img src="/media{{ match.awayTeam.image }}" width="30px"/>{{ match.awayTeam.team_in_db.fc_id_name_dictionary.club_name }}
-            {% endif %}
-            {{ match.score.homeTeam }} - {{ match.score.awayTeam }}
-            </p>
-        {% endfor %}
-    {% endfor %}
+{#    {% regroup data.matches by stage as matches_grouper %}#}
+{#    {% for matches in matches_grouper %}#}
+{#        {{ matches.grouper }}#}
+{#        {% for match in matches.list %}#}
+{#            <p>#}
+{#            {% if not match.homeTeam.image %}#}
+{#                {{ match.homeTeam.team_in_db }}#}
+{#            {% else %}#}
+{#                {{ match.homeTeam.team_in_db.fc_id_name_dictionary.club_name }}<img src="/media{{ match.homeTeam.image }}" width="30px"/>#}
+{#            {% endif %}#}
+{#            -#}
+{#            {% if not match.awayTeam.image %}#}
+{#                {{ match.awayTeam.team_in_db }}#}
+{#            {% else %}#}
+{#                <img src="/media{{ match.awayTeam.image }}" width="30px"/>{{ match.awayTeam.team_in_db.fc_id_name_dictionary.club_name }}#}
+{#            {% endif %}#}
+{#            {{ match.score.homeTeam }} - {{ match.score.awayTeam }}#}
+{#            </p>#}
+{#        {% endfor %}#}
+{#    {% endfor %}#}
 
     {% if standings %}
-        {% for group in standings %}
-            {{ group.group }}
+        {% regroup standings by groups as groups_list %}
+        {% for group in groups_list %}
+            <p align="center">Группа - {{ group.grouper }}</p>
             <table>
             <tr>
                 <th>Название</th>
@@ -42,22 +43,20 @@
                 <th>П</th>
                 <th>О</th>
             </tr>
-            {% for team in group.table %}
+            {% for team_in_group in group.list %}
                 <tr>
                     <td>
-                    {% if not team.team.team_in_db.fc_en_name %}
-                        {{ team.team.team_in_db }}
-                    {% else %}
-                        <a href="/football/team/{{ team.team.team_in_db.fc_en_name }}/">{{ team.team.team_in_db.fc_id_name_dictionary.club_name }} ({{ team.team.team_in_db.country.country_name }})</a>
-                    {% endif %}
+                        <a href="/football/team/{{ team_in_group.team.fc_en_name }}/">
+                            {{ team_in_group.team.fc_id_name_dictionary.club_name }} ({{ team_in_group.team.country.country_name }})
+                        </a>
                     </td>
-                    <td>{{ team.playedGames }}</td>
-                    <td>{{ team.won }}</td>
-                    <td>{{ team.draw }}</td>
-                    <td>{{ team.lost }}</td>
-                    <td>{{ team.goalsFor }}</td>
-                    <td>{{ team.goalsAgainst }}</td>
-                    <td>{{ team.points }}</td>
+                    <td>{{ team_in_group.played_games }}</td>
+                    <td>{{ team_in_group.won }}</td>
+                    <td>{{ team_in_group.draw }}</td>
+                    <td>{{ team_in_group.lost }}</td>
+                    <td>{{ team_in_group.goals_for }}</td>
+                    <td>{{ team_in_group.goals_against }}</td>
+                    <td>{{ team_in_group.points }}</td>
                 </tr>
             {% endfor %}
             <table>
