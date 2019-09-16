@@ -50,10 +50,15 @@ def search_team_in_db(name):
                 #return {'team_in_db': name}
 
 
-def champions_league(request, stage):
+def champions_league_start_years():
+    return CLGroup.objects.order_by('-start_year').values_list('start_year', flat=True).distinct()
+
+
+def champions_league(request, stage, start_year=datetime.now().year):
 
     stages = dct_cl_stages[stage]
     standings_group = None
+    start_years = champions_league_start_years()
 
     datas = APIMatches.objects.filter(league_code="CL").order_by('-id')[0]
     data = {'matches': []}
@@ -85,9 +90,13 @@ def champions_league(request, stage):
         #         # print('==='*40)
         # # print(standings)
         # # standings_group = APITables.objects.filter(league_code="CL").order_by('-id')[0]
-        standings_group = CLGroup.objects.filter(start_year=2017).order_by('groups', 'position')
+        standings_group = CLGroup.objects.filter(start_year=start_year).order_by('groups', 'position')
 
-    return render(request, "champions_league.html", {"data": data, "standings": standings_group})
+    return render(request, "champions_league.html", {
+        "data": data,
+        "standings": standings_group,
+        "start_years": start_years,
+    })
 
 
 def championship(request, name_country):
