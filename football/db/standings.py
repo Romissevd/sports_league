@@ -104,7 +104,7 @@ class DBChampionsLeagueGS(FCDataBase):
             goals_against = %(goalsAgainst)s,
             goals_for = %(goalsFor)s, 
             last_update = %(lastUPD)s
-            WHERE team_id = %(team_id)s AND start_year = %(start_year)s AND played_games < %(playedGames)s;
+            WHERE team_id = %(team_id)s AND start_year = %(start_year)s;
             INSERT INTO football_championsleaguegroupstage (
             team_id,
             groups,

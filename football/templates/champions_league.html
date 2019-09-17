@@ -10,12 +10,15 @@
     </ul>
 
     {% if start_years %}
-
-        <select>
+        <form action="{% url 'groups' %}">
+        <select name="years" onchange="this.form.submit()">
+            <option>------</option>
             {% for year in start_years %}
-                <option>{{ year }}/{{ year|summa:1 }}</option>
+                <option value="{{ year }}">{{ year }}/{{ year|summa:1 }}</option>
             {% endfor %}
         </select>
+{#        <input type="submit">#}
+        </form>
     {% endif %}
 
 {#    {% regroup data.matches by stage as matches_grouper %}#}
@@ -44,9 +47,9 @@
         {% for group in groups_list %}
             <p align="center">Группа - {{ group.grouper }}</p>
             <table>
-            <tr>
-                <th>Название</th>
-                <th>Игр</th>
+            <tr><th>#</th>
+                <th></th>
+                <th>И</th>
                 <th>В</th>
                 <th>Н</th>
                 <th>П</th>
@@ -56,6 +59,7 @@
             </tr>
             {% for team_in_group in group.list %}
                 <tr>
+                    <td><img src="/media/fc_logo/{{ team_in_group.team.num_image }}.png" width="30px"/></td>
                     <td>
                         <a href="/football/team/{{ team_in_group.team.fc_en_name }}/">
                             {{ team_in_group.team.fc_id_name_dictionary.club_name }} ({{ team_in_group.team.country.country_name }})

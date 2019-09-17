@@ -54,7 +54,9 @@ def champions_league_start_years():
     return CLGroup.objects.order_by('-start_year').values_list('start_year', flat=True).distinct()
 
 
-def champions_league(request, stage, start_year=datetime.now().year):
+def champions_league(request, stage):
+
+    start_year = request.GET.get('years', datetime.now().year)
 
     stages = dct_cl_stages[stage]
     standings_group = None

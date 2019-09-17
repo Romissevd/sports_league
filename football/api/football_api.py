@@ -76,7 +76,7 @@ def api_data_table(league_code):
 def source_data_conversion_1(league_code='CL'):
     data_league = APIData(
         APIUserData.SITE,
-        "competitions/{code}/standings?season=2017".format(code=league_code),
+        "competitions/{code}/standings".format(code=league_code),
         APIUserData.HEADERS,
     ).data_json()
 
