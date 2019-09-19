@@ -17,7 +17,6 @@
                 <option value="{{ year }}">{{ year }}/{{ year|summa:1 }}</option>
             {% endfor %}
         </select>
-{#        <input type="submit">#}
         </form>
     {% endif %}
 
@@ -46,8 +45,9 @@
         {% regroup standings by groups as groups_list %}
         {% for group in groups_list %}
             <p align="center">Группа - {{ group.grouper }}</p>
-            <table>
-            <tr><th>#</th>
+            <table width="600px">
+            <tr align="center">
+                <th>#</th>
                 <th></th>
                 <th>И</th>
                 <th>В</th>
@@ -60,21 +60,21 @@
             {% for team_in_group in group.list %}
                 <tr>
                     <td><img src="/media/fc_logo/{{ team_in_group.team.num_image }}.png" width="30px"/></td>
-                    <td>
+                    <td width="300px">
                         <a href="/football/team/{{ team_in_group.team.fc_en_name }}/">
                             {{ team_in_group.team.fc_id_name_dictionary.club_name }} ({{ team_in_group.team.country.country_name }})
                         </a>
                     </td>
-                    <td>{{ team_in_group.played_games }}</td>
-                    <td>{{ team_in_group.won }}</td>
-                    <td>{{ team_in_group.draw }}</td>
-                    <td>{{ team_in_group.lost }}</td>
-                    <td>{{ team_in_group.goals_for }}</td>
-                    <td>{{ team_in_group.goals_against }}</td>
-                    <td>{{ team_in_group.points }}</td>
+                    <td align="center">{{ team_in_group.played_games }}</td>
+                    <td align="center">{{ team_in_group.won }}</td>
+                    <td align="center">{{ team_in_group.draw }}</td>
+                    <td align="center">{{ team_in_group.lost }}</td>
+                    <td align="center">{{ team_in_group.goals_for }}</td>
+                    <td align="center">{{ team_in_group.goals_against }}</td>
+                    <td align="center">{{ team_in_group.points }}</td>
                 </tr>
             {% endfor %}
-            <table>
+            </table>
         {% endfor %}
     {% endif %}
 {% endblock %}
