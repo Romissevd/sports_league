@@ -1,0 +1,11 @@
+.groups {
+    background-color: #23b411;
+}
+
+[class*="group "] {
+    display: none;
+}
+
+.groups [class*="group "]:first-child{
+    display: block;
+}

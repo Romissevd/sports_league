@@ -1,7 +1,13 @@
 {% extends "base.html" %}
 {% load static %}
+{% block extra_head %}
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static "css/groups.css" %}" />
+{% endblock %}
 {% load summa %}
 {% block content %}
+
+
 
     <ul class="list-stages_LC">
         <li class="stage"><a href="{% url 'preliminary' %}">Предварительный этап</a></li>
@@ -43,9 +49,20 @@
 
     {% if standings %}
         {% regroup standings by groups as groups_list %}
+        <div class="listGroups">
+        <p>Группы:
+            {% for group in groups_list %}
+                <input id="gr_{{ group.grouper }}" type="radio" value="{{ group.grouper }}" onclick="buttonClick (this)" style="display: none">
+                <label id="lab" for="gr_{{ group.grouper }}" title="Группа {{ group.grouper }}">{{ group.grouper }} </label>
+            {% endfor %}
+        </p>
+        </div>
+        <script src="{% static "js/groups.js" %}"></script>
+        <div class="groups">
         {% for group in groups_list %}
+            <div class="group {{ group.grouper }}">
             <p align="center">Группа - {{ group.grouper }}</p>
-            <table width="600px">
+            <table>
             <tr align="center">
                 <th>#</th>
                 <th></th>
@@ -75,6 +92,8 @@
                 </tr>
             {% endfor %}
             </table>
+            </div>
         {% endfor %}
+        </div>
     {% endif %}
 {% endblock %}
