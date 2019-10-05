@@ -1,13 +1,14 @@
-.groups {
-    position: relative;
+.listGroups {
 }
 
 [id*="group "] {
-    position: absolute;
-    opacity: 0;
-    transition: opacity 500ms;
+    display: none;
 }
 
 .showed {
-    opacity: 1;
+    display: block;
+}
+
+[id*="group "] [class*="table_group_"] {
+    width: 100%;
 }

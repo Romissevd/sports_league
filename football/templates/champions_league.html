@@ -49,7 +49,7 @@
 
     {% if standings %}
         {% regroup standings by groups as groups_list %}
-        <div class="listGroups">
+        <div class="listNameGroups">
         <p>Группы:
             {% for group in groups_list %}
                 <input id="gr_{{ group.grouper }}" type="radio" value="{{ group.grouper }}" onclick="buttonClick (this)" style="display: none">
@@ -58,7 +58,7 @@
         </p>
         </div>
 
-        <div class="groups">
+        <div class="listGroups">
         {% for group in groups_list %}
             {% if forloop.first %}
                 <div id="group {{ group.grouper }}" class="showed" >
@@ -66,9 +66,9 @@
                 <div id="group {{ group.grouper }}" class="" >
             {% endif %}
             <p align="center">Группа - {{ group.grouper }}</p>
-            <table>
+            <table class="table_group_{{ group.grouper }}">
             <tr align="center">
-                <th>#</th>
+                <th></th>
                 <th></th>
                 <th>И</th>
                 <th>В</th>
