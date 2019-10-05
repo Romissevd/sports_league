@@ -57,10 +57,14 @@
             {% endfor %}
         </p>
         </div>
-        <script src="{% static "js/groups.js" %}"></script>
+
         <div class="groups">
         {% for group in groups_list %}
-            <div class="group {{ group.grouper }}">
+            {% if forloop.first %}
+                <div id="group {{ group.grouper }}" class="showed" >
+            {% else %}
+                <div id="group {{ group.grouper }}" class="" >
+            {% endif %}
             <p align="center">Группа - {{ group.grouper }}</p>
             <table>
             <tr align="center">
@@ -96,4 +100,6 @@
         {% endfor %}
         </div>
     {% endif %}
+    <script src="{% static "js/groups.js" %}"></script>
 {% endblock %}
+

@@ -1,11 +1,13 @@
 .groups {
-    background-color: #23b411;
+    position: relative;
 }
 
-[class*="group "] {
-    display: none;
+[id*="group "] {
+    position: absolute;
+    opacity: 0;
+    transition: opacity 500ms;
 }
 
-.groups [class*="group "]:first-child{
-    display: block;
+.showed {
+    opacity: 1;
 }
