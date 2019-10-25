@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from .models import FootballClub, APIMatches, CodeLeague, APITables, CountryEnName, ChampionsLeagueGroupStage as CLGroup
+from .models import FootballClub, APIMatches, CodeLeague, APITables, CountryEnName, ChampionsLeagueGroupStage as CLGroup, \
+    ChampionsLeagueMatches as CLMatches
 from datetime import datetime
 from football.leagues.champions_leaague import dct_cl_stages
 
@@ -57,6 +58,7 @@ def champions_league_start_years():
 def champions_league(request, stage):
 
     start_year = request.GET.get('years', datetime.now().year)
+    matches = None
 
     stages = dct_cl_stages[stage]
     standings_group = None
@@ -66,7 +68,6 @@ def champions_league(request, stage):
     data = {'matches': []}
 
     for match in datas.data['matches']:
-        # print(match)
         m = {}
         if match['stage'] in stages:
             m.update(stage=match['stage'])
@@ -74,9 +75,6 @@ def champions_league(request, stage):
             m.update(awayTeam=search_team_in_db(match['awayTeam']['name']))
             m.update(score={'homeTeam': match['score']['fullTime']['homeTeam'], 'awayTeam': match['score']['fullTime']['awayTeam']})
             data['matches'].append(m)
-    # print(data)
-    # data = json.loads(data)
-    # print(data)
 
     if stage == 'groups':
         # standings = APITables.objects.filter(league_code="CL").order_by('-id')[0]
@@ -93,12 +91,21 @@ def champions_league(request, stage):
         # # print(standings)
         # # standings_group = APITables.objects.filter(league_code="CL").order_by('-id')[0]
         standings_group = CLGroup.objects.filter(start_year=start_year).order_by('groups', 'position')
+        matches = champions_league_matches(start_year, "GROUP_STAGE")
 
     return render(request, "champions_league.html", {
         "data": data,
         "standings": standings_group,
         "start_years": start_years,
+        "matches": matches,
     })
+
+
+def champions_league_matches(start_year, stage):
+
+    matches = CLMatches.objects.filter(start_year=start_year, stage=stage).order_by('groups', 'time_match')
+
+    return matches
 
 
 def championship(request, name_country):

@@ -1,0 +1,13 @@
+[id*="matches_group_"] {
+    display: none;
+}
+
+.showed_matches {
+    display: block;
+}
+
+.game {
+    float: left;
+    width: 50%;
+    font-size: 14px;
+}

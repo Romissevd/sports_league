@@ -3,6 +3,7 @@
 {% block extra_head %}
     {% load static %}
     <link rel="stylesheet" type="text/css" href="{% static "css/groups.css" %}" />
+    <link rel="stylesheet" type="text/css" href="{% static "css/matches.css" %}" />
 {% endblock %}
 {% load summa %}
 {% block content %}
@@ -100,6 +101,30 @@
         {% endfor %}
         </div>
     {% endif %}
+
+    {% regroup matches by groups as matches_list %}
+    {% for match in matches_list %}
+
+        {% if forloop.first %}
+            <div id="matches_group_{{ match.grouper }}" class="showed_matches" >
+        {% else %}
+            <div id="matches_group_{{ match.grouper }}" class="" >
+        {% endif %}
+        {% for game in match.list %}
+            <div class="game">
+            <p>{{ game.home_team.fc_id_name_dictionary.club_name }} - {{ game.away_team.fc_id_name_dictionary.club_name }}<br>
+                {% ifequal game.home_team_fulltime None %}
+                    -:-
+                {% else %}
+                    {{ game.home_team_fulltime }} : {{ game.away_team_fulltime }}
+                {% endifequal %}
+            </p>
+            </div>
+        {% endfor %}
+        </div>
+    {% endfor %}
+
     <script src="{% static "js/groups.js" %}"></script>
+{#    <script src="{% static "js/matches.js" %}"></script>#}
 {% endblock %}
 

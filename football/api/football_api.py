@@ -7,7 +7,7 @@ from football.api.api_data import APIData
 from football.api.account_info import APIUserData
 from football.models import APIMatches, APITables
 from datetime import datetime
-from football.db.standings import Standings, DBChampionsLeagueGS
+from football.db.standings import Standings, DBChampionsLeagueGS, DBChampionsLeagueMatches
 from football.db.country import Country
 from football.db.team import Team
 from football.views import search_team_in_db
@@ -28,24 +28,75 @@ CODES_LEAGUES = [
     # 'BSA', # Serie A - Brazil
 ]
 
-def api_data_league(league_code):
-    data_league = APIData(
+
+def team_in_db(name):
+    return search_team_in_db(name)
+
+
+def api_matches_data(league_code):
+
+    data = list()
+
+    matches_data = APIData(
         APIUserData.SITE,
         "competitions/{code}/matches".format(code=league_code),
         APIUserData.HEADERS,
-    )
+    ).data_json()
 
-    info_json = data_league.data_json()
-    if info_json is not None:
-        with open('data_league.txt', 'w') as file_leaggue:
-            file_leaggue.write(json.dumps(info_json, indent=4, sort_keys=True))
+    matches_data = matches_data.get('matches')
 
-        print(json.dumps(info_json, indent=4, sort_keys=True))
-        # APIMatches.objects.create(
-        #     date=datetime.now(),
-        #     data=info_json,
-        #     league_code=league_code,
-        # )
+    if matches_data is None:
+        return None
+
+    for match in matches_data:
+
+        match_info = dict()
+
+        start_year = match.get('season').get('startDate').split('-')[0]  # TODO регулярное выражение?
+        end_year = match.get('season').get('endDate').split('-')[0]
+        match_info.update(start_year=start_year, end_year=end_year)
+
+        away_team_name = match.get('awayTeam').get('name')
+        match_info.update(away_team=team_in_db(away_team_name)['team_in_db'].id)
+
+        home_team_name = match.get('homeTeam').get('name')
+        match_info.update(home_team=team_in_db(home_team_name)['team_in_db'].id)
+
+        group = match.get('group')
+        if group and "Group" in group:
+            group = group[-1]
+        match_info.update(groups=group)
+
+        stage = match.get('stage')
+        match_info.update(stage=stage)
+
+        status = match.get('status')
+        match_info.update(status=status)
+
+        time_match = match.get('utcDate')
+        match_info.update(time_match=time_match)
+
+        score = match.get('score')
+        match_info.update(
+            away_team_extratime=score.get('extraTime').get('awayTeam'),
+            home_team_extratime=score.get('extraTime').get('homeTeam'),
+            away_team_fulltime=score.get('fullTime').get('awayTeam'),
+            home_team_fulltime=score.get('fullTime').get('homeTeam'),
+            away_team_halftime=score.get('halfTime').get('awayTeam'),
+            home_team_halftime=score.get('halfTime').get('homeTeam'),
+            away_team_penalties=score.get('penalties').get('awayTeam'),
+            home_team_penalties=score.get('penalties').get('homeTeam'),
+            winner=score.get('winner'),
+        )
+
+        last_updated = match.get('lastUpdated')
+        match_info.update(last_updated=last_updated)
+
+        data.append(match_info)
+
+        DBChampionsLeagueMatches().insert_team(match_info)
+    # return data
+
 
 
 def forming_table_name(*args):
@@ -59,8 +110,8 @@ def api_data_table(league_code):
         APIUserData.SITE,
         "competitions/{code}/standings".format(code=league_code),
         APIUserData.HEADERS,
-    )
-    info_json = data_league.data_json()
+    ).data_json()
+    info_json = data_league
     if info_json is not None:
         with open('data_table.txt', 'w') as file_leaggue:
             file_leaggue.write(json.dumps(info_json, indent=4, sort_keys=True))
@@ -112,10 +163,10 @@ def source_data_conversion_1(league_code='CL'):
 if __name__ == "__main__":
     # for code_league in CODES_LEAGUES:
     #     print(code_league)
-    #     api_data_league(code_league)
+    api_matches_data('CL')
     # #    source_data_conversion_1(code_league)
     #     print('=='*80)
     #     api_data_table(code_league)
     #     time.sleep(5)
 
-    source_data_conversion_1('CL')
+    # source_data_conversion_1('CL')

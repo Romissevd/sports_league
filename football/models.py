@@ -80,6 +80,28 @@ class ChampionsLeagueGroupStage(models.Model):
     last_update = models.DateTimeField(default=datetime.now())
 
 
+class ChampionsLeagueMatches(models.Model):
+
+    home_team = models.ForeignKey(FootballClub, on_delete=models.CASCADE, related_name='home')
+    away_team = models.ForeignKey(FootballClub, on_delete=models.CASCADE, related_name='away')
+    groups = models.CharField(max_length=50, null=True)
+    stage = models.CharField(max_length=50)
+    status = models.CharField(max_length=50)
+    time_match = models.DateTimeField(default=datetime.now())
+    away_team_extratime = models.IntegerField(null=True)
+    home_team_extratime = models.IntegerField(null=True)
+    away_team_fulltime = models.IntegerField(null=True)
+    home_team_fulltime = models.IntegerField(null=True)
+    away_team_halftime = models.IntegerField(null=True)
+    home_team_halftime = models.IntegerField(null=True)
+    away_team_penalties = models.IntegerField(null=True)
+    home_team_penalties = models.IntegerField(null=True)
+    winner = models.CharField(max_length=50, null=True)
+    start_year = models.IntegerField()
+    end_year = models.IntegerField()
+    last_updated = models.DateTimeField(default=datetime.now())
+
+
 class APIMatches(models.Model):
 
     date = models.DateTimeField()

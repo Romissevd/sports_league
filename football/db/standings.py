@@ -142,3 +142,72 @@ class DBChampionsLeagueGS(FCDataBase):
         self.query(ins, team_info)
         self.save()
         self.close()
+
+
+class DBChampionsLeagueMatches(FCDataBase):
+
+
+    def insert_team(self, match_info):
+        ins = """
+        UPDATE football_championsleaguematches SET 
+            groups = %(groups)s,
+            stage = %(stage)s,
+            status = %(status)s,
+            time_match = %(time_match)s,
+            away_team_extratime = %(away_team_extratime)s,
+            home_team_extratime = %(home_team_extratime)s,
+            away_team_fulltime = %(away_team_fulltime)s,
+            home_team_fulltime = %(home_team_fulltime)s,
+            away_team_halftime = %(away_team_halftime)s,
+            home_team_halftime = %(home_team_halftime)s,
+            away_team_penalties = %(away_team_penalties)s,
+            home_team_penalties = %(home_team_penalties)s,
+            winner = %(winner)s,
+            end_year = %(end_year)s,
+            last_updated = %(last_updated)s
+            WHERE home_team_id = %(home_team)s AND away_team_id = %(away_team)s AND start_year = %(start_year)s;
+            INSERT INTO football_championsleaguematches (
+            home_team_id,
+            away_team_id,
+            groups,
+            stage,
+            status,
+            time_match,
+            away_team_extratime,
+            home_team_extratime,
+            away_team_fulltime,
+            home_team_fulltime,
+            away_team_halftime,
+            home_team_halftime,
+            away_team_penalties,
+            home_team_penalties,
+            winner,
+            start_year,
+            end_year,
+            last_updated 
+        ) 
+        SELECT 
+            %(home_team)s,
+            %(away_team)s,
+            %(groups)s,
+            %(stage)s,
+            %(status)s,
+            %(time_match)s,
+            %(away_team_extratime)s,
+            %(home_team_extratime)s,
+            %(away_team_fulltime)s,
+            %(home_team_fulltime)s,
+            %(away_team_halftime)s,
+            %(home_team_halftime)s,
+            %(away_team_penalties)s,
+            %(home_team_penalties)s,
+            %(winner)s,
+            %(start_year)s,
+            %(end_year)s,
+            %(last_updated)s
+
+            WHERE NOT EXISTS (SELECT 1 FROM football_championsleaguematches WHERE home_team_id = %(home_team)s AND away_team_id = %(away_team)s AND start_year = %(start_year)s);
+        """
+        self.query(ins, match_info)
+        self.save()
+        self.close()
