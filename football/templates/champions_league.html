@@ -110,15 +110,30 @@
         {% else %}
             <div id="matches_group_{{ match.grouper }}" class="" >
         {% endif %}
-        {% for game in match.list %}
+
+        {% regroup match.list by time_match.date as matches_grouper %}
+
+        {% for round_day in matches_grouper  %}
             <div class="game">
-            <p>{{ game.home_team.fc_id_name_dictionary.club_name }} - {{ game.away_team.fc_id_name_dictionary.club_name }}<br>
-                {% ifequal game.home_team_fulltime None %}
-                    -:-
-                {% else %}
-                    {{ game.home_team_fulltime }} : {{ game.away_team_fulltime }}
-                {% endifequal %}
-            </p>
+            <table class="table_games">
+                <tr>{{ round_day.grouper }}</tr>
+                <tr>{% for game in round_day.list %}
+                    <td class="home_club">{{ game.home_team.fc_id_name_dictionary.club_name }}
+                        <img src="/media/fc_logo/{{ game.home_team.num_image }}.png" width="20px"/>
+                    </td>
+                    <td class="match_result">
+                        {% ifequal game.home_team_fulltime None %}
+                            -:-
+                        {% else %}
+                            {{ game.home_team_fulltime }} : {{ game.away_team_fulltime }}
+                        {% endifequal %}
+                    </td>
+                    <td class="away_club"><img src="/media/fc_logo/{{ game.away_team.num_image }}.png" width="20px"/>
+                        {{ game.away_team.fc_id_name_dictionary.club_name }}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
             </div>
         {% endfor %}
         </div>

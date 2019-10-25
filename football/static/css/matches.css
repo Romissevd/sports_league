@@ -8,6 +8,22 @@
 
 .game {
     float: left;
-    width: 50%;
-    font-size: 14px;
+    width: 47%;
+    font-size: 10pt;
+    border: 1px #666666 solid;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    text-align: center;
+}
+
+.table_games {
+    width: 100%;
+}
+
+.home_club {
+    text-align: right;
+}
+
+.away_club {
+    text-align: left;
 }
